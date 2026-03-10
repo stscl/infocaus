@@ -1,11 +1,19 @@
 Package: infocaus
-Title: What the Package Does (One Line, Title Case)
+Title: Information-Theoretic Measures for Causal Discovery
 Version: 0.0.0.9000
 Authors@R: 
-    person("Wenbo", "Lyu", , "lyu.geosocial@gmail.com", role = c("aut", "cre"),
+    person(given = "Wenbo", family = "Lyu",
+           email = "lyu.geosocial@gmail.com", 
+           role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0002-6003-3800"))
-Description: What the package does (one paragraph).
+Description: Methods for detecting temporal and spatial causality using information flow and information decomposition, following the framework described in Martinez-Sanchez et al. (2024) <doi:10.1038/s41467-024-53373-4>.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+URL: https://stscl.github.io/infocaus/, https://github.com/stscl/infocaus
+BugReports: https://github.com/stscl/infocaus/issues
+Depends: 
+    R (>= 4.1.0)
+LinkingTo: 
+    Rcpp
