@@ -13,6 +13,46 @@ RcppDist4MatSub <- function(mat, lib, pred, method = "euclidean", na_rm = TRUE, 
     .Call(`_infocaus_RcppDist4MatSub`, mat, lib, pred, method, na_rm, byrow)
 }
 
+RcppDiscEntropy <- function(series, base = 2.0, na_rm = TRUE) {
+    .Call(`_infocaus_RcppDiscEntropy`, series, base, na_rm)
+}
+
+RcppContEntropy <- function(vec, k = 3L, alg = 0L, base = 2.0) {
+    .Call(`_infocaus_RcppContEntropy`, vec, k, alg, base)
+}
+
+RcppDiscJE <- function(mat, vars, base = 2.0, na_rm = TRUE) {
+    .Call(`_infocaus_RcppDiscJE`, mat, vars, base, na_rm)
+}
+
+RcppContJE <- function(mat, vars, k = 3L, alg = 0L, base = 2.0) {
+    .Call(`_infocaus_RcppContJE`, mat, vars, k, alg, base)
+}
+
+RcppDiscCE <- function(mat, target, conds, base = 2.0, na_rm = TRUE) {
+    .Call(`_infocaus_RcppDiscCE`, mat, target, conds, base, na_rm)
+}
+
+RcppContCE <- function(mat, target, conds, k = 3L, alg = 0L, base = 2.0) {
+    .Call(`_infocaus_RcppContCE`, mat, target, conds, k, alg, base)
+}
+
+RcppDiscMI <- function(mat, target, interact, base = 2.0, na_rm = TRUE) {
+    .Call(`_infocaus_RcppDiscMI`, mat, target, interact, base, na_rm)
+}
+
+RcppContMI <- function(mat, target, interact, k = 3L, alg = 0L, base = 2.0, normalize = FALSE) {
+    .Call(`_infocaus_RcppContMI`, mat, target, interact, k, alg, base, normalize)
+}
+
+RcppDiscCMI <- function(mat, target, interact, conds, base = 2.0, na_rm = TRUE) {
+    .Call(`_infocaus_RcppDiscCMI`, mat, target, interact, conds, base, na_rm)
+}
+
+RcppContCMI <- function(mat, target, interact, conds, k = 3L, alg = 0L, base = 2.0, normalize = FALSE) {
+    .Call(`_infocaus_RcppContCMI`, mat, target, interact, conds, k, alg, base, normalize)
+}
+
 RcppGenLatticeLag <- function(mat, nb, lag = 1L) {
     .Call(`_infocaus_RcppGenLatticeLag`, mat, nb, lag)
 }

@@ -131,4 +131,58 @@ Rcpp::NumericMatrix mat_std2r(
     bool byrow = true
 );
 
+/********************************************************************
+ *  pat_r2std
+ *
+ *  Convert an R matrix (Integer / Numeric / Character)
+ *  into std::vector<std::vector<uint64_t>>.
+ *
+ *  Structure:
+ *
+ *  The orientation of the conversion is controlled by the
+ *  `byrow` argument.
+ *
+ *  When byrow = true
+ *
+ *      R matrix rows correspond to elements of the outer vector.
+ *
+ *      R:
+ *          [ r11, r12 ]
+ *          [ r21, r22 ]
+ *          [ r31, r32 ]
+ *
+ *      C++:
+ *          {
+ *              {r11, r12},
+ *              {r21, r22},
+ *              {r31, r32}
+ *          }
+ *
+ *
+ *  When byrow = false
+ *
+ *      R matrix columns correspond to elements of the outer vector.
+ *
+ *      R:
+ *          [ r11, r12 ]
+ *          [ r21, r22 ]
+ *          [ r31, r32 ]
+ *
+ *      C++:
+ *          {
+ *              {r11, r21, r31},
+ *              {r12, r22, r32}
+ *          }
+ *
+ *  Design:
+ *      - Scan matrix once to collect global unique values
+ *      - Sort uniques
+ *      - Assign id 1..uniq
+ *
+ *  NA handling:
+ *      NA encoded as {0}
+ *
+ ********************************************************************/
+std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true);
+
 #endif // DataTrans_H
