@@ -104,3 +104,161 @@ Rcpp::List std2nb(const std::vector<std::vector<size_t>>& nb) {
 
   return result;
 }
+
+/********************************************************************
+ *
+ *  Matrix Conversion Utilities (R <-> C++)
+ *
+ *  These functions convert between:
+ *
+ *      R representation:
+ *          Rcpp::NumericMatrix
+ *
+ *      C++ representation:
+ *          std::vector<std::vector<double>>
+ *
+ *  The orientation of the conversion is controlled by the
+ *  `byrow` argument.
+ *
+ *  When byrow = true
+ *
+ *      R matrix rows correspond to elements of the outer vector.
+ *
+ *      R:
+ *          [ r11, r12 ]
+ *          [ r21, r22 ]
+ *          [ r31, r32 ]
+ *
+ *      C++:
+ *          {
+ *              {r11, r12},
+ *              {r21, r22},
+ *              {r31, r32}
+ *          }
+ *
+ *
+ *  When byrow = false
+ *
+ *      R matrix columns correspond to elements of the outer vector.
+ *
+ *      R:
+ *          [ r11, r12 ]
+ *          [ r21, r22 ]
+ *          [ r31, r32 ]
+ *
+ *      C++:
+ *          {
+ *              {r11, r21, r31},
+ *              {r12, r22, r32}
+ *          }
+ *
+ *
+ *  Notes
+ *
+ *      - No copying beyond necessary allocation is performed.
+ *      - Matrix dimensions must be non zero.
+ *      - No assumption is made about missing values (NA are kept).
+ *
+ ********************************************************************/
+
+// Function to convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
+std::vector<std::vector<double>> mat_r2std(
+    const Rcpp::NumericMatrix& mat,
+    bool byrow = true
+) {
+
+  size_t nrow = static_cast<size_t>(mat.nrow());
+  size_t ncol = static_cast<size_t>(mat.ncol());
+
+  if (nrow == 0 || ncol == 0) {
+    Rcpp::stop("Input matrix must have positive dimensions.");
+  }
+
+  std::vector<std::vector<double>> result;
+
+  if (byrow) {
+
+    // Each row becomes one vector
+    result.resize(nrow);
+
+    for (size_t i = 0; i < nrow; ++i) {
+      result[i].reserve(ncol);
+
+      for (size_t j = 0; j < ncol; ++j) {
+        result[i].push_back(mat(i, j));
+      }
+    }
+
+  } else {
+
+    // Each column becomes one vector
+    result.resize(ncol);
+
+    for (size_t j = 0; j < ncol; ++j) {
+      result[j].reserve(nrow);
+
+      for (size_t i = 0; i < nrow; ++i) {
+        result[j].push_back(mat(i, j));
+      }
+    }
+
+  }
+
+  return result;
+}
+
+// Function to convert std::vector<std::vector<double>> to Rcpp::NumericMatrix
+Rcpp::NumericMatrix mat_std2r(
+    const std::vector<std::vector<double>>& mat,
+    bool byrow = true
+) {
+
+  size_t outer = mat.size();
+
+  if (outer == 0) {
+    Rcpp::stop("Input matrix container is empty.");
+  }
+
+  size_t inner = mat[0].size();
+
+  if (inner == 0) {
+    Rcpp::stop("Matrix rows/columns must contain elements.");
+  }
+
+  if (byrow) {
+
+    // std rows -> R rows
+    Rcpp::NumericMatrix result(outer, inner);
+
+    for (size_t i = 0; i < outer; ++i) {
+
+    //   if (mat[i].size() != inner) {
+    //     Rcpp::stop("Inconsistent row length in input matrix.");
+    //   }
+
+      for (size_t j = 0; j < inner; ++j) {
+        result(i, j) = mat[i][j];
+      }
+    }
+
+    return result;
+
+  } else {
+
+    // std rows -> R columns
+    Rcpp::NumericMatrix result(inner, outer);
+
+    for (size_t j = 0; j < outer; ++j) {
+
+    //   if (mat[j].size() != inner) {
+    //     Rcpp::stop("Inconsistent column length in input matrix.");
+    //   }
+
+      for (size_t i = 0; i < inner; ++i) {
+        result(i, j) = mat[j][i];
+      }
+    }
+
+    return result;
+  }
+}
