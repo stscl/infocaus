@@ -25,3 +25,19 @@ RcppGenTSLag <- function(mat, lag = 1L) {
     .Call(`_infocaus_RcppGenTSLag`, mat, lag)
 }
 
+RcppNN4Mat <- function(mat, k, method = "euclidean", include_self = FALSE, byrow = TRUE) {
+    .Call(`_infocaus_RcppNN4Mat`, mat, k, method, include_self, byrow)
+}
+
+RcppNN4MatSub <- function(mat, lib, pred, k, method = "euclidean", include_self = FALSE, byrow = TRUE) {
+    .Call(`_infocaus_RcppNN4MatSub`, mat, lib, pred, k, method, include_self, byrow)
+}
+
+RcppNN4DistMat <- function(distmat, k, include_self = FALSE) {
+    .Call(`_infocaus_RcppNN4DistMat`, distmat, k, include_self)
+}
+
+RcppNN4DistMatSub <- function(distmat, lib, pred, k, include_self = FALSE) {
+    .Call(`_infocaus_RcppNN4DistMatSub`, distmat, lib, pred, k, include_self)
+}
+

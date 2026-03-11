@@ -86,6 +86,62 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RcppNN4Mat
+Rcpp::List RcppNN4Mat(const Rcpp::NumericMatrix& mat, int k, std::string method, bool include_self, bool byrow);
+RcppExport SEXP _infocaus_RcppNN4Mat(SEXP matSEXP, SEXP kSEXP, SEXP methodSEXP, SEXP include_selfSEXP, SEXP byrowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< std::string >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type include_self(include_selfSEXP);
+    Rcpp::traits::input_parameter< bool >::type byrow(byrowSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppNN4Mat(mat, k, method, include_self, byrow));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RcppNN4MatSub
+Rcpp::List RcppNN4MatSub(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, int k, std::string method, bool include_self, bool byrow);
+RcppExport SEXP _infocaus_RcppNN4MatSub(SEXP matSEXP, SEXP libSEXP, SEXP predSEXP, SEXP kSEXP, SEXP methodSEXP, SEXP include_selfSEXP, SEXP byrowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type lib(libSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type pred(predSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< std::string >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type include_self(include_selfSEXP);
+    Rcpp::traits::input_parameter< bool >::type byrow(byrowSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppNN4MatSub(mat, lib, pred, k, method, include_self, byrow));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RcppNN4DistMat
+Rcpp::List RcppNN4DistMat(const Rcpp::NumericMatrix& distmat, int k, bool include_self);
+RcppExport SEXP _infocaus_RcppNN4DistMat(SEXP distmatSEXP, SEXP kSEXP, SEXP include_selfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type distmat(distmatSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< bool >::type include_self(include_selfSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppNN4DistMat(distmat, k, include_self));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RcppNN4DistMatSub
+Rcpp::List RcppNN4DistMatSub(const Rcpp::NumericMatrix& distmat, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, int k, bool include_self);
+RcppExport SEXP _infocaus_RcppNN4DistMatSub(SEXP distmatSEXP, SEXP libSEXP, SEXP predSEXP, SEXP kSEXP, SEXP include_selfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type distmat(distmatSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type lib(libSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type pred(predSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< bool >::type include_self(include_selfSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppNN4DistMatSub(distmat, lib, pred, k, include_self));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppDist4Vec", (DL_FUNC) &_infocaus_RcppDist4Vec, 4},
@@ -94,6 +150,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppGenLatticeLag", (DL_FUNC) &_infocaus_RcppGenLatticeLag, 3},
     {"_infocaus_RcppGenGridLag", (DL_FUNC) &_infocaus_RcppGenGridLag, 3},
     {"_infocaus_RcppGenTSLag", (DL_FUNC) &_infocaus_RcppGenTSLag, 2},
+    {"_infocaus_RcppNN4Mat", (DL_FUNC) &_infocaus_RcppNN4Mat, 5},
+    {"_infocaus_RcppNN4MatSub", (DL_FUNC) &_infocaus_RcppNN4MatSub, 7},
+    {"_infocaus_RcppNN4DistMat", (DL_FUNC) &_infocaus_RcppNN4DistMat, 3},
+    {"_infocaus_RcppNN4DistMatSub", (DL_FUNC) &_infocaus_RcppNN4DistMatSub, 5},
     {NULL, NULL, 0}
 };
 
