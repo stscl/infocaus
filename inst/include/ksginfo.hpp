@@ -117,7 +117,8 @@ inline double Entropy(
             row.begin() + (k - 1),
             row.end());
 
-        double eps = std::max(row[k-1], 1e-12);
+        double eps = row[k-1];
+        // double eps = std::max(row[k-1], 1e-15);
 
         avg += std::log(eps);
     }
@@ -179,7 +180,8 @@ inline double JE(
             row.begin() + (k - 1),
             row.end());
 
-        double eps = std::max(row[k-1], 1e-12);
+        double eps = row[k-1];
+        // double eps = std::max(row[k-1], 1e-15);
 
         avg += std::log(eps);
     }
@@ -260,8 +262,9 @@ inline double MI(
             throw std::runtime_error("k larger than valid neighbour count");
 
         std::nth_element(row.begin(),row.begin()+k-1,row.end());
-
-        double eps = std::max(row[k-1], 1e-12);
+        
+        double eps = row[k-1];
+        // double eps = std::max(row[k-1], 1e-15);
 
         avg_log_eps += std::log(eps);
 
@@ -379,7 +382,8 @@ inline double CMI(
 
         std::nth_element(row.begin(),row.begin()+k-1,row.end());
 
-        double eps = std::max(row[k-1], 1e-12);
+        double eps = row[k-1];
+        // double eps = std::max(row[k-1], 1e-15);
 
         avg_log_eps += std::log(eps);
 
