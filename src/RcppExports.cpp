@@ -133,8 +133,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppDiscMI
-double RcppDiscMI(SEXP mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& interact, double base, bool na_rm);
-RcppExport SEXP _infocaus_RcppDiscMI(SEXP matSEXP, SEXP targetSEXP, SEXP interactSEXP, SEXP baseSEXP, SEXP na_rmSEXP) {
+double RcppDiscMI(SEXP mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& interact, double base, bool na_rm, bool normalize);
+RcppExport SEXP _infocaus_RcppDiscMI(SEXP matSEXP, SEXP targetSEXP, SEXP interactSEXP, SEXP baseSEXP, SEXP na_rmSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< SEXP >::type mat(matSEXP);
@@ -142,7 +142,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type interact(interactSEXP);
     Rcpp::traits::input_parameter< double >::type base(baseSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppDiscMI(mat, target, interact, base, na_rm));
+    Rcpp::traits::input_parameter< bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppDiscMI(mat, target, interact, base, na_rm, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -163,8 +164,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppDiscCMI
-double RcppDiscCMI(SEXP mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& interact, const Rcpp::IntegerVector& conds, double base, bool na_rm);
-RcppExport SEXP _infocaus_RcppDiscCMI(SEXP matSEXP, SEXP targetSEXP, SEXP interactSEXP, SEXP condsSEXP, SEXP baseSEXP, SEXP na_rmSEXP) {
+double RcppDiscCMI(SEXP mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& interact, const Rcpp::IntegerVector& conds, double base, bool na_rm, bool normalize);
+RcppExport SEXP _infocaus_RcppDiscCMI(SEXP matSEXP, SEXP targetSEXP, SEXP interactSEXP, SEXP condsSEXP, SEXP baseSEXP, SEXP na_rmSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< SEXP >::type mat(matSEXP);
@@ -173,7 +174,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type conds(condsSEXP);
     Rcpp::traits::input_parameter< double >::type base(baseSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppDiscCMI(mat, target, interact, conds, base, na_rm));
+    Rcpp::traits::input_parameter< bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppDiscCMI(mat, target, interact, conds, base, na_rm, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -296,9 +298,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppContJE", (DL_FUNC) &_infocaus_RcppContJE, 5},
     {"_infocaus_RcppDiscCE", (DL_FUNC) &_infocaus_RcppDiscCE, 5},
     {"_infocaus_RcppContCE", (DL_FUNC) &_infocaus_RcppContCE, 6},
-    {"_infocaus_RcppDiscMI", (DL_FUNC) &_infocaus_RcppDiscMI, 5},
+    {"_infocaus_RcppDiscMI", (DL_FUNC) &_infocaus_RcppDiscMI, 6},
     {"_infocaus_RcppContMI", (DL_FUNC) &_infocaus_RcppContMI, 7},
-    {"_infocaus_RcppDiscCMI", (DL_FUNC) &_infocaus_RcppDiscCMI, 6},
+    {"_infocaus_RcppDiscCMI", (DL_FUNC) &_infocaus_RcppDiscCMI, 7},
     {"_infocaus_RcppContCMI", (DL_FUNC) &_infocaus_RcppContCMI, 8},
     {"_infocaus_RcppGenLatticeLag", (DL_FUNC) &_infocaus_RcppGenLatticeLag, 3},
     {"_infocaus_RcppGenGridLag", (DL_FUNC) &_infocaus_RcppGenGridLag, 3},

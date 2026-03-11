@@ -259,7 +259,8 @@ namespace InfoTheo
         const std::vector<size_t>& target,
         const std::vector<size_t>& interact,
         double base = 2.0,
-        bool na_rm = true)
+        bool na_rm = true,
+        bool normalize = false)
     {
         if (mat.empty() || target.empty())
             return std::numeric_limits<double>::quiet_NaN();
@@ -270,9 +271,16 @@ namespace InfoTheo
         std::vector<size_t> ti = interact;
         ti.insert(ti.end(), target.begin(), target.end());
 
-        return JE(mat, target, base, na_rm) +
-            JE(mat, interact, base, na_rm) -
-            JE(mat, ti, base, na_rm);
+        double ht = JE(mat, target, base, na_rm); 
+        double hi = JE(mat, interact, base, na_rm); 
+        double hti = JE(mat, ti, base, na_rm); 
+        
+        double mi = ht + hi - hti; 
+        
+        if (!normalize) return mi; 
+        if (hti <= 0) return mi; 
+
+        return mi / hti;
     }
 
     /***********************************************************
@@ -284,7 +292,8 @@ namespace InfoTheo
         const std::vector<size_t>& interact,
         const std::vector<size_t>& conds,
         double base = 2.0,
-        bool na_rm = true)
+        bool na_rm = true,
+        bool normalize = false)
     {
         if (mat.empty() || target.empty())
             return std::numeric_limits<double>::quiet_NaN();
@@ -301,10 +310,22 @@ namespace InfoTheo
         cti.insert(cti.end(), target.begin(), target.end());
         cti.insert(cti.end(), interact.begin(), interact.end());
 
-        return JE(mat, ct, base, na_rm)
-            + JE(mat, ci, base, na_rm)
-            - JE(mat, conds, base, na_rm)
-            - JE(mat, cti, base, na_rm);
+        double h_ct  = JE(mat, ct, base, na_rm);
+        double h_ci  = JE(mat, ci, base, na_rm);
+        double h_c   = JE(mat, conds, base, na_rm);
+        double h_cti = JE(mat, cti, base, na_rm);
+
+        double cmi = h_ct + h_ci - h_c - h_cti;
+
+        if (!normalize) return cmi;
+
+        std::vector<size_t> ti = interact;
+        ti.insert(ti.end(), target.begin(), target.end());
+
+        double h_ti_c = CE(mat, ti, conds, base, na_rm);
+        if (h_ti_c <= 0) return cmi;
+
+        return cmi / h_ti_c;
     }
 
 } // namespace InfoTheo
