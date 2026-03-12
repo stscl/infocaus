@@ -11,7 +11,7 @@
  *
  *  Data layout:
  *      DiscMat = std::vector<std::vector<uint64_t>>
- *                 // mat[var][obs]  (discrete state series)
+ *                 // mat[var][obs]  (discrete series)
  *
  *      ContMat = std::vector<std::vector<double>>
  *                 // mat[var][obs]  (continuous observations)
@@ -37,8 +37,8 @@
  *
  *  Parameters:
  *
- *      lag
- *          Time lag between source and target variables.
+ *      lag_p, lag_q
+ *          Time lag for target and agent variables.
  *
  *      k
  *          k-nearest neighbours for KSG estimator.
@@ -86,7 +86,8 @@ namespace TE
         const DiscMat& mat,
         const std::vector<size_t>& target,
         const std::vector<size_t>& agent,
-        size_t lag = 3,
+        size_t lag_p = 3,
+        size_t lag_q = 3,
         double base = 2.0,
         bool na_rm = true,
         bool normalize = false)
@@ -94,9 +95,9 @@ namespace TE
         const size_t n_obs  = mat[0].size();
         const size_t n_cols = mat.size();
 
-        if (mat.empty() || lag > n_obs)
+        if (mat.empty() || lag_p > n_obs || lag_q > n_obs)
             return std::numeric_limits<double>::quiet_NaN();
-        if (lag == 0)
+        if (lag_p == 0 || lag_q == 0)
             return 0.0;
 
         // Validate, sort, and deduplicate variable indices
@@ -137,9 +138,9 @@ namespace TE
         // X_{t-lag}
         for (size_t i = 0; i < ag.size(); ++i)
         {   
-            for (size_t t = lag; t < n_obs; ++t)
+            for (size_t t = lag_q; t < n_obs; ++t)
             {
-                uint64_t v = mat[ag[i]][t - lag];
+                uint64_t v = mat[ag[i]][t - lag_q];
                 if (v != 0)
                     pm[i + tg.size()][t] = v;
             }
@@ -148,9 +149,9 @@ namespace TE
         // Y_{t-lag}
         for (size_t i = 0; i < tg.size(); ++i)
         {   
-            for (size_t t = lag; t < n_obs; ++t)
+            for (size_t t = lag_p; t < n_obs; ++t)
             {
-                uint64_t v = mat[tg[i]][t - lag];
+                uint64_t v = mat[tg[i]][t - lag_p];
                 if (v != 0)
                     pm[i + tg.size() + ag.size()][t] = v;
             }
@@ -177,7 +178,8 @@ namespace TE
         const ContMat& mat,
         const std::vector<size_t>& target,
         const std::vector<size_t>& agent,
-        size_t lag = 3,
+        size_t lag_p = 3,
+        size_t lag_q = 3,
         size_t k = 3,
         size_t alg = 0,
         double base = 2.0,
@@ -186,9 +188,9 @@ namespace TE
         const size_t n_obs  = mat[0].size();
         const size_t n_cols = mat.size();
 
-        if (mat.empty() || lag > n_obs)
+        if (mat.empty() || lag_p > n_obs || lag_q > n_obs)
             return std::numeric_limits<double>::quiet_NaN();
-        if (lag == 0 || k <= 1)
+        if (lag_p == 0 || lag_q == 0)
             return 0.0;
 
         // Validate, sort, and deduplicate variable indices
@@ -229,9 +231,9 @@ namespace TE
         // X_{t-lag}
         for (size_t i = 0; i < ag.size(); ++i)
         {   
-            for (size_t t = lag; t < n_obs; ++t)
+            for (size_t t = lag_q; t < n_obs; ++t)
             {
-                double v = mat[ag[i]][t - lag];
+                double v = mat[ag[i]][t - lag_q];
                 if (!std::isnan(v))
                     pm[i + tg.size()][t] = v;
             }
@@ -240,9 +242,9 @@ namespace TE
         // Y_{t-lag}
         for (size_t i = 0; i < tg.size(); ++i)
         {   
-            for (size_t t = lag; t < n_obs; ++t)
+            for (size_t t = lag_p; t < n_obs; ++t)
             {
-                double v = mat[tg[i]][t - lag];
+                double v = mat[tg[i]][t - lag_p];
                 if (!std::isnan(v))
                     pm[i + tg.size() + ag.size()][t] = v;
             }
