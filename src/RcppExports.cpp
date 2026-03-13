@@ -10,6 +10,25 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// RcppDisc
+Rcpp::IntegerVector RcppDisc(const Rcpp::NumericVector& vec, int n, const std::string& method, int sample_begin, double sample_prob, int seed, double threshold, int iter_step, Rcpp::Nullable<Rcpp::NumericVector> breakpoints, bool right_closed);
+RcppExport SEXP _infocaus_RcppDisc(SEXP vecSEXP, SEXP nSEXP, SEXP methodSEXP, SEXP sample_beginSEXP, SEXP sample_probSEXP, SEXP seedSEXP, SEXP thresholdSEXP, SEXP iter_stepSEXP, SEXP breakpointsSEXP, SEXP right_closedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< int >::type sample_begin(sample_beginSEXP);
+    Rcpp::traits::input_parameter< double >::type sample_prob(sample_probSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
+    Rcpp::traits::input_parameter< int >::type iter_step(iter_stepSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type breakpoints(breakpointsSEXP);
+    Rcpp::traits::input_parameter< bool >::type right_closed(right_closedSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppDisc(vec, n, method, sample_begin, sample_prob, seed, threshold, iter_step, breakpoints, right_closed));
+    return rcpp_result_gen;
+END_RCPP
+}
 // RcppDist4Vec
 double RcppDist4Vec(const Rcpp::NumericVector& v1, const Rcpp::NumericVector& v2, std::string method, bool na_rm);
 RcppExport SEXP _infocaus_RcppDist4Vec(SEXP v1SEXP, SEXP v2SEXP, SEXP methodSEXP, SEXP na_rmSEXP) {
@@ -326,6 +345,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_infocaus_RcppDisc", (DL_FUNC) &_infocaus_RcppDisc, 10},
     {"_infocaus_RcppDist4Vec", (DL_FUNC) &_infocaus_RcppDist4Vec, 4},
     {"_infocaus_RcppDist4Mat", (DL_FUNC) &_infocaus_RcppDist4Mat, 4},
     {"_infocaus_RcppDist4MatSub", (DL_FUNC) &_infocaus_RcppDist4MatSub, 6},
