@@ -15,7 +15,7 @@
 - [`cmi()`](https://stscl.github.io/infoxtr/reference/cmi.md) :
   Conditional Mutual Information
 
-### Information transfer
+### Information flow
 
 - [`te()`](https://stscl.github.io/infoxtr/reference/te.md) : Transfer
   Entropy
