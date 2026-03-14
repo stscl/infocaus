@@ -27,6 +27,7 @@
 #include "infoxtr/discretize.hpp"
 #include "infoxtr/infotheo.hpp"
 #include "infoxtr/ksginfo.hpp"
+#include "infoxtr/surd.hpp"
 #include "infoxtr/transferentropy.hpp"
 
 #endif // INFOXTR_INFOXTR_H

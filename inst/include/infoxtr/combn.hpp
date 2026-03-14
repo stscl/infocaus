@@ -18,6 +18,8 @@
 #define INFOXTR_COMBN_HPP
 
 #include <vector>
+#include <limits>
+#include <algorithm> 
 #include <functional>
 
 namespace infoxtr
@@ -45,7 +47,7 @@ namespace combn
      * @return std::vector<std::vector<T>> All possible m-combinations
      */
     template <typename T>
-    inline std::vector<std::vector<T>> Combn(const std::vector<T>& vec, size_t m)
+    inline std::vector<std::vector<T>> combn(const std::vector<T>& vec, size_t m)
     {
         std::vector<std::vector<T>> result;
         std::vector<T> current;
@@ -65,7 +67,7 @@ namespace combn
 
             size_t remaining = m - current.size();
 
-            for (size_t i = start; i <= vec_size - remaining; ++i)
+            for (size_t i = start; i + remaining <= vec_size; ++i)
             {
                 current.push_back(vec[i]);
                 helper(i + 1);
@@ -82,25 +84,27 @@ namespace combn
     // ==============================
 
     /**
-     * @brief Generate all non-empty subsets of a given vector.
-     *
-     * Iteratively calls Combn for sizes 1 to n,
-     * where n is the size of the input vector.
-     *
-     * @tparam T Element type
-     * @param vec Input vector
-     * @return std::vector<std::vector<T>> All non-empty subsets
-     */
+    * @brief Generate all non-empty subsets of a given vector up to a maximum order.
+    *
+    * Iteratively calls combn for sizes 1 to min(n, max_order),
+    * where n is the size of the input vector.
+    *
+    * @tparam T Element type
+    * @param vec Input vector
+    * @param max_order Maximum subset size (default: no limit)
+    * @return std::vector<std::vector<T>> All non-empty subsets up to max_order
+    */
     template <typename T>
-    inline std::vector<std::vector<T>> GenSubsets(const std::vector<T>& vec)
+    inline std::vector<std::vector<T>> genSubsets(
+        const std::vector<T>& vec,
+        size_t max_order = std::numeric_limits<size_t>::max())
     {
         std::vector<std::vector<T>> allSubsets;
-
         const size_t n = vec.size();
+        const size_t limit = std::min(n, max_order);
 
-        for (size_t m = 1; m <= n; ++m)
-        {
-            std::vector<std::vector<T>> combs = Combn(vec, m);
+        for (size_t m = 1; m <= limit; ++m) {
+            std::vector<std::vector<T>> combs = combn(vec, m);
             allSubsets.insert(allSubsets.end(), combs.begin(), combs.end());
         }
 
