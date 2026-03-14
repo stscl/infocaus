@@ -440,7 +440,7 @@ double RcppDiscTE(SEXP mat,
                   bool normalize = false,
                   bool lag_single = false)
 {
-    infoxtr::infotheo::Matrix m = pat_r2std(mat,false);
+    infoxtr::infotheo::Matrix m = pat_r2std(mat, false);
 
     std::vector<size_t> tg = Rcpp::as<std::vector<size_t>>(target);
     std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
@@ -512,4 +512,157 @@ double RcppContTE(const Rcpp::NumericMatrix& mat,
                 static_cast<size_t>(std::abs(k)), 
                 static_cast<size_t>(std::abs(alg)), 
                 base, normalize, lag_single);
+}
+
+// Wrapper function to preform SURD decomposition for discrete data
+// [[Rcpp::export(rng = false)]]
+Rcpp::List RcppDiscSURD(SEXP mat,
+                        int max_order = 3,
+                        int threads = 1,
+                        double base = 2.0,
+                        bool normalize = true)
+{
+    infoxtr::surd::DiscMat m = pat_r2std(mat, false);
+
+    infoxtr::surd::SURDRes res = infoxtr::surd::surd(
+        m, static_cast<size_t>(std::abs(max_order)),
+        static_cast<size_t>(std::abs(threads)), base, normalize);
+
+    const size_t k = res.size();
+
+    Rcpp::NumericVector values(k);
+    Rcpp::CharacterVector types(k);
+    Rcpp::CharacterVector names(k);
+
+    for (size_t i = 0; i < k; ++i)
+    {
+        values[i] = res.values[i];
+
+        // variable name
+        if (res.types[i] == 3)
+        {
+            // InfoLeak uses all sources
+            std::string nm = "InfoLeak";
+            names[i] = nm;
+            types[i] = "InfoLeak";
+            continue;
+        }
+
+        const auto& vars = res.var_indices[i];
+
+        std::string nm;
+
+        for (size_t j = 0; j < vars.size(); ++j)
+        {
+            if (j > 0)
+                nm += "_";
+
+            nm += "V";
+            nm += std::to_string(vars[j]);
+        }
+
+        names[i] = nm;
+
+        switch (res.types[i])
+        {
+            case 0:
+                types[i] = "R";
+                break;
+            case 1:
+                types[i] = "U";
+                break;
+            case 2:
+                types[i] = "S";
+                break;
+            default:
+                types[i] = "Unknown";
+        }
+    }
+
+    // values.attr("names") = names;
+
+    return Rcpp::List::create(
+        Rcpp::Named("vars")  = names,
+        Rcpp::Named("types")  = types,
+        Rcpp::Named("values") = values
+    );
+}
+
+// Wrapper function to preform SURD decomposition for continuous data
+// [[Rcpp::export(rng = false)]]
+Rcpp::List RcppContSURD(SEXP mat,
+                        int max_order = 3,
+                        int k = 3,
+                        int alg = 0,
+                        int threads = 1,
+                        double base = 2.0,
+                        bool normalize = true)
+{
+    std::vector<std::vector<double>> m = mat_r2std(mat, false);
+
+    infoxtr::surd::SURDRes res = infoxtr::surd::surd(
+        m, static_cast<size_t>(std::abs(max_order)),
+        static_cast<size_t>(std::abs(k)),
+        static_cast<size_t>(std::abs(alg)),
+        static_cast<size_t>(std::abs(threads)), 
+        base, normalize);
+
+    const size_t n_vals = res.size();
+
+    Rcpp::NumericVector values(n_vals);
+    Rcpp::CharacterVector types(n_vals);
+    Rcpp::CharacterVector names(n_vals);
+
+    for (size_t i = 0; i < n_vals; ++i)
+    {
+        values[i] = res.values[i];
+
+        // variable name
+        if (res.types[i] == 3)
+        {
+            // InfoLeak uses all sources
+            std::string nm = "InfoLeak";
+            names[i] = nm;
+            types[i] = "InfoLeak";
+            continue;
+        }
+
+        const auto& vars = res.var_indices[i];
+
+        std::string nm;
+
+        for (size_t j = 0; j < vars.size(); ++j)
+        {
+            if (j > 0)
+                nm += "_";
+
+            nm += "V";
+            nm += std::to_string(vars[j]);
+        }
+
+        names[i] = nm;
+
+        switch (res.types[i])
+        {
+            case 0:
+                types[i] = "R";
+                break;
+            case 1:
+                types[i] = "U";
+                break;
+            case 2:
+                types[i] = "S";
+                break;
+            default:
+                types[i] = "Unknown";
+        }
+    }
+
+    // values.attr("names") = names;
+
+    return Rcpp::List::create(
+        Rcpp::Named("vars")  = names,
+        Rcpp::Named("types")  = types,
+        Rcpp::Named("values") = values
+    );
 }
