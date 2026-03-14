@@ -1,4 +1,4 @@
-# Entropy Estimation
+# Shannon Entropy
 
 Estimate the entropy of a vector using either category counts (for
 discrete data) or a k-nearest neighbor estimator (for continuous data).
