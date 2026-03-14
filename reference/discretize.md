@@ -80,6 +80,8 @@ categories via [`as.factor()`](https://rdrr.io/r/base/factor.html).
 ## Examples
 
 ``` r
-infocaus::discretize(1:100, n = 5, method = 'natural')
-#> Error in loadNamespace(x): there is no package called ‘infocaus’
+infoxtr::discretize(1:100, n = 5, method = 'natural')
+#>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+#>  [38] 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+#>  [75] 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
 ```
