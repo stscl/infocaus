@@ -4,7 +4,7 @@
 #' commonly used discretization methods. Missing values (`NA`/`NaN`) 
 #' are ignored and returned as class `0`.
 #'
-#' @note If `x` is a character or factor vector, it will be converted to
+#' @note If `x` is not numeric, it will be converted to
 #' integer categories via `as.factor()`.
 #'
 #' @param x A vector.
@@ -32,7 +32,7 @@
 #' 
 discretize = \(x, n = 5, method = 'natural', large = 3000, prop = 0.15,
                seed = 123456789, thr = 0.4, iter = 100, bps = NULL, right_closed = TRUE){
-  if (any(inherits(x,'factor'),inherits(x,'character'))){
+  if (!inherits(x,"double") || !inherits(x,"integer")){
     return(as.integer(as.factor(x)))
   }
 

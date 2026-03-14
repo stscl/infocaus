@@ -52,7 +52,7 @@ commonly used discretization methods. Missing values (\code{NA}/\code{NaN})
 are ignored and returned as class \code{0}.
 }
 \note{
-If \code{x} is a character or factor vector, it will be converted to
+If \code{x} is not numeric, it will be converted to
 integer categories via \code{as.factor()}.
 }
 \examples{

@@ -23,4 +23,5 @@ Imports:
     terra
 Suggests: 
     lmtest,
-    NlinTS
+    NlinTS,
+    readr
