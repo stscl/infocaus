@@ -1,8 +1,8 @@
 # Discretization
 
-Discretizes a numeric vector into categorical classes using several
+Discretize a numeric vector into categorical classes using several
 commonly used discretization methods. Missing values (`NA`/`NaN`) are
-ignored when computing breakpoints and returned as class `0`.
+ignored and returned as class `0`.
 
 ## Usage
 
@@ -80,8 +80,9 @@ categories via [`as.factor()`](https://rdrr.io/r/base/factor.html).
 ## Examples
 
 ``` r
-infoxtr::discretize(1:100, n = 5, method = 'natural')
-#>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-#>  [38] 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4
-#>  [75] 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+set.seed(42)
+infoxtr::discretize(stats::rnorm(99,1,10), n = 5, method = 'natural')
+#>  [1] 5 3 4 4 4 3 5 3 5 3 5 5 2 3 3 4 3 1 1 5 3 1 3 5 5 3 3 1 4 2 4 4 5 2 4 1 2 2
+#> [39] 1 3 4 3 4 2 2 4 2 5 3 4 4 2 5 4 3 4 4 3 1 4 3 4 4 5 2 5 4 5 4 4 2 3 4 2 3 4
+#> [77] 4 4 2 2 5 4 3 3 2 4 3 3 4 4 5 3 4 5 2 2 2 2 3
 ```
