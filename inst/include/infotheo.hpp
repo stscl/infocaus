@@ -26,9 +26,11 @@
 #include <cmath>
 #include <limits>
 #include <cstdint>
+#include <numeric>
+#include <algorithm>
+#include <stdexcept>
 #include <unordered_map>
 #include <unordered_set>
-#include <stdexcept>
 
 namespace InfoTheo
 {
