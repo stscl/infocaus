@@ -77,15 +77,15 @@ inline double Entropy(
     if (n_valid == 0)
         return std::numeric_limits<double>::quiet_NaN();
 
-    double h = 0.0;
+    double H = 0.0;
 
     for (const auto& kv : freq)
     {
         double p = static_cast<double>(kv.second) / n_valid;
-        h -= p * std::log(p);
+        H -= p * std::log(p);
     }
 
-    return convert_log_base(h, base);
+    return convert_log_base(H, base);
 }
 
 /***********************************************************
