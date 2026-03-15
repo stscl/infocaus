@@ -19,6 +19,10 @@
 
 - [`te()`](https://stscl.github.io/infoxtr/reference/te.md) : Transfer
   Entropy
+- [`surd(`*`<data.frame>`*`)`](https://stscl.github.io/infoxtr/reference/surd.md)
+  [`surd(`*`<sf>`*`)`](https://stscl.github.io/infoxtr/reference/surd.md)
+  [`surd(`*`<SpatRaster>`*`)`](https://stscl.github.io/infoxtr/reference/surd.md)
+  : SURD
 
 ## Miscellaneous Utility Functions
 
