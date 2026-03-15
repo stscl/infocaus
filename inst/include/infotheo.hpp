@@ -105,7 +105,7 @@ inline double JE(
     const size_t n_cols = mat.size();
 
     /*------------------------------------------------------
-     * Validate variable indices
+     * Validate, sort, and deduplicate variable indices
      *-----------------------------------------------------*/
     std::vector<size_t> clean_vars;
     clean_vars.reserve(vars.size());
@@ -113,6 +113,13 @@ inline double JE(
     for (size_t v : vars)
         if (v < n_cols)
             clean_vars.push_back(v);
+
+    // Sort + unique: remove duplicates and ensure deterministic order
+    std::sort(clean_vars.begin(), clean_vars.end());
+    clean_vars.erase(
+        std::unique(clean_vars.begin(), clean_vars.end()),
+        clean_vars.end()
+    );
 
     if (clean_vars.empty())
         return std::numeric_limits<double>::quiet_NaN();
