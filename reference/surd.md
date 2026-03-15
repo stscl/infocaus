@@ -131,12 +131,12 @@ Commun 15, 9296 (2024).
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
 infoxtr::surd(columbus, 1, 2:3)
 #> $vars
-#> [1] "V1"       "V2"       "V1_V2"    "InfoLeak"
+#> [1] "V1"       "V2"       "V1_V2"    "V1_V2"    "InfoLeak"
 #> 
 #> $types
-#> [1] "R"        "U"        "S"        "InfoLeak"
+#> [1] "U"        "U"        "R"        "S"        "InfoLeak"
 #> 
 #> $values
-#> [1] 0.525846545 0.004055599 0.470097856 0.585771865
+#> [1] 0.06337975 0.06743535 0.46246679 0.40671810 0.58577187
 #> 
 ```
