@@ -8,6 +8,10 @@
  *      Series = std::vector<uint64_t>
  *      Matrix = std::vector<std::vector<uint64_t>>   // mat[var][obs]
  *
+ *  Missing value convention:
+ *      Value 0 is treated as NA when na_rm=true
+ *      Ensure your discrete encoding reserves 0 for missing data
+ *
  *  Functions:
  *      Entropy
  *      JE   Joint Entropy
