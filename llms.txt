@@ -76,3 +76,9 @@ devtools::install_github("stscl/infoxtr",
 - [`discretize()`](https://stscl.github.io/infoxtr/reference/discretize.md)
   : Discretization
 
+# Articles
+
+### All vignettes
+
+- [Synergistic-Unique-Redundant Decomposition of Causality
+  (SURD)](https://stscl.github.io/infoxtr/articles/surd.md):

@@ -1,6 +1,6 @@
 # SURD
 
-Synergistic-Unique-Redundant Decomposition of causality
+Synergistic-Unique-Redundant decomposition of causality
 
 ## Usage
 
@@ -13,7 +13,7 @@ surd(
   lag = 1,
   bin = 5,
   method = "equal",
-  max.combs = 3,
+  max.combs = 10,
   threads = 1,
   base = 2,
   normalize = TRUE
@@ -27,7 +27,7 @@ surd(
   lag = 1,
   bin = 5,
   method = "equal",
-  max.combs = 3,
+  max.combs = 10,
   threads = 1,
   base = 2,
   normalize = TRUE,
@@ -42,7 +42,7 @@ surd(
   lag = 1,
   bin = 5,
   method = "equal",
-  max.combs = 3,
+  max.combs = 10,
   threads = 1,
   base = 2,
   normalize = TRUE

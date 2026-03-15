@@ -1,6 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://stscl.github.io/infoxtr/404.html</loc></url>
+<url><loc>https://stscl.github.io/infoxtr/articles/index.html</loc></url>
+<url><loc>https://stscl.github.io/infoxtr/articles/surd.html</loc></url>
 <url><loc>https://stscl.github.io/infoxtr/authors.html</loc></url>
+<url><loc>https://stscl.github.io/infoxtr/build-vignettes.html</loc></url>
 <url><loc>https://stscl.github.io/infoxtr/index.html</loc></url>
 <url><loc>https://stscl.github.io/infoxtr/reference/ce.html</loc></url>
 <url><loc>https://stscl.github.io/infoxtr/reference/cmi.html</loc></url>
