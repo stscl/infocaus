@@ -61,50 +61,57 @@ inline Matrix GenLatticeLag(
         return mat;
     }
 
-    NeighborMat prev(n);
-    NeighborMat cur(n);
-
     for (size_t i = 0; i < n; ++i)
-        prev[i] = {i};
-
-    for (size_t step = 1; step <= lag; ++step)
     {
-        for (size_t i = 0; i < n; ++i)
-        {
-            std::unordered_set<size_t> s;
+        std::vector<char> visited(n, 0);
+        std::vector<size_t> frontier;
+        std::vector<size_t> next;
 
-            for (size_t v : prev[i])
+        frontier.push_back(i);
+        visited[i] = 1;
+
+        for (size_t step = 1; step <= lag; ++step)
+        {
+            next.clear();
+
+            for (size_t v : frontier)
             {
                 for (size_t u : nb[v])
-                    s.insert(u);
-            }
-
-            cur[i].assign(s.begin(), s.end());
-            std::sort(cur[i].begin(), cur[i].end());
-        }
-
-        prev.swap(cur);
-    }
-
-    for (size_t i = 0; i < n; ++i)
-    {
-        for (size_t j = 0; j < p; ++j)
-        {
-            double sum = 0.0;
-            size_t cnt = 0;
-
-            for (size_t id : prev[i])
-            {
-                double v = mat[id][j];
-                if (!std::isnan(v))
                 {
-                    sum += v;
-                    ++cnt;
+                    if (!visited[u])
+                    {
+                        visited[u] = 1;
+                        next.push_back(u);
+                    }
                 }
             }
 
-            if (cnt > 0)
-                out[i][j] = sum / cnt;
+            if (step == lag)
+            {
+                for (size_t j = 0; j < p; ++j)
+                {
+                    double sum = 0.0;
+                    size_t cnt = 0;
+
+                    for (size_t id : next)
+                    {
+                        double v = mat[id][j];
+                        if (!std::isnan(v))
+                        {
+                            sum += v;
+                            ++cnt;
+                        }
+                    }
+
+                    if (cnt > 0)
+                        out[i][j] = sum / cnt;
+                }
+            }
+
+            frontier.swap(next);
+
+            if (frontier.empty())
+                break;
         }
     }
 
