@@ -100,31 +100,41 @@ inline double JE(
     if (mat.empty() || vars.empty())
         return std::numeric_limits<double>::quiet_NaN();
 
-    const size_t n_obs = mat[0].size();
+    const size_t n_obs  = mat[0].size();
     const size_t n_cols = mat.size();
 
-    std::unordered_set<size_t> valid_vars;
-    valid_vars.reserve(vars.size());
+    /*------------------------------------------------------
+     * Validate variable indices
+     *-----------------------------------------------------*/
+    std::vector<size_t> clean_vars;
+    clean_vars.reserve(vars.size());
 
     for (size_t v : vars)
         if (v < n_cols)
-            valid_vars.insert(v);
+            clean_vars.push_back(v);
 
-    std::vector<size_t> clean_vars(valid_vars.begin(), valid_vars.end());
+    if (clean_vars.empty())
+        return std::numeric_limits<double>::quiet_NaN();
 
-    std::unordered_map<uint64_t, size_t> freq;
-    freq.reserve(n_obs * 1.3);
+    const size_t k = clean_vars.size();
+
+    /*------------------------------------------------------
+     * Construct joint state table
+     * Layout:
+     *   states[i*k + j]
+     *-----------------------------------------------------*/
+    std::vector<uint64_t> states;
+    states.reserve(n_obs * k);
 
     size_t n_valid = 0;
 
     for (size_t i = 0; i < n_obs; ++i)
     {
-        uint64_t key = 0;
         bool skip = false;
 
-        for (size_t v : clean_vars)
+        for (size_t j = 0; j < k; ++j)
         {
-            uint64_t val = mat[v][i];
+            uint64_t val = mat[clean_vars[j]][i];
 
             if (na_rm && val == 0)
             {
@@ -132,27 +142,81 @@ inline double JE(
                 break;
             }
 
-            key = hash_combine(key, val);
+            states.push_back(val);
         }
 
-        if (skip) continue;
-
-        ++freq[key];
-        ++n_valid;
+        if (!skip)
+            ++n_valid;
+        else
+            states.resize(states.size() - (states.size() % k));
     }
 
     if (n_valid == 0)
         return std::numeric_limits<double>::quiet_NaN();
 
-    double h = 0.0;
+    /*------------------------------------------------------
+     * Create index array for sorting
+     *-----------------------------------------------------*/
+    std::vector<size_t> order(n_valid);
+    for (size_t i = 0; i < n_valid; ++i)
+        order[i] = i;
 
-    for (const auto& kv : freq)
+    /*------------------------------------------------------
+     * Sort joint states lexicographically
+     *-----------------------------------------------------*/
+    std::sort(order.begin(), order.end(),
+        [&](size_t a, size_t b)
+        {
+            size_t ia = a * k;
+            size_t ib = b * k;
+
+            for (size_t j = 0; j < k; ++j)
+            {
+                uint64_t va = states[ia + j];
+                uint64_t vb = states[ib + j];
+
+                if (va < vb) return true;
+                if (va > vb) return false;
+            }
+            return false;
+        });
+
+    /*------------------------------------------------------
+     * Run-length frequency counting
+     *-----------------------------------------------------*/
+    double H = 0.0;
+    size_t run = 1;
+
+    auto equal_state = [&](size_t a, size_t b)
     {
-        double p = static_cast<double>(kv.second) / n_valid;
-        h -= p * std::log(p);
+        size_t ia = a * k;
+        size_t ib = b * k;
+
+        for (size_t j = 0; j < k; ++j)
+            if (states[ia + j] != states[ib + j])
+                return false;
+
+        return true;
+    };
+
+    for (size_t i = 1; i < n_valid; ++i)
+    {
+        if (equal_state(order[i], order[i-1]))
+        {
+            ++run;
+        }
+        else
+        {
+            double p = static_cast<double>(run) / n_valid;
+            H -= p * std::log(p);
+            run = 1;
+        }
     }
 
-    return convert_log_base(h, base);
+    double p = static_cast<double>(run) / n_valid;
+    H -= p * std::log(p);
+
+    return convert_log_base(H, base);
 }
 
 /***********************************************************
