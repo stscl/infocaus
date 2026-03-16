@@ -119,13 +119,13 @@ Rcpp::List std2nb(const std::vector<std::vector<size_t>>& nb);
  *
  ********************************************************************/
 
-// Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
+// Function to convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
 std::vector<std::vector<double>> mat_r2std(
     const Rcpp::NumericMatrix& mat,
     bool byrow = true
 );
 
-// Convert std::vector<std::vector<double>> to Rcpp::NumericMatrix
+// Function to convert std::vector<std::vector<double>> to Rcpp::NumericMatrix
 Rcpp::NumericMatrix mat_std2r(
     const std::vector<std::vector<double>>& mat,
     bool byrow = true
