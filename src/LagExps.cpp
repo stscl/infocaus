@@ -12,14 +12,7 @@ Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat,
                                       const Rcpp::List& nb, 
                                       int lag = 1) {
   // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
-  int numRows = mat.nrow();
-  int numCols = mat.ncol();
-  std::vector<std::vector<double>> cppMat(numRows, std::vector<double>(numCols));
-  for (int r = 0; r < numRows; ++r) {
-    for (int c = 0; c < numCols; ++c) {
-      cppMat[r][c] = mat(r, c);
-    }
-  }
+  std::vector<std::vector<double>> cppMat = mat_r2std(mat, byrow = true);
 
   // Convert Rcpp::List to std::vector<std::vector<size_t>>
   std::vector<std::vector<size_t>> nb_std = nb2std(nb);
@@ -28,5 +21,5 @@ Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat,
   std::vector<std::vector<double>> lagged_values =
     Lag::GenLatticeLag(cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
 
-  return lagged_values;
+  return mat_r2std(lagged_values, byrow = true);
 }
