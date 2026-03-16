@@ -1,0 +1,10 @@
+citHeader("To cite package infoxtr in publications, please use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "{infoxtr: Information-Theoretic Measures for Revealing Variable Interactions}",
+  author   = "Wenbo Lyu",
+  year     = "2026",
+  note     = "R package version 0.1",
+  doi      = "10.32614/CRAN.package.infoxtr"
+)
