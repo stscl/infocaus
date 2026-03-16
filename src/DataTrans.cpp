@@ -232,9 +232,9 @@ Rcpp::NumericMatrix mat_std2r(
 
     for (size_t i = 0; i < outer; ++i) {
 
-      if (mat[i].size() != inner) {
-        Rcpp::stop("Inconsistent row length in input matrix.");
-      }
+    //   if (mat[i].size() != inner) {
+    //     Rcpp::stop("Inconsistent row length in input matrix.");
+    //   }
 
       for (size_t j = 0; j < inner; ++j) {
         result(i, j) = mat[i][j];
