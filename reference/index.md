@@ -24,6 +24,11 @@
   [`surd(`*`<SpatRaster>`*`)`](https://stscl.github.io/infoxtr/reference/surd.md)
   : SURD
 
+## Knockoff-based interaction testing
+
+- [`kocmi()`](https://stscl.github.io/infoxtr/reference/kocmi.md) :
+  KOCMI
+
 ## Miscellaneous Utility Functions
 
 - [`discretize()`](https://stscl.github.io/infoxtr/reference/discretize.md)
