@@ -194,7 +194,7 @@ namespace kocmi
         }
         observed_sdval = std::sqrt(observed_sdval / static_cast<double>(n - 1));
         
-        if (infoxtr::numericutils::doubleNearlyEqual(observed_sdval, 0.0))
+        if (!infoxtr::numericutils::doubleNearlyEqual(observed_sdval, 0.0))
         {
             result.t_stat = observed_mean / observed_sdval;
         }
