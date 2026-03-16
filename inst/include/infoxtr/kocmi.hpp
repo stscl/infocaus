@@ -425,7 +425,7 @@ namespace kocmi
         const size_t monte_size = knockoff.size();
         if (contain_null && monte_size != null_knockoff.size())
             throw std::invalid_argument(
-                "[KOCMI] The size of `monte_size` and `null_knockoff` should be the same"
+                "[KOCMI] The size of `knockoff` and `null_knockoff` should be the same"
             );
 
         if (threads == 0) threads = 1;
@@ -490,7 +490,7 @@ namespace kocmi
         const size_t monte_size = knockoff.size();
         if (contain_null && monte_size != null_knockoff.size())
             throw std::invalid_argument(
-                "[KOCMI] The size of `monte_size` and `null_knockoff` should be the same"
+                "[KOCMI] The size of `knockoff` and `null_knockoff` should be the same"
             );
 
         if (threads == 0) threads = 1;

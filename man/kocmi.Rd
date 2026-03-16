@@ -76,9 +76,11 @@ A named numeric vector.
 Knockoff Conditional Mutual Information
 }
 \examples{
-popd_df = readr::read_csv(system.file("case/popd.csv",package = "spEDM"))
-popd_df
-# infoxtr::kocmi(popd_df, 3, 6, c(4,5,7))
+set.seed(42)
+kn1 = replicate(50, stats::rnorm(100))
+kn2 = replicate(50, stats::rnorm(100))
+mat = replicate(3, stats::rnorm(100))
+infoxtr::kocmi(mat, 1, 2, 3, kn1, kn2)
 
 }
 \references{
