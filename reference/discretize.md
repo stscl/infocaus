@@ -13,7 +13,7 @@ discretize(
   method = "natural",
   large = 3000,
   prop = 0.15,
-  seed = 123456789,
+  seed = 42,
   thr = 0.4,
   iter = 100,
   bps = NULL,

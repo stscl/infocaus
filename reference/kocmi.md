@@ -16,7 +16,7 @@ kocmi(
   nboots = 10000,
   k = 3,
   threads = 1,
-  seed = 123456789,
+  seed = 42,
   base = exp(1),
   method = "equal",
   contain_null = TRUE
@@ -118,5 +118,5 @@ kn2 = replicate(50, stats::rnorm(100))
 mat = replicate(3, stats::rnorm(100))
 infoxtr::kocmi(mat, 1, 2, 3, kn1, kn2)
 #>     t_stat    p_value 
-#> -0.2059844  0.1532000 
+#> -0.2059844  0.1540000 
 ```
