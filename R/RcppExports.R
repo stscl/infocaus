@@ -9,3 +9,7 @@ RcppGenGridLag <- function(mat, nrows, lag = 1L) {
     .Call(`_infocaus_RcppGenGridLag`, mat, nrows, lag)
 }
 
+RcppGenTSLag <- function(mat, lag = 1L) {
+    .Call(`_infocaus_RcppGenTSLag`, mat, lag)
+}
+
