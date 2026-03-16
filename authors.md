@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/stscl/infoxtr/blob/main/DESCRIPTION)
 
 Lyu W (2026). *infoxtr: Information-Theoretic Measures for Revealing
-Variable Interactions*. R package version 0.0.0.9000,
+Variable Interactions*. R package version 0.1,
 <https://stscl.github.io/infoxtr/>.
 
     @Manual{,
       title = {infoxtr: Information-Theoretic Measures for Revealing Variable Interactions},
       author = {Wenbo Lyu},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 0.1},
       url = {https://stscl.github.io/infoxtr/},
     }
