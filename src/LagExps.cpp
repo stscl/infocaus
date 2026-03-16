@@ -21,5 +21,5 @@ Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat,
   std::vector<std::vector<double>> lagged_values =
     Lag::GenLatticeLag(cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
 
-  return mat_r2std(lagged_values, true);
+  return mat_std2r(lagged_values, true);
 }
