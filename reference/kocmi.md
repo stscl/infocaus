@@ -112,28 +112,11 @@ knockoff operation. Science Advances 11.
 ## Examples
 
 ``` r
-popd_df = readr::read_csv(system.file("case/popd.csv",package = "spEDM"))
-#> Rows: 2806 Columns: 7
-#> ── Column specification ────────────────────────────────────────────────────────
-#> Delimiter: ","
-#> dbl (7): lon, lat, popd, elev, tem, pre, slope
-#> 
-#> ℹ Use `spec()` to retrieve the full column specification for this data.
-#> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-popd_df
-#> # A tibble: 2,806 × 7
-#>      lon   lat  popd  elev   tem   pre slope
-#>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-#>  1  117.  30.5  780.     8  17.4 1528. 0.452
-#>  2  117.  30.6  395.    48  17.2 1487. 0.842
-#>  3  117.  30.8  261.    49  16.0 1456. 3.56 
-#>  4  116.  30.1  258.    23  17.4 1555. 0.932
-#>  5  116.  30.5  211.   101  16.3 1494. 3.34 
-#>  6  117.  31.0  386.    10  16.6 1382. 1.65 
-#>  7  117.  30.2  350.    23  17.5 1569. 0.346
-#>  8  117.  30.7  470.    22  17.1 1493. 1.88 
-#>  9  117.  30.6 1226.    11  17.4 1526. 0.208
-#> 10  116.  30.9  137.   598  13.9 1458. 5.92 
-#> # ℹ 2,796 more rows
-# infoxtr::kocmi(popd_df, 3, 6, c(4,5,7))
+set.seed(42)
+kn1 = replicate(50, stats::rnorm(100))
+kn2 = replicate(50, stats::rnorm(100))
+mat = replicate(3, stats::rnorm(100))
+infoxtr::kocmi(mat, 1, 2, 3, kn1, kn2)
+#>     t_stat    p_value 
+#> -0.2059844  0.1532000 
 ```
