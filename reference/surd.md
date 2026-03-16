@@ -1,6 +1,6 @@
 # SURD
 
-Synergistic-Unique-Redundant decomposition of causality
+Synergistic-Unique-Redundant Decomposition
 
 ## Usage
 
