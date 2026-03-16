@@ -40,6 +40,10 @@ reference:
   - te
   - surd
 
+- title: Knockoff-based interaction testing
+  contents:
+  - kocmi
+
 - title: Miscellaneous Utility Functions
   contents:
   - discretize
