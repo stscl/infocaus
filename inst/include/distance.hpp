@@ -14,11 +14,23 @@
  *          NaN values are removed pairwise before calculation.
  *          If all elements are removed, result is NaN.
  *
+ *  Matrix behavior:
+ *      Distances can be computed either row-wise or column-wise.
+ *
+ *      byrow = true  (default)
+ *          Each row is treated as an observation vector.
+ *          Distance matrix is computed between rows.
+ *
+ *      byrow = false
+ *          Each column is treated as an observation vector.
+ *          Distance matrix is computed between columns.
+ *
  *  Functions:
  *      Dist(scalar, scalar)
  *      Dist(vector, scalar)
  *      Dist(vector, vector)
- *      Dist(matrix)
+ *      Dist(matrix)                     -> full distance matrix
+ *      Dist(matrix, lib, pred)          -> subset distance matrix
  *
  *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
