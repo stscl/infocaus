@@ -336,7 +336,7 @@ namespace Dist
      *
      * @param mat    Input numeric matrix stored as vector of rows
      * @param method Distance metric ("euclidean", "manhattan", "maximum")
-     * @param na_rm  Remove NaN values pairwise if true
+     * @param na_rm  Remove NaN/NA values pairwise if true
      * @param byrow  If true compute row distances, otherwise column distances
      *
      * @return Symmetric distance matrix
