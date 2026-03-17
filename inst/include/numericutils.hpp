@@ -108,8 +108,8 @@ namespace NumericUtils
         if (std::isnan(x))
             return std::numeric_limits<double>::quiet_NaN();
 
-        // Pole at zero
-        if (doubleNearlyEqual(x, 0.0))
+        // Pole at non-positive
+        if (std::floor(x) == x && x <= 0)
             return std::numeric_limits<double>::infinity();
 
         // Reflection formula for negative arguments
