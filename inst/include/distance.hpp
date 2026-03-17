@@ -459,7 +459,7 @@ namespace Dist
      * @param lib    Indices defining the library set
      * @param pred   Indices defining the prediction set
      * @param method Distance metric
-     * @param na_rm  Remove NaN values pairwise
+     * @param na_rm  Remove NaN/NA values pairwise
      * @param byrow  If true operate on rows, otherwise columns
      *
      * @return Distance matrix with entries defined by pred × lib pairs
