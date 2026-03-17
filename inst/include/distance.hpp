@@ -437,13 +437,33 @@ namespace Dist
         return distm;
     }
 
-    /***********************************************************
-     * Matrix - Subset Distance
-     * Compute distances from pred rows to lib rows
+    /************************************************************************
+     * Matrix Subset Distance
      *
-     * Each element (i, j) equals
+     * Computes distances between selected rows or columns
+     * of a matrix using index sets.
+     *
+     * Each element (pi, lj) equals
+     *
      *      dist(mat[pred[i]], mat[lib[j]])
-     ***********************************************************/
+     *
+     * Behavior depends on byrow:
+     *
+     * byrow = true
+     *      Distances are computed between rows.
+     *
+     * byrow = false
+     *      Distances are computed between columns.
+     *
+     * @param mat    Input numeric matrix
+     * @param lib    Indices defining the library set
+     * @param pred   Indices defining the prediction set
+     * @param method Distance metric
+     * @param na_rm  Remove NaN values pairwise
+     * @param byrow  If true operate on rows, otherwise columns
+     *
+     * @return Distance matrix with entries defined by pred × lib pairs
+     ************************************************************************/
     inline std::vector<std::vector<double>> Dist(
         const std::vector<std::vector<double>>& mat,
         const std::vector<size_t>& lib,
