@@ -18,8 +18,9 @@
 #define NUMERICUTILS_HPP
 
 #include <cmath>
-#include <algorithm>
 #include <limits>
+#include <numeric>
+#include <algorithm>
 #include <initializer_list>
 
 namespace NumericUtils
