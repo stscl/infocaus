@@ -462,7 +462,9 @@ namespace Dist
      * @param na_rm  Remove NaN/NA values pairwise
      * @param byrow  If true operate on rows, otherwise columns
      *
-     * @return Distance matrix with entries defined by pred × lib pairs
+     * @return A square matrix of size n_rows × n_rows (or n_cols × n_cols if byrow=false),
+     *         with entries at [pred[i]][lib[j]] filled with computed distances.
+     *         All other entries remain NaN.
      ************************************************************************/
     inline std::vector<std::vector<double>> Dist(
         const std::vector<std::vector<double>>& mat,
