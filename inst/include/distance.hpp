@@ -437,7 +437,7 @@ namespace Dist
         return distm;
     }
 
-    /************************************************************************
+    /****************************************************************************************
      * Matrix Subset Distance
      *
      * Computes distances between selected rows or columns
@@ -465,7 +465,7 @@ namespace Dist
      * @return A square matrix of size n_rows × n_rows (or n_cols × n_cols if byrow=false),
      *         with entries at [pred[i]][lib[j]] filled with computed distances.
      *         All other entries remain NaN.
-     ************************************************************************/
+     ***************************************************************************************/
     inline std::vector<std::vector<double>> Dist(
         const std::vector<std::vector<double>>& mat,
         const std::vector<size_t>& lib,
