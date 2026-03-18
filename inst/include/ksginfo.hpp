@@ -173,28 +173,30 @@ Mutual Information (KSG estimator)
 ***********************************************************/
 inline double MI(
     const Matrix& mat,
+    const std::vector<size_t>& target,
+    const std::vector<size_t>& interact,
     const std::vector<size_t>& xvars,
     const std::vector<size_t>& yvars,
     size_t k = 3,
     KSGAlgorithm alg = KSGAlgorithm::Alg1,
     bool normalize = false)
 {
-    std::vector<size_t> xy = xvars;
-    xy.insert(xy.end(),yvars.begin(),yvars.end());
+    std::vector<size_t> ti = target;
+    ti.insert(ti.end(), interact.begin(), interact.end());
 
-    auto d_xy = Dist::Dist(subset(mat,xy),"maximum",true,false);
-    auto d_x  = Dist::Dist(subset(mat,xvars),"maximum",true,false);
-    auto d_y  = Dist::Dist(subset(mat,yvars),"maximum",true,false);
+    auto d_xy = Dist::Dist(subset(mat,ti),"maximum",true,false);
+    auto d_x  = Dist::Dist(subset(mat,target),"maximum",true,false);
+    auto d_y  = Dist::Dist(subset(mat,interact),"maximum",true,false);
 
     const size_t n = d_xy.size();
 
     double sum = 0.0;
 
-    for (size_t i=0;i<n;++i)
+    for (size_t i = 0; i < n; ++i)
     {
         std::vector<double> row;
 
-        for (size_t j=0;j<n;++j)
+        for (size_t j = 0; j<n; ++j)
         {
             if (i==j) continue;
             row.push_back(d_xy[i][j]);
