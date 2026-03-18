@@ -29,9 +29,9 @@
 #include <vector>
 #include <cmath>
 #include <limits>
+#include <numeric>
 #include <algorithm>
 #include <stdexcept>
-
 #include "distance.hpp"
 #include "numericutils.hpp"
 
