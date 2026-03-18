@@ -56,9 +56,7 @@ Rcpp::NumericVector RcppDist4MatSub(
     // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
     std::vector<std::vector<double>> cppMat = mat_r2std(mat, true);
 
-    const size_t n_rows = mat.size();
-    const size_t n_cols = mat[0].size();
-    const size_t n_obs = byrow ? n_rows : n_cols;
+    const int n_obs = byrow ? mat.nrow() : mat.ncol(); 
 
     // Convert and check that lib and pred indices are within bounds & convert R based 1 index to C++ based 0 index
     std::vector<size_t> lib_std;
