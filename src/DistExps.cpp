@@ -30,7 +30,7 @@ double RcppDist4Vec(
 Rcpp::NumericVector RcppDist4Mat(
     const Rcpp::NumericMatrix& mat,
     std::string method = "euclidean",
-    bool na_rm = truebool na_rm = true,
+    bool na_rm = true,
     bool byrow = true
 ) {
     // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
