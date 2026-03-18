@@ -64,7 +64,7 @@ Rcpp::NumericVector RcppDist4MatSub(
     std::vector<size_t> lib_std;
     lib_std.reserve(lib.size());
     for (int i = 0; i < lib.size(); ++i) {
-        if (lib[i] < 1 || lib[i] > numRows) {
+        if (lib[i] < 1 || lib[i] > n_obs) {
             Rcpp::stop("lib contains out-of-bounds index at position %d (value: %d)", i + 1, lib[i]);
         }
         lib_std.push_back(static_cast<size_t>(lib[i] - 1));
@@ -73,7 +73,7 @@ Rcpp::NumericVector RcppDist4MatSub(
     std::vector<size_t> pred_std;
     pred_std.reserve(pred.size());
     for (int i = 0; i < pred.size(); ++i) {
-        if (pred[i] < 1 || pred[i] > numRows) {
+        if (pred[i] < 1 || pred[i] > n_obs) {
             Rcpp::stop("pred contains out-of-bounds index at position %d (value: %d)", i + 1, pred[i]);
         }
         pred_std.push_back(static_cast<size_t>(pred[i] - 1));
@@ -81,7 +81,7 @@ Rcpp::NumericVector RcppDist4MatSub(
 
     // Call the distance function
     std::vector<std::vector<double>> distm = Dist::Dist(
-        cppMat, lib_std, pred_std, method, na_rm);
+        cppMat, lib_std, pred_std, method, na_rm, byrow);
 
     // Convert std::vector<std::vector<double>> to Rcpp::NumericMatrix and return
     return mat_std2r(distm, true);
