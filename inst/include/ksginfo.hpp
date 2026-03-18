@@ -116,7 +116,41 @@ inline double JE(
     const std::vector<size_t>& vars,
     size_t k = 3)
 {
-    return Entropy(mat,vars,k);
+    Matrix sub = subset(mat,vars);
+
+    const size_t d = sub.size();
+    const size_t n = sub[0].size();
+
+    auto dist = Dist::Dist(sub,"maximum",true,false);
+
+    double avg = 0.0;
+
+    for (size_t i=0;i<n;++i)
+    {
+        std::vector<double> row;
+
+        for (size_t j=0;j<n;++j)
+        {
+            if (i==j) continue;
+            row.push_back(dist[i][j]);
+        }
+
+        std::nth_element(row.begin(),row.begin()+k-1,row.end());
+
+        double eps = row[k-1];
+
+        avg += std::log(eps);
+    }
+
+    avg /= n;
+
+    double H =
+        NumericUtils::Digamma(n)
+        - NumericUtils::Digamma(k)
+        + d * avg
+        + d * std::log(2.0);
+
+    return H;
 }
 
 /***********************************************************
