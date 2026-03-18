@@ -254,6 +254,9 @@ Conditional Mutual Information
 ***********************************************************/
 inline double CMI(
     const Matrix& mat,
+    const std::vector<size_t>& target,
+    const std::vector<size_t>& interact,
+    const std::vector<size_t>& conds,
     const std::vector<size_t>& xvars,
     const std::vector<size_t>& yvars,
     const std::vector<size_t>& zvars,
@@ -261,15 +264,15 @@ inline double CMI(
     size_t alg = 0,
     bool normalize = false)
 {
-    std::vector<size_t> xyz = zvars;
-    xyz.insert(xyz.end(),xvars.begin(),xvars.end());
-    xyz.insert(xyz.end(),yvars.begin(),yvars.end());
+    std::vector<size_t> xyz = conds;
+    xyz.insert(xyz.end(), target.begin(), target.end());
+    xyz.insert(xyz.end(), interact.begin(), interact.end());
 
-    std::vector<size_t> xz = zvars;
-    xz.insert(xz.end(),xvars.begin(),xvars.end());
+    std::vector<size_t> xz = conds;
+    xz.insert(xz.end(), target.begin(), target.end());
 
-    std::vector<size_t> yz = zvars;
-    yz.insert(yz.end(),yvars.begin(),yvars.end());
+    std::vector<size_t> yz = conds;
+    yz.insert(yz.end(), interact.begin(), interact.end());
 
     auto d_xyz = Dist::Dist(subset(mat,xyz),"maximum",true,false);
     auto d_xz  = Dist::Dist(subset(mat,xz),"maximum",true,false);
@@ -280,7 +283,7 @@ inline double CMI(
 
     double sum = 0.0;
 
-    for (size_t i = 0;i < n; ++i)
+    for (size_t i = 0; i < n; ++i)
     {
         std::vector<double> row;
 
