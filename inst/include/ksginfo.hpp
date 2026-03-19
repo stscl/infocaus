@@ -74,7 +74,6 @@ inline double Entropy(
     auto dist = Dist::Dist(vec,"maximum",true,false);
 
     double avg = 0.0;
-
     for (size_t i = 0; i < n; ++i)
     {
         std::vector<double> row = dist[i];
@@ -99,14 +98,12 @@ inline double Entropy(
 
         avg += std::log(eps);
     }
-
     avg /= static_cast<double>(n);
 
-    double H =
-        NumericUtils::Digamma(n)
-      - NumericUtils::Digamma(k)
-      + avg
-      + std::log(2.0);
+    double H = NumericUtils::Digamma(n)
+               - NumericUtils::Digamma(k)
+               + avg
+               + std::log(2.0);
 
     if (NumericUtils::doubleNearlyEqual(base,std::exp(1.0))) 
         H /= std::log(base);
