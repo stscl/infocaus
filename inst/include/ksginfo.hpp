@@ -299,12 +299,10 @@ inline double MI(
 
     mi = std::max(0.0, mi);
 
-    if (!normalize) {
-        if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
-            mi /= std::log(base);
+    if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+        mi /= std::log(base);
 
-        return mi;
-    }
+    if (!normalize) return mi;
 
     double hxy = NumericUtils::Digamma(n)
                - NumericUtils::Digamma(k)
