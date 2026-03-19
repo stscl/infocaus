@@ -13,6 +13,25 @@
  *      Series = std::vector<double>
  *      Matrix = std::vector<std::vector<double>> // mat[var][obs]
  *
+ *  Estimator variants (alg parameter):
+ *
+ *      Entropy / Joint Entropy / Conditional Entropy
+ *      ---------------------------------------------
+ *      alg = 0
+ *            Kozachenko–Leonenko entropy estimator
+ *
+ *      alg = 1
+ *            Bias corrected KL estimator
+ *            (adds +1/k correction)
+ *
+ *      Mutual Information / Conditional Mutual Information
+ *      ---------------------------------------------------
+ *      alg = 0
+ *            Kraskov–Stögbauer–Grassberger estimator I (KSG1)
+ *
+ *      alg = 1
+ *            Kraskov–Stögbauer–Grassberger estimator II (KSG2)
+ *
  *  Distance backend:
  *      Dist::Dist (Chebyshev metric)
  *
