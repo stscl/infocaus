@@ -62,7 +62,7 @@ inline Matrix subset(
  ***********************************************************/
 inline double Entropy(
     const Series& series,
-    size_t k,
+    size_t k = 3,
     double base = 2.0)
 {
     const size_t n = series.size();
