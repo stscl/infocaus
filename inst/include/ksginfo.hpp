@@ -166,8 +166,8 @@ inline double JE(
 }
 
 /***********************************************************
-Conditional Entropy
-***********************************************************/
+ * Conditional Entropy
+ ***********************************************************/
 inline double CE(
     const Matrix& mat,
     const std::vector<size_t>& target,
