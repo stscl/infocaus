@@ -78,6 +78,8 @@ inline double Entropy(
     {
         std::vector<double> row = dist[i];
 
+        if (i < row.size()) row[i] = std::numeric_limits<double>::quiet_NaN();
+
         // remove NaN
         row.erase(
             std::remove_if(
@@ -131,6 +133,8 @@ inline double JE(
     for (size_t i = 0; i < n; ++i)
     {
         std::vector<double> row = dist[i];
+
+        if (i < row.size()) row[i] = std::numeric_limits<double>::quiet_NaN();
 
         // remove NaN
         row.erase(
@@ -207,6 +211,8 @@ inline double MI(
     for (size_t i = 0; i < n; ++i)
     {
         std::vector<double> row = d_xy[i];
+
+        if (i < row.size()) row[i] = std::numeric_limits<double>::quiet_NaN();
 
         // remove NaN
         row.erase(
@@ -317,6 +323,7 @@ inline double CMI(
     {
         std::vector<double> row = d_xyz[i];
 
+        if (i < row.size()) row[i] = std::numeric_limits<double>::quiet_NaN();
 
         row.erase(
             std::remove_if(row.begin(),row.end(),
