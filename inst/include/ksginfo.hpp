@@ -187,8 +187,6 @@ inline double MI(
     const Matrix& mat,
     const std::vector<size_t>& target,
     const std::vector<size_t>& interact,
-    const std::vector<size_t>& xvars,
-    const std::vector<size_t>& yvars,
     size_t k = 3,
     size_t alg = 0,
     bool normalize = false)
@@ -203,7 +201,6 @@ inline double MI(
     const size_t n = d_xy.size();
 
     double sum = 0.0;
-
     for (size_t i = 0; i < n; ++i)
     {
         std::vector<double> row;
@@ -275,9 +272,6 @@ inline double CMI(
     const std::vector<size_t>& target,
     const std::vector<size_t>& interact,
     const std::vector<size_t>& conds,
-    const std::vector<size_t>& xvars,
-    const std::vector<size_t>& yvars,
-    const std::vector<size_t>& zvars,
     size_t k = 3,
     size_t alg = 0,
     bool normalize = false)
