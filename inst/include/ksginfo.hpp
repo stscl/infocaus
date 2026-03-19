@@ -245,11 +245,13 @@ inline double MI(
     {
         std::vector<double> row = d_xy[i];
 
-        if (i < row.size()) row[i] = std::numeric_limits<double>::quiet_NaN();
+        if (i < row.size())
+            row[i] = std::numeric_limits<double>::quiet_NaN();
 
-        // remove NaN
         row.erase(
-            std::remove_if(row.begin(),row.end(),
+            std::remove_if(
+                row.begin(),
+                row.end(),
                 [](double v){ return std::isnan(v); }),
             row.end());
 
@@ -273,15 +275,11 @@ inline double MI(
         }
 
         if (alg == 0)
-        {
             sum += NumericUtils::Digamma(nx+1)
                  + NumericUtils::Digamma(ny+1);
-        }
         else
-        {
             sum += NumericUtils::Digamma(nx)
                  + NumericUtils::Digamma(ny);
-        }
     }
 
     avg_log_eps /= n;
@@ -303,15 +301,12 @@ inline double MI(
     if (!normalize)
         return mi;
 
-    // compute H(X,Y) from same eps
-
     double hxy = NumericUtils::Digamma(n)
-                 - NumericUtils::Digamma(k)
-                 + d * avg_log_eps
-                 + d * std::log(2.0);
+               - NumericUtils::Digamma(k)
+               + d * avg_log_eps
+               + d * std::log(2.0);
 
-    if (hxy <= 0)
-        return mi;
+    if (hxy <= 0) return mi;
 
     return mi / hxy;
 }
