@@ -191,10 +191,10 @@ inline double MI(
     size_t alg = 0,
     bool normalize = false)
 {
-    std::vector<size_t> ti = target;
-    ti.insert(ti.end(), interact.begin(), interact.end());
+    std::vector<size_t> xy = target;
+    xy.insert(xy.end(), interact.begin(), interact.end());
 
-    auto d_xy = Dist::Dist(subset(mat,ti),"maximum",true,false);
+    auto d_xy = Dist::Dist(subset(mat,xy),"maximum",true,false);
     auto d_x  = Dist::Dist(subset(mat,target),"maximum",true,false);
     auto d_y  = Dist::Dist(subset(mat,interact),"maximum",true,false);
 
