@@ -181,8 +181,8 @@ inline double CE(
 }
 
 /***********************************************************
-Mutual Information (KSG estimator)
-***********************************************************/
+ * Mutual Information (KSG estimator)
+ ***********************************************************/
 inline double MI(
     const Matrix& mat,
     const std::vector<size_t>& target,
@@ -265,8 +265,8 @@ inline double MI(
 }
 
 /***********************************************************
-Conditional Mutual Information
-***********************************************************/
+ * Conditional Mutual Information
+ ***********************************************************/
 inline double CMI(
     const Matrix& mat,
     const std::vector<size_t>& target,
