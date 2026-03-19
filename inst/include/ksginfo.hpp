@@ -214,7 +214,7 @@ inline double CE(
     std::vector<size_t> tc = cond;
     tc.insert(tc.end(),target.begin(),target.end());
 
-    return JE(mat,tc,k,alg,base) - JE(mat,cond,k,alg,base);
+    return return JE(mat,tc,k,base,alg) - JE(mat,cond,k,base,alg);
 }
 
 /***********************************************************
