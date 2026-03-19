@@ -199,45 +199,57 @@ inline double MI(
     auto d_y  = Dist::Dist(subset(mat,interact),"maximum",true,false);
 
     const size_t n = d_xy.size();
+    const size_t d = xy.size();
 
     double sum = 0.0;
+    double avg_log_eps = 0.0;
+
     for (size_t i = 0; i < n; ++i)
     {
-        std::vector<double> row;
+        std::vector<double> row = d_xy[i];
 
-        for (size_t j = 0; j<n; ++j)
-        {
-            if (i==j) continue;
-            row.push_back(d_xy[i][j]);
-        }
+        /* remove self distance */
+        if (i < row.size())
+            row[i] = std::numeric_limits<double>::quiet_NaN();
+
+        // remove NaN
+        row.erase(
+            std::remove_if(row.begin(),row.end(),
+                [](double v){ return std::isnan(v); }),
+            row.end());
+
+        if (row.size() < k)
+            throw std::runtime_error("k larger than valid neighbour count");
 
         std::nth_element(row.begin(),row.begin()+k-1,row.end());
 
         double eps = row[k-1];
 
-        size_t nx=0, ny=0;
+        avg_log_eps += std::log(eps);
 
-        for (size_t j=0;j<n;++j)
+        size_t nx = 0, ny = 0;
+
+        for (size_t j = 0; j < n; ++j)
         {
-            if (i==j) continue;
+            if (i == j) continue;
 
-            if (d_x[i][j] <= eps) nx++;
-            if (d_y[i][j] <= eps) ny++;
+            if (!std::isnan(d_x[i][j]) && d_x[i][j] <= eps) nx++;
+            if (!std::isnan(d_y[i][j]) && d_y[i][j] <= eps) ny++;
         }
 
         if (alg == 0)
         {
-            sum +=
-                NumericUtils::Digamma(nx+1)
-              + NumericUtils::Digamma(ny+1);
+            sum += NumericUtils::Digamma(nx+1)
+                 + NumericUtils::Digamma(ny+1);
         }
         else
         {
-            sum +=
-                NumericUtils::Digamma(nx)
-              + NumericUtils::Digamma(ny);
+            sum += NumericUtils::Digamma(nx)
+                 + NumericUtils::Digamma(ny);
         }
     }
+
+    avg_log_eps /= n;
 
     double mi;
 
@@ -256,7 +268,13 @@ inline double MI(
     if (!normalize)
         return mi;
 
-    double hxy = JE(mat,xy,k);
+    /* compute H(X,Y) from same eps */
+
+    double hxy =
+        NumericUtils::Digamma(n)
+      - NumericUtils::Digamma(k)
+      + d * avg_log_eps
+      + d * std::log(2.0);
 
     if (hxy <= 0)
         return mi;
