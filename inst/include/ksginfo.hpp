@@ -264,13 +264,12 @@ inline double MI(
     if (!normalize)
         return mi;
 
-    /* compute H(X,Y) from same eps */
+    // compute H(X,Y) from same eps
 
-    double hxy =
-        NumericUtils::Digamma(n)
-      - NumericUtils::Digamma(k)
-      + d * avg_log_eps
-      + d * std::log(2.0);
+    double hxy = NumericUtils::Digamma(n)
+                 - NumericUtils::Digamma(k)
+                 + d * avg_log_eps
+                 + d * std::log(2.0);
 
     if (hxy <= 0)
         return mi;
