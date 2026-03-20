@@ -2,5 +2,7 @@
 
 ## infoxtr 0.1
 
-- Initial CRAN submission
-  ([\#57](https://github.com/stscl/infoxtr/issues/57)).
+CRAN release: 2026-03-19
+
+- First stable release
+  ([\#60](https://github.com/stscl/infoxtr/issues/60)).
