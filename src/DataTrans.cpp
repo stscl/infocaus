@@ -433,19 +433,39 @@ std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
         for (uint64_t i = 0; i<uniq.size(); ++i)
             dict[uniq[i]] = i+1;
 
-        for (size_t j = 0; j < p; ++j)
+        if (byrow)
         {
-            auto &col = mat[j];
+          for (size_t i = 0; i < n; ++i)
+          {
+              auto &row = mat[i];
 
-            for (size_t i=0;i<n;++i)
-            {
-                double v = m(i,j);
+              for (size_t j = 0; j < p; ++j)
+              {
+                  double v = m(i,j);
 
-                if (Rcpp::NumericVector::is_na(v))
-                    col.push_back({0});
-                else
-                    col.push_back(dict[v]);
-            }
+                  if (Rcpp::NumericVector::is_na(v))
+                      row.push_back({0});
+                  else
+                      row.push_back(dict[v]);
+              }
+          }
+        }
+        else 
+        {
+          for (size_t j = 0; j < p; ++j)
+          {
+              auto &col = mat[j];
+
+              for (size_t i = 0; i < n; ++i)
+              {
+                  double v = m(i,j);
+
+                  if (Rcpp::NumericVector::is_na(v))
+                      col.push_back({0});
+                  else
+                      col.push_back(dict[v]);
+              }
+          }
         }
 
         break;
