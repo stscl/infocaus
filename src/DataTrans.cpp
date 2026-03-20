@@ -262,3 +262,209 @@ Rcpp::NumericMatrix mat_std2r(
     return result;
   }
 }
+
+/********************************************************************
+ *  pat_r2std
+ *
+ *  Convert an R matrix (Integer / Numeric / Character)
+ *  into std::vector<std::vector<uint64_t>>.
+ *
+ *  Structure:
+ *
+ *      R matrix:
+ *          n rows  = observations
+ *          p cols  = variables
+ *
+ *      C++:
+ *          Matrix[var][obs]
+ *
+ *  Design:
+ *      - Scan matrix once to collect global unique values
+ *      - Sort uniques
+ *      - Assign id 1..uniq
+ *      - Encode each element via index2base4
+ *
+ *  NA handling:
+ *      NA encoded as {0}
+ *
+ ********************************************************************/
+std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
+{
+    if (!Rf_isMatrix(x))
+        Rcpp::stop("Input must be a matrix.");
+
+    std::vector<std::vector<uint64_t>> mat;
+
+    switch (TYPEOF(x))
+    {
+
+    /******************************
+     * IntegerMatrix
+     ******************************/
+    case INTSXP:
+    {
+        Rcpp::IntegerMatrix m(x);
+
+        const size_t n = m.nrow();
+        const size_t p = m.ncol();
+
+        mat.resize(p);
+        for (size_t j = 0; j < p; ++j)
+            mat[j].reserve(n);
+
+        std::vector<int> uniq;
+        uniq.reserve(n*p);
+
+        for (size_t j = 0; j < p; ++j)
+        {
+            for (size_t i = 0; i < n; ++i)
+            {
+                int v = m(i,j);
+                if (!Rcpp::IntegerVector::is_na(v))
+                    uniq.push_back(v);
+            }
+        }
+
+        std::sort(uniq.begin(), uniq.end());
+        uniq.erase(std::unique(uniq.begin(), uniq.end()), uniq.end());
+
+        std::unordered_map<int,uint64_t> dict;
+        dict.reserve(uniq.size());
+
+        for (uint64_t i = 0; i < uniq.size(); ++i)
+            dict[uniq[i]] = i+1;
+
+        for (size_t j = 0; j < p; ++j)
+        {
+            auto &col = mat[j];
+
+            for (size_t i = 0; i < n; ++i)
+            {
+                int v = m(i,j);
+
+                if (Rcpp::IntegerVector::is_na(v))
+                    col.push_back({0});
+                else
+                    col.push_back(dict[v]);
+            }
+        }
+
+        break;
+    }
+
+    /******************************
+     * NumericMatrix
+     ******************************/
+    case REALSXP:
+    {
+        Rcpp::NumericMatrix m(x);
+
+        const size_t n = m.nrow();
+        const size_t p = m.ncol();
+
+        mat.resize(p);
+        for (size_t j = 0; j < p; ++j)
+            mat[j].reserve(n);
+
+        std::vector<double> uniq;
+        uniq.reserve(n*p);
+
+        for (size_t j = 0; j < p; ++j)
+        {
+            for (size_t i = 0; i < n; ++i)
+            {
+                double v = m(i,j);
+                if (!Rcpp::NumericVector::is_na(v))
+                    uniq.push_back(v);
+            }
+        }
+
+        std::sort(uniq.begin(), uniq.end());
+        uniq.erase(std::unique(uniq.begin(), uniq.end()), uniq.end());
+
+        std::unordered_map<double,uint64_t> dict;
+        dict.reserve(uniq.size());
+
+        for (uint64_t i = 0; i<uniq.size(); ++i)
+            dict[uniq[i]] = i+1;
+
+        for (size_t j = 0; j < p; ++j)
+        {
+            auto &col = mat[j];
+
+            for (size_t i=0;i<n;++i)
+            {
+                double v = m(i,j);
+
+                if (Rcpp::NumericVector::is_na(v))
+                    col.push_back({0});
+                else
+                    col.push_back(dict[v]);
+            }
+        }
+
+        break;
+    }
+
+    /******************************
+     * CharacterMatrix
+     ******************************/
+    case STRSXP:
+    {
+        Rcpp::CharacterMatrix m(x);
+
+        const size_t n = m.nrow();
+        const size_t p = m.ncol();
+
+        mat.resize(p);
+        for (size_t j = 0; j < p; ++j)
+            mat[j].reserve(n);
+
+        std::vector<std::string> uniq;
+        uniq.reserve(n*p);
+
+        for (size_t j = 0; j < p; ++j)
+        {
+            for (size_t i = 0; i < n; ++i)
+            {
+                if (!Rcpp::CharacterVector::is_na(m(i,j)))
+                    uniq.emplace_back(std::string(m(i,j)));
+            }
+        }
+
+        std::sort(uniq.begin(), uniq.end());
+        uniq.erase(std::unique(uniq.begin(), uniq.end()), uniq.end());
+
+        std::unordered_map<std::string,uint64_t> dict;
+        dict.reserve(uniq.size());
+
+        for (uint64_t i = 0; i < uniq.size(); ++i)
+            dict[uniq[i]] = i+1;
+
+        for (size_t j = 0; j < p; ++j)
+        {
+            auto &col = mat[j];
+
+            for (size_t i = 0; i < n; ++i)
+            {
+                if (Rcpp::CharacterVector::is_na(m(i,j)))
+                {
+                    col.push_back({0});
+                }
+                else
+                {
+                    std::string key = std::string(m(i,j));
+                    col.push_back(dict[key]);
+                }
+            }
+        }
+
+        break;
+    }
+
+    default:
+        Rcpp::stop("Matrix must be Integer, Numeric, or Character.");
+    }
+
+    return mat;
+}
