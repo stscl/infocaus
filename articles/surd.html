@@ -72,8 +72,8 @@
                         <h4 data-toc-skip class="author">Wenbo Lyu</h4>
             
             <h4 data-toc-skip class="date"><div class="line-block">Last
-update: 2026-03-16<br>
-Last run: 2026-03-16</div></h4>
+update: 2026-03-20<br>
+Last run: 2026-03-20</div></h4>
       
       <small class="dont-index">Source: <a href="https://github.com/stscl/infoxtr/blob/main/vignettes/surd.Rmd" class="external-link"><code>vignettes/surd.Rmd</code></a></small>
       <div class="d-none name"><code>surd.Rmd</code></div>
@@ -177,6 +177,14 @@ showing the <strong>information leak</strong>.</p>
 <span></span>
 <span>  <span class="fu">patchwork</span><span class="fu">::</span><span class="fu">wrap_plots</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol <span class="op">=</span> <span class="fl">2</span>, widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+<p>To generate the visualization, please ensure the required packages
+are installed by running the following code:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tibble"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tibble"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-cases">Example Cases<a class="anchor" aria-label="anchor" href="#example-cases"></a>
@@ -187,7 +195,7 @@ causal analyses.</p>
 <div class="section level3">
 <h3 id="air-pollution-and-cardiovascular-health-in-hong-kong">Air Pollution and Cardiovascular Health in Hong Kong<a class="anchor" aria-label="anchor" href="#air-pollution-and-cardiovascular-health-in-hong-kong"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cvd</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"case/cvd.csv"</span>,package <span class="op">=</span> <span class="st">"tEDM"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cvd</span><span class="op">)</span></span>
 <span><span class="co">## # A tibble: 6 × 5</span></span>
@@ -199,7 +207,7 @@ causal analyses.</p>
 <span><span class="co">## 4   182  68.8  74.7  30.8  5.6 </span></span>
 <span><span class="co">## 5   181  49.4  62.3  23.1  3.6 </span></span>
 <span><span class="co">## 6   129  67.4  63.6  17.4  6.73</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cvd_long</span> <span class="op">=</span> <span class="va">cvd</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rowid_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="op">-</span><span class="va">id</span>,</span>
@@ -211,7 +219,7 @@ causal analyses.</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.direction <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
 <span>                 legend.position <span class="op">=</span> <span class="st">"inside"</span>,</span>
-<span>                 legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"center"</span>,<span class="st">"top"</span><span class="op">)</span>,</span>
+<span>                 legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"center"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
 <span>                 legend.background <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">fig_cvds_ts</span></span></code></pre></div>
 <div class="float">
@@ -224,7 +232,7 @@ November 1997.</div>
 incidence of cardiovascular diseases, we performed SURD analysis using a
 time lag step <code>3</code> and <code>10</code> discretization
 bins.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_cvds</span> <span class="op">=</span> <span class="fu">infoxtr</span><span class="fu">::</span><span class="fu"><a href="../reference/surd.html">surd</a></span><span class="op">(</span><span class="va">cvd</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span>,</span>
 <span>                         lag <span class="op">=</span> <span class="fl">15</span>, bin <span class="op">=</span> <span class="fl">10</span>, threads <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">res_cvds</span><span class="op">)</span></span>
@@ -252,7 +260,7 @@ bins.</p>
 <span><span class="co">## 19 V1_V2_V3_V4 S        0.404   </span></span>
 <span><span class="co">## 20 InfoLeak    InfoLeak 0.535</span></span></code></pre></div>
 <p>The SURD results are shown in the figure below:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils_plot_surd</span><span class="op">(</span><span class="va">res_cvds</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
 <img src="../reference/figures/surd/fig_surd_cvds-1.png" alt="Figure 2. SURD decomposition results between different air pollutants and cardiovascular diseases."><div class="figcaption">
@@ -264,7 +272,7 @@ diseases.</div>
 <div class="section level3">
 <h3 id="population-density-and-its-drivers-in-mainland-china">Population Density and Its Drivers in Mainland China<a class="anchor" aria-label="anchor" href="#population-density-and-its-drivers-in-mainland-china"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">popd_nb</span> <span class="op">=</span> <span class="fu">spdep</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/spdep/reference/read.gal.html" class="external-link">read.gal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"case/popd_nb.gal"</span>,package <span class="op">=</span> <span class="st">"spEDM"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## Warning in spdep::read.gal(system.file("case/popd_nb.gal", package = "spEDM")): neighbour object</span></span>
 <span><span class="co">## has 4 sub-graphs</span></span>
@@ -290,7 +298,7 @@ diseases.</div>
 <span><span class="co">##  9 1226.    11  17.4 1526. 0.208 (117.171 30.5558)</span></span>
 <span><span class="co">## 10  137.   598  13.9 1458. 5.92  (116.208 30.8983)</span></span>
 <span><span class="co">## # ℹ 2,796 more rows</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_popd</span> <span class="op">=</span> <span class="fu">infoxtr</span><span class="fu">::</span><span class="fu"><a href="../reference/surd.html">surd</a></span><span class="op">(</span><span class="va">popd_sf</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span>,</span>
 <span>                         lag <span class="op">=</span> <span class="fl">3</span>, bin <span class="op">=</span> <span class="fl">10</span>, nb <span class="op">=</span> <span class="va">popd_nb</span>, threads <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">res_popd</span><span class="op">)</span></span>
@@ -316,7 +324,7 @@ diseases.</div>
 <span><span class="co">## 17 V2_V3_V4    S        0.154  </span></span>
 <span><span class="co">## 18 V1_V2_V3_V4 S        0.107  </span></span>
 <span><span class="co">## 19 InfoLeak    InfoLeak 0.642</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils_plot_surd</span><span class="op">(</span><span class="va">res_popd</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
 <img src="../reference/figures/surd/fig_surd_popd-1.png" alt="Figure 3. SURD decomposition results between population density and its Drivers."><div class="figcaption">
@@ -328,7 +336,7 @@ results between population density and its Drivers.</div>
 <h3 id="influence-of-climatic-and-topographic-factors-on-net-primary-productivity-npp-in-mainland-china">Influence of Climatic and Topographic Factors on Net Primary
 Productivity (NPP) in Mainland China<a class="anchor" aria-label="anchor" href="#influence-of-climatic-and-topographic-factors-on-net-primary-productivity-npp-in-mainland-china"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">npp</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"case/npp.tif"</span>, package <span class="op">=</span> <span class="st">"spEDM"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">npp</span></span>
 <span><span class="co">## class       : SpatRaster </span></span>
@@ -340,7 +348,7 @@ Productivity (NPP) in Mainland China<a class="anchor" aria-label="anchor" href="
 <span><span class="co">## names       :      npp,        pre,      tem,      elev,         hfp </span></span>
 <span><span class="co">## min values  :   164.00,   384.3409, -47.8194, -122.2004,  0.03390418 </span></span>
 <span><span class="co">## max values  : 16606.33, 23878.3555, 263.6938, 5350.4902, 44.90312195</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_npp</span> <span class="op">=</span> <span class="fu">infoxtr</span><span class="fu">::</span><span class="fu"><a href="../reference/surd.html">surd</a></span><span class="op">(</span><span class="va">npp</span>,<span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span>,</span>
 <span>                        lag <span class="op">=</span> <span class="fl">2</span>, bin <span class="op">=</span> <span class="fl">10</span>, threads <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">res_npp</span><span class="op">)</span></span>
@@ -358,7 +366,7 @@ Productivity (NPP) in Mainland China<a class="anchor" aria-label="anchor" href="
 <span><span class="co">##  9 V1_V2_V4    R     0.0149   </span></span>
 <span><span class="co">## 10 V1_V2_V3_V4 R     0.565    </span></span>
 <span><span class="co">## # ℹ 12 more rows</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils_plot_surd</span><span class="op">(</span><span class="va">res_npp</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
 <img src="../reference/figures/surd/fig_surd_npp-1.png" alt="Figure 4. SURD decomposition results between climatic and topographic factors and npp."><div class="figcaption">

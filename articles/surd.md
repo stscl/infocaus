@@ -90,6 +90,17 @@ utils_plot_surd = \(surd_list,threshold = 0,style = "shallow") {
 }
 ```
 
+To generate the visualization, please ensure the required packages are
+installed by running the following code:
+
+``` r
+if (!requireNamespace("dplyr")) install.packages("dplyr")
+if (!requireNamespace("tibble")) install.packages("tibble")
+if (!requireNamespace("stringr")) install.packages("stringr")
+if (!requireNamespace("ggplot2")) install.packages("ggplot2")
+if (!requireNamespace("patchwork")) install.packages("patchwork")
+```
+
 ## Example Cases
 
 The following sections demonstrate SURD decomposition in different
@@ -124,7 +135,7 @@ fig_cvds_ts = ggplot2::ggplot(cvd_long, ggplot2::aes(x = id, y = value, color = 
   ggplot2::theme_bw() +
   ggplot2::theme(legend.direction = "horizontal",
                  legend.position = "inside",
-                 legend.justification = c("center","top"),
+                 legend.justification = c("center", "top"),
                  legend.background = ggplot2::element_rect(fill = "transparent", color = NA))
 fig_cvds_ts
 ```
