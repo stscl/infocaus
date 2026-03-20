@@ -299,18 +299,26 @@ inline double MI(
 
     mi = std::max(0.0, mi);
 
-    if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
-        mi /= std::log(base);
+    if (!normalize) 
+    {
+        if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+            mi /= std::log(base);
 
-    if (!normalize) return mi;
+        return mi;
+    } 
 
     double hxy = NumericUtils::Digamma(n)
                - NumericUtils::Digamma(k)
                + d * avg_log_eps
                + d * std::log(2.0);
-    
     if (alg == 1) hxy += 1.0 / k;
-    if (hxy <= 0) return mi;
+
+    if (hxy <= 0) {
+        if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+            mi /= std::log(base);
+
+        return mi;
+    } 
 
     return mi / hxy;
 }
