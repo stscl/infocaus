@@ -54,7 +54,7 @@ double RcppDiscJE(SEXP mat,
                   double base = 2.0,
                   bool na_rm = true)
 {
-    InfoTheo::Matrix m = mat2patmat(mat);
+    InfoTheo::Matrix m = pat_r2std(mat,false);
     std::vector<size_t> v = Rcpp::as<std::vector<size_t>>(vars);
 
     const size_t n_cols = m.size();
@@ -78,7 +78,7 @@ double RcppDiscCE(SEXP mat,
                   double base = 2.0,
                   bool na_rm = true)
 {
-    InfoTheo::Matrix m = mat2patmat(mat);
+    InfoTheo::Matrix m = pat_r2std(mat,false);
 
     std::vector<size_t> t = Rcpp::as<std::vector<size_t>>(target);
     std::vector<size_t> c = Rcpp::as<std::vector<size_t>>(conds);
@@ -112,7 +112,7 @@ double RcppDiscMI(SEXP mat,
                   double base = 2.0,
                   bool na_rm = true)
 {
-    InfoTheo::Matrix m = mat2patmat(mat);
+    InfoTheo::Matrix m = pat_r2std(mat,false);
 
     std::vector<size_t> t = Rcpp::as<std::vector<size_t>>(target);
     std::vector<size_t> i = Rcpp::as<std::vector<size_t>>(interact);
@@ -147,7 +147,7 @@ double RcppDiscCMI(SEXP mat,
                    double base = 2.0,
                    bool na_rm = true)
 {
-    InfoTheo::Matrix m = mat2patmat(mat);
+    InfoTheo::Matrix m = pat_r2std(mat,false);
 
     std::vector<size_t> t = Rcpp::as<std::vector<size_t>>(target);
     std::vector<size_t> i = Rcpp::as<std::vector<size_t>>(interact);
