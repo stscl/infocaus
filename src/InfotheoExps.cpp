@@ -119,7 +119,7 @@ double RcppDiscMI(SEXP mat,
 
     const size_t n_cols = m.size();
     for (auto& idx : t) {
-        if (idx < 1 || idx > n_cols) {
+        if (idx < 1 || idx > n_obs) {
             Rcpp::stop("Target index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
                        static_cast<int>(n_cols));
@@ -153,29 +153,28 @@ double RcppDiscCMI(SEXP mat,
     std::vector<size_t> i = Rcpp::as<std::vector<size_t>>(interact);
     std::vector<size_t> c = Rcpp::as<std::vector<size_t>>(conds);
 
-    const size_t n_obs = byrow ? static_cast<size_t>(mat.nrow()) 
-                               : static_cast<size_t>(mat.ncol());
+    const size_t n_cols = m.size();
     for (auto& idx : t) {
-        if (idx < 1 || idx > n_obs) {
+        if (idx < 1 || idx > n_cols) {
             Rcpp::stop("Target index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
-                       static_cast<int>(n_obs));
+                       static_cast<int>(n_cols));
         }
         idx -= 1;  // to 0-based
     }
     for (auto& idx : i) {
-        if (idx < 1 || idx > n_obs) {
+        if (idx < 1 || idx > n_cols) {
             Rcpp::stop("Interact index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
-                       static_cast<int>(n_obs));
+                       static_cast<int>(n_cols));
         }
         idx -= 1;  // to 0-based
     }
     for (auto& idx : c) {
-        if (idx < 1 || idx > n_obs) {
+        if (idx < 1 || idx > n_cols) {
             Rcpp::stop("Conds index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
-                       static_cast<int>(n_obs));
+                       static_cast<int>(n_cols));
         }
         idx -= 1;  // to 0-based
     }
