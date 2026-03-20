@@ -181,6 +181,7 @@ inline double JE(
             row.end());
 
         double eps = row[k - 1];
+        // double eps = std::max(row[k-1], NumericUtils::DOUBLE_EPS);
 
         avg += std::log(eps);
     }
@@ -263,6 +264,7 @@ inline double MI(
         std::nth_element(row.begin(),row.begin()+k-1,row.end());
 
         double eps = row[k-1];
+        // double eps = std::max(row[k-1], NumericUtils::DOUBLE_EPS);
 
         avg_log_eps += std::log(eps);
 
@@ -381,6 +383,7 @@ inline double CMI(
         std::nth_element(row.begin(),row.begin()+k-1,row.end());
 
         double eps = row[k-1];
+        // double eps = std::max(row[k-1], NumericUtils::DOUBLE_EPS);
 
         avg_log_eps += std::log(eps);
 
