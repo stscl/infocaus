@@ -332,12 +332,21 @@ std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
     {
         Rcpp::IntegerMatrix m(x);
 
-        const size_t n = m.nrow();
-        const size_t p = m.ncol();
+        const size_t n = static_cast<size_t>(m.nrow());
+        const size_t p = static_cast<size_t>(m.ncol());
 
-        mat.resize(p);
-        for (size_t j = 0; j < p; ++j)
-            mat[j].reserve(n);
+        if (byrow) 
+        {
+          mat.resize(n);
+          for (size_t j = 0; j < n; ++j)
+              mat[j].reserve(p);  
+        }
+        else 
+        {
+          mat.resize(p);
+          for (size_t j = 0; j < p; ++j)
+              mat[j].reserve(n);        
+        }
 
         std::vector<int> uniq;
         uniq.reserve(n*p);
@@ -386,12 +395,21 @@ std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
     {
         Rcpp::NumericMatrix m(x);
 
-        const size_t n = m.nrow();
-        const size_t p = m.ncol();
+        const size_t n = static_cast<size_t>(m.nrow());
+        const size_t p = static_cast<size_t>(m.ncol());
 
-        mat.resize(p);
-        for (size_t j = 0; j < p; ++j)
-            mat[j].reserve(n);
+        if (byrow) 
+        {
+          mat.resize(n);
+          for (size_t j = 0; j < n; ++j)
+              mat[j].reserve(p);  
+        }
+        else 
+        {
+          mat.resize(p);
+          for (size_t j = 0; j < p; ++j)
+              mat[j].reserve(n);        
+        }
 
         std::vector<double> uniq;
         uniq.reserve(n*p);
@@ -440,12 +458,21 @@ std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
     {
         Rcpp::CharacterMatrix m(x);
 
-        const size_t n = m.nrow();
-        const size_t p = m.ncol();
+        const size_t n = static_cast<size_t>(m.nrow());
+        const size_t p = static_cast<size_t>(m.ncol());
 
-        mat.resize(p);
-        for (size_t j = 0; j < p; ++j)
-            mat[j].reserve(n);
+        if (byrow) 
+        {
+          mat.resize(n);
+          for (size_t j = 0; j < n; ++j)
+              mat[j].reserve(p);  
+        }
+        else 
+        {
+          mat.resize(p);
+          for (size_t j = 0; j < p; ++j)
+              mat[j].reserve(n);        
+        }
 
         std::vector<std::string> uniq;
         uniq.reserve(n*p);
