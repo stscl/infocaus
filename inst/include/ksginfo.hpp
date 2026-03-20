@@ -118,6 +118,7 @@ inline double Entropy(
             row.end());
 
         double eps = row[k - 1];
+        // double eps = std::max(row[k-1], NumericUtils::DOUBLE_EPS);
 
         avg += std::log(eps);
     }
