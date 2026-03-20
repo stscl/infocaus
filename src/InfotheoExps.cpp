@@ -44,11 +44,11 @@ double RcppDiscEntropy(SEXP series,
             {
                 if (Rcpp::IntegerVector::is_na(v[i]))
                 {
-                    series.push_back( 0 );
+                    s.push_back( 0 );
                 }
                 else
                 {
-                    series.push_back( dict[v[i]] );
+                    s.push_back( dict[v[i]] );
                 }
             }
             
@@ -79,11 +79,11 @@ double RcppDiscEntropy(SEXP series,
             {
                 if (Rcpp::NumericVector::is_na(v[i]))
                 {
-                    series.push_back( 0 );
+                    s.push_back( 0 );
                 }
                 else
                 {
-                    series.push_back( dict[v[i]] );
+                    s.push_back( dict[v[i]] );
                 }
             }
 
@@ -114,11 +114,11 @@ double RcppDiscEntropy(SEXP series,
             {
                 if (Rcpp::CharacterVector::is_na(v[i]))
                 {
-                    series.push_back( 0 );
+                    s.push_back( 0 );
                 }
                 else
                 {
-                    series.push_back( dict[std::string(v[i])] );
+                    s.push_back( dict[std::string(v[i])] );
                 }
             }
 
