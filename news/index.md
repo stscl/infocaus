@@ -4,5 +4,4 @@
 
 CRAN release: 2026-03-19
 
-- First stable release
-  ([\#60](https://github.com/stscl/infoxtr/issues/60)).
+- Initial CRAN submission.

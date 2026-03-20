@@ -104,10 +104,6 @@ kocmi(
 
 A named numeric vector.
 
-## Note
-
-`kocmi` only support numeric data.
-
 ## References
 
 Zhang, X., Chen, L., 2025. Quantifying interventional causality by

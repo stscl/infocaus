@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/stscl/infoxtr/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/stscl/infoxtr/blob/v0.1/inst/CITATION)
 
 Lyu W (2026). *infoxtr: Information-Theoretic Measures for Revealing
 Variable Interactions*.

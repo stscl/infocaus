@@ -117,7 +117,7 @@ A list.
 
 ## Note
 
-`surd` only support numeric data.
+SURD only support numeric data.
 
 ## References
 
