@@ -13,7 +13,7 @@ surd(
   lag = 1,
   bin = 5,
   method = "equal",
-  max.combs = 10,
+  max.order = 10,
   threads = 1,
   base = 2,
   normalize = TRUE
@@ -27,7 +27,7 @@ surd(
   lag = 1,
   bin = 5,
   method = "equal",
-  max.combs = 10,
+  max.order = 10,
   threads = 1,
   base = 2,
   normalize = TRUE,
@@ -42,7 +42,7 @@ surd(
   lag = 1,
   bin = 5,
   method = "equal",
-  max.combs = 10,
+  max.order = 10,
   threads = 1,
   base = 2,
   normalize = TRUE
@@ -77,7 +77,7 @@ surd(
   `"geometric"`, `"quantile"`, `"natural("jenks")"`, or
   `"headtail"("headtails")`.
 
-- max.combs:
+- max.order:
 
   (optional) Maximum combination order.
 
