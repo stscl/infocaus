@@ -282,7 +282,6 @@ Rcpp::NumericMatrix mat_std2r(
  *      - Scan matrix once to collect global unique values
  *      - Sort uniques
  *      - Assign id 1..uniq
- *      - Encode each element via index2base4
  *
  *  NA handling:
  *      NA encoded as {0}
