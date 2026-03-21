@@ -89,6 +89,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RcppContJE
+double RcppContJE(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& vars, int k, int alg, double base);
+RcppExport SEXP _infocaus_RcppContJE(SEXP matSEXP, SEXP varsSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type vars(varsSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
+    Rcpp::traits::input_parameter< double >::type base(baseSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppContJE(mat, vars, k, alg, base));
+    return rcpp_result_gen;
+END_RCPP
+}
 // RcppDiscCE
 double RcppDiscCE(SEXP mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& conds, double base, bool na_rm);
 RcppExport SEXP _infocaus_RcppDiscCE(SEXP matSEXP, SEXP targetSEXP, SEXP condsSEXP, SEXP baseSEXP, SEXP na_rmSEXP) {
@@ -231,6 +245,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppDiscEntropy", (DL_FUNC) &_infocaus_RcppDiscEntropy, 3},
     {"_infocaus_RcppContEntropy", (DL_FUNC) &_infocaus_RcppContEntropy, 4},
     {"_infocaus_RcppDiscJE", (DL_FUNC) &_infocaus_RcppDiscJE, 4},
+    {"_infocaus_RcppContJE", (DL_FUNC) &_infocaus_RcppContJE, 5},
     {"_infocaus_RcppDiscCE", (DL_FUNC) &_infocaus_RcppDiscCE, 5},
     {"_infocaus_RcppDiscMI", (DL_FUNC) &_infocaus_RcppDiscMI, 5},
     {"_infocaus_RcppDiscCMI", (DL_FUNC) &_infocaus_RcppDiscCMI, 6},

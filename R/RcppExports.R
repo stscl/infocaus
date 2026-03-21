@@ -25,6 +25,10 @@ RcppDiscJE <- function(mat, vars, base = 2.0, na_rm = TRUE) {
     .Call(`_infocaus_RcppDiscJE`, mat, vars, base, na_rm)
 }
 
+RcppContJE <- function(mat, vars, k = 3L, alg = 0L, base = 2.0) {
+    .Call(`_infocaus_RcppContJE`, mat, vars, k, alg, base)
+}
+
 RcppDiscCE <- function(mat, target, conds, base = 2.0, na_rm = TRUE) {
     .Call(`_infocaus_RcppDiscCE`, mat, target, conds, base, na_rm)
 }
