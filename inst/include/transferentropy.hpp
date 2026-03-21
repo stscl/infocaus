@@ -65,7 +65,7 @@ namespace TE
             return std::numeric_limits<double>::quiet_NaN();
         
         // Construct joint state matrix
-        DiscMat pm(tg.size()*2 + ag.size());
+        DiscMat pm(tg.size()*2 + ag.size(),std::vector<uint64_t>(n_obs,0));
 
         for (size_t i = 0; i < tg.size(); ++i)
         {   
@@ -77,17 +77,11 @@ namespace TE
         }
         for (size_t i = 0; i < tg.size(); ++i)
         {   
-            pm[i + tg.size() + ag.size()] = mat[ag[i]];
-        }
-        
-
-        for (size_t t = lag; t < n; ++t)
-        {
-            for (size_t j = 0; j < p; ++j)
+            for (size_t t = lag; t < n_obs; ++t)
             {
-                double v = mat[t - lag][j];
-                if (!std::isnan(v))
-                    out[t][j] = v;
+                uint64_t v = mat[tg[i]][t - lag];
+                if (v != 0)
+                    pm[i + tg.size() + ag.size()][t] = v;
             }
         }
 
