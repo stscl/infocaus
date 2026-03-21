@@ -85,7 +85,18 @@ namespace TE
             }
         }
 
-        
+        // Construct variable index vector for CMI
+        std::vector<size_t> tg_idx(tg.size());
+        std::iota(tg_idx.begin(), tg_idx.end(), 0);
+
+        std::vector<size_t> ag_idx(ag.size());
+        std::iota(ag_idx.begin(), ag_idx.end(), tg.size());
+
+        std::vector<size_t> tgl_idx(tg.size());
+        std::iota(tgl_idx.begin(), tgl_idx.end(), tg.size() + ag.size());
+
+        // Compute conditional mutual information
+        return InfoTheo::CMI(pm, tg_idx, ag_idx, tgl_idx, base, na_rm, normalize);
     }
 
     /***********************************************************
