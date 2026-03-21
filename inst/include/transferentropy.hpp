@@ -61,105 +61,20 @@ namespace TE
 
         if (tg.empty() || ag.empty())
             return std::numeric_limits<double>::quiet_NaN();
+        
+        // Construct joint state matrix
+        DiscMat pm(tg.size()*2 + ag.size());
 
-        const size_t k = clean_vars.size();
-
-        /*------------------------------------------------------
-         * Construct joint state table
-         * Layout:
-         *   states[i*k + j]
-         *-----------------------------------------------------*/
-        std::vector<uint64_t> states;
-        states.reserve(n_obs * k);
-
-        size_t n_valid = 0;
-        for (size_t i = 0; i < n_obs; ++i)
-        {
-            // Phase 1: Check for NA first (read-only)
-            bool skip = false;
-            for (size_t j = 0; j < k; ++j)
-            {
-                if (na_rm && mat[clean_vars[j]][i] == 0)
-                {
-                    skip = true;
-                    break;
-                }
-            }
-            if (skip) continue;
-            
-            // Phase 2: Push valid values (guaranteed complete)
-            for (size_t j = 0; j < k; ++j)
-                states.push_back(mat[clean_vars[j]][i]);
-            
-            ++n_valid;
+        for (size_t i = 0; i < tg.size(); ++i)
+        {   
+            pm[i] = mat[tg[i]];
+        }
+        for (size_t i = 0; i < ag.size(); ++i)
+        {   
+            pm[i + tg.size()] = mat[ag[i]];
         }
 
-        if (n_valid == 0)
-            return std::numeric_limits<double>::quiet_NaN();
-
-        /*------------------------------------------------------
-         * Create index array for sorting
-         *-----------------------------------------------------*/
-        std::vector<size_t> order(n_valid);
-        for (size_t i = 0; i < n_valid; ++i)
-            order[i] = i;
-
-        /*------------------------------------------------------
-         * Sort joint states lexicographically
-         *-----------------------------------------------------*/
-        std::sort(order.begin(), order.end(),
-            [&](size_t a, size_t b)
-            {
-                size_t ia = a * k;
-                size_t ib = b * k;
-
-                for (size_t j = 0; j < k; ++j)
-                {
-                    uint64_t va = states[ia + j];
-                    uint64_t vb = states[ib + j];
-
-                    if (va < vb) return true;
-                    if (va > vb) return false;
-                }
-                return false;
-            });
-
-        /*------------------------------------------------------
-         * Run-length frequency counting
-         *-----------------------------------------------------*/
-        double H = 0.0;
-        size_t run = 1;
-
-        auto equal_state = [&](size_t a, size_t b)
-        {
-            size_t ia = a * k;
-            size_t ib = b * k;
-
-            for (size_t j = 0; j < k; ++j)
-                if (states[ia + j] != states[ib + j])
-                    return false;
-
-            return true;
-        };
-
-        for (size_t i = 1; i < n_valid; ++i)
-        {
-            if (equal_state(order[i], order[i-1]))
-            {
-                ++run;
-            }
-            else
-            {
-                double p = static_cast<double>(run) / n_valid;
-                H -= p * std::log(p);
-                run = 1;
-            }
-        }
-
-        double p = static_cast<double>(run) / n_valid;
-        H -= p * std::log(p);
-
-        return convert_log_base(H, base);
+        
     }
 
     /***********************************************************
