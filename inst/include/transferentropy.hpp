@@ -21,12 +21,13 @@ namespace TE
      ***********************************************************/
     inline double TE4Disc(
         const InfoTheo::Matrix& mat,
-        const std::vector<size_t>& vars,
+        const std::vector<size_t>& target,
+        const std::vector<size_t>& agent,
         double base = 2.0,
         bool na_rm = true,
         bool normalize = false)
     {
-        if (mat.empty() || vars.empty())
+        if (mat.empty())
             return std::numeric_limits<double>::quiet_NaN();
 
         const size_t n_obs  = mat[0].size();
@@ -35,18 +36,15 @@ namespace TE
         /*------------------------------------------------------
          * Validate, sort, and deduplicate variable indices
          *-----------------------------------------------------*/
-        std::vector<size_t> clean_vars;
-        clean_vars.reserve(vars.size());
-
-        for (size_t v : vars)
+        std::vector<size_t> tg;
+        tg.reserve(target.size());
+        for (size_t v : target)
             if (v < n_cols)
-                clean_vars.push_back(v);
-
-        // Sort + unique: remove duplicates and ensure deterministic order
-        std::sort(clean_vars.begin(), clean_vars.end());
-        clean_vars.erase(
-            std::unique(clean_vars.begin(), clean_vars.end()),
-            clean_vars.end()
+                tg.push_back(v);
+        std::sort(tg.begin(), tg.end());
+        tg.erase(
+            std::unique(tg.begin(), tg.end()),
+            tg.end()
         );
 
         if (clean_vars.empty())
