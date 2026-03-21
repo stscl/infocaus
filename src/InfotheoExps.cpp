@@ -339,7 +339,8 @@ double RcppDiscCMI(SEXP mat,
                    const Rcpp::IntegerVector& interact,
                    const Rcpp::IntegerVector& conds,
                    double base = 2.0,
-                   bool na_rm = true)
+                   bool na_rm = true,
+                   bool normalize = false)
 {
     InfoTheo::Matrix m = pat_r2std(mat,false);
 
@@ -373,7 +374,7 @@ double RcppDiscCMI(SEXP mat,
         idx -= 1;  // to 0-based
     }
 
-    return InfoTheo::CMI(m, t, i, c, base, na_rm);
+    return InfoTheo::CMI(m, t, i, c, base, na_rm, normalize);
 }
 
 // Wrapper function to calculate conditional mutual information for continuous data
