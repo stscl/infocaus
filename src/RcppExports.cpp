@@ -63,6 +63,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RcppContEntropy
+double RcppContEntropy(const Rcpp::NumericVector& vec, int k, int alg, double base);
+RcppExport SEXP _infocaus_RcppContEntropy(SEXP vecSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
+    Rcpp::traits::input_parameter< double >::type base(baseSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppContEntropy(vec, k, alg, base));
+    return rcpp_result_gen;
+END_RCPP
+}
 // RcppDiscJE
 double RcppDiscJE(SEXP mat, const Rcpp::IntegerVector& vars, double base, bool na_rm);
 RcppExport SEXP _infocaus_RcppDiscJE(SEXP matSEXP, SEXP varsSEXP, SEXP baseSEXP, SEXP na_rmSEXP) {
@@ -216,6 +229,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppDist4Mat", (DL_FUNC) &_infocaus_RcppDist4Mat, 4},
     {"_infocaus_RcppDist4MatSub", (DL_FUNC) &_infocaus_RcppDist4MatSub, 6},
     {"_infocaus_RcppDiscEntropy", (DL_FUNC) &_infocaus_RcppDiscEntropy, 3},
+    {"_infocaus_RcppContEntropy", (DL_FUNC) &_infocaus_RcppContEntropy, 4},
     {"_infocaus_RcppDiscJE", (DL_FUNC) &_infocaus_RcppDiscJE, 4},
     {"_infocaus_RcppDiscCE", (DL_FUNC) &_infocaus_RcppDiscCE, 5},
     {"_infocaus_RcppDiscMI", (DL_FUNC) &_infocaus_RcppDiscMI, 5},

@@ -17,6 +17,10 @@ RcppDiscEntropy <- function(series, base = 2.0, na_rm = TRUE) {
     .Call(`_infocaus_RcppDiscEntropy`, series, base, na_rm)
 }
 
+RcppContEntropy <- function(vec, k = 3L, alg = 0L, base = 2.0) {
+    .Call(`_infocaus_RcppContEntropy`, vec, k, alg, base)
+}
+
 RcppDiscJE <- function(mat, vars, base = 2.0, na_rm = TRUE) {
     .Call(`_infocaus_RcppDiscJE`, mat, vars, base, na_rm)
 }
