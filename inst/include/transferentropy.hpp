@@ -33,9 +33,7 @@ namespace TE
         const size_t n_obs  = mat[0].size();
         const size_t n_cols = mat.size();
 
-        /*------------------------------------------------------
-         * Validate, sort, and deduplicate variable indices
-         *-----------------------------------------------------*/
+        // Validate, sort, and deduplicate variable indices
         std::vector<size_t> tg;
         tg.reserve(target.size());
         for (size_t v : target)
@@ -47,7 +45,18 @@ namespace TE
             tg.end()
         );
 
-        if (clean_vars.empty())
+        std::vector<size_t> ag;
+        ag.reserve(agent.size());
+        for (size_t v : agent)
+            if (v < n_cols)
+                ag.push_back(v);
+        std::sort(ag.begin(), ag.end());
+        ag.erase(
+            std::unique(ag.begin(), ag.end()),
+            ag.end()
+        );
+
+        if (tg.empty() || ag.empty())
             return std::numeric_limits<double>::quiet_NaN();
 
         const size_t k = clean_vars.size();
