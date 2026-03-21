@@ -33,6 +33,10 @@ RcppDiscCE <- function(mat, target, conds, base = 2.0, na_rm = TRUE) {
     .Call(`_infocaus_RcppDiscCE`, mat, target, conds, base, na_rm)
 }
 
+RcppContCE <- function(mat, target, conds, k = 3L, alg = 0L, base = 2.0) {
+    .Call(`_infocaus_RcppContCE`, mat, target, conds, k, alg, base)
+}
+
 RcppDiscMI <- function(mat, target, interact, base = 2.0, na_rm = TRUE) {
     .Call(`_infocaus_RcppDiscMI`, mat, target, interact, base, na_rm)
 }
