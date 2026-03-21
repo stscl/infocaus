@@ -32,6 +32,8 @@ namespace TE
     {
         if (mat.empty())
             return std::numeric_limits<double>::quiet_NaN();
+        if (lag == 0)
+            return 0.0;
 
         const size_t n_obs  = mat[0].size();
         const size_t n_cols = mat.size();
@@ -72,6 +74,21 @@ namespace TE
         for (size_t i = 0; i < ag.size(); ++i)
         {   
             pm[i + tg.size()] = mat[ag[i]];
+        }
+        for (size_t i = 0; i < tg.size(); ++i)
+        {   
+            pm[i + tg.size() + ag.size()] = mat[ag[i]];
+        }
+        
+
+        for (size_t t = lag; t < n; ++t)
+        {
+            for (size_t j = 0; j < p; ++j)
+            {
+                double v = mat[t - lag][j];
+                if (!std::isnan(v))
+                    out[t][j] = v;
+            }
         }
 
         
