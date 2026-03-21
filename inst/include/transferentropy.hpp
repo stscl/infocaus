@@ -14,7 +14,9 @@
 #include "ksginfo.hpp"
 
 namespace TE
-{
+{   
+    using DiscMat = std::vector<std::vector<uint64_t>>;
+    using ContMat = std::vector<std::vector<double>>;
 
     /***********************************************************
      * Transfer Entropy for Discrete Data
