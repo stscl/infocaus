@@ -22,9 +22,10 @@ namespace TE
      * Transfer Entropy for Discrete Data
      ***********************************************************/
     inline double TE4Disc(
-        const InfoTheo::Matrix& mat,
+        const DiscMat& mat,
         const std::vector<size_t>& target,
         const std::vector<size_t>& agent,
+        size_t lag = 3,
         double base = 2.0,
         bool na_rm = true,
         bool normalize = false)
