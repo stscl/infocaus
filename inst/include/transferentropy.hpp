@@ -183,13 +183,13 @@ namespace TE
         double base = 2.0,
         bool normalize = false)
     {
-        if (mat.empty())
+        const size_t n_obs  = mat[0].size();
+        const size_t n_cols = mat.size();
+
+        if (mat.empty() || lag > n_obs)
             return std::numeric_limits<double>::quiet_NaN();
         if (lag == 0 || k <= 1)
             return 0.0;
-
-        const size_t n_obs  = mat[0].size();
-        const size_t n_cols = mat.size();
 
         // Validate, sort, and deduplicate variable indices
         std::vector<size_t> tg;
