@@ -463,3 +463,51 @@ double RcppDiscTE(SEXP mat,
     return TE::TE4Disc(m, tg, ag, static_cast<size_t>(std::abs(lag_p)), 
                        static_cast<size_t>(std::abs(lag_q)), base, na_rm, normalize);
 }
+
+// Wrapper function to calculate transfer entropy for continuous time series data
+// [[Rcpp::export(rng = false)]]
+double RcppContTE(const Rcpp::NumericMatrix& mat,
+                  const Rcpp::IntegerVector& target,
+                  const Rcpp::IntegerVector& agent,
+                  int lag_p = 3,
+                  int lag_q = 3,
+                  int k = 3, 
+                  int alg = 0,
+                  double base = 2.0,
+                  bool normalize = false)
+{
+    std::vector<std::vector<double>> m = mat_r2std(mat, false);
+
+    std::vector<size_t> t = Rcpp::as<std::vector<size_t>>(target);
+    std::vector<size_t> i = Rcpp::as<std::vector<size_t>>(interact);
+    std::vector<size_t> c = Rcpp::as<std::vector<size_t>>(conds);
+
+    const size_t n_cols = m.size();
+    for (auto& idx : t) {
+        if (idx < 1 || idx > n_cols) {
+            Rcpp::stop("Target index %d out of bounds [1, %d]", 
+                       static_cast<int>(idx), 
+                       static_cast<int>(n_cols));
+        }
+        idx -= 1;  // to 0-based
+    }
+    for (auto& idx : i) {
+        if (idx < 1 || idx > n_cols) {
+            Rcpp::stop("Interact index %d out of bounds [1, %d]", 
+                       static_cast<int>(idx), 
+                       static_cast<int>(n_cols));
+        }
+        idx -= 1;  // to 0-based
+    }
+    for (auto& idx : c) {
+        if (idx < 1 || idx > n_cols) {
+            Rcpp::stop("Conds index %d out of bounds [1, %d]", 
+                       static_cast<int>(idx), 
+                       static_cast<int>(n_cols));
+        }
+        idx -= 1;  // to 0-based
+    }
+    
+    return KSGInfo::CMI(m, t, i, c, static_cast<size_t>(std::abs(k)), 
+                       static_cast<size_t>(std::abs(alg)), base, normalize);
+}
