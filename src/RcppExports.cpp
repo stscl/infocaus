@@ -196,6 +196,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RcppDiscTE
+double RcppDiscTE(SEXP mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& agent, int lag_p, int lag_q, double base, bool na_rm, bool normalize);
+RcppExport SEXP _infocaus_RcppDiscTE(SEXP matSEXP, SEXP targetSEXP, SEXP agentSEXP, SEXP lag_pSEXP, SEXP lag_qSEXP, SEXP baseSEXP, SEXP na_rmSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< SEXP >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type agent(agentSEXP);
+    Rcpp::traits::input_parameter< int >::type lag_p(lag_pSEXP);
+    Rcpp::traits::input_parameter< int >::type lag_q(lag_qSEXP);
+    Rcpp::traits::input_parameter< double >::type base(baseSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    Rcpp::traits::input_parameter< bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppDiscTE(mat, target, agent, lag_p, lag_q, base, na_rm, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
 // RcppGenLatticeLag
 Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat, const Rcpp::List& nb, int lag);
 RcppExport SEXP _infocaus_RcppGenLatticeLag(SEXP matSEXP, SEXP nbSEXP, SEXP lagSEXP) {
@@ -302,6 +319,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppContMI", (DL_FUNC) &_infocaus_RcppContMI, 7},
     {"_infocaus_RcppDiscCMI", (DL_FUNC) &_infocaus_RcppDiscCMI, 7},
     {"_infocaus_RcppContCMI", (DL_FUNC) &_infocaus_RcppContCMI, 8},
+    {"_infocaus_RcppDiscTE", (DL_FUNC) &_infocaus_RcppDiscTE, 8},
     {"_infocaus_RcppGenLatticeLag", (DL_FUNC) &_infocaus_RcppGenLatticeLag, 3},
     {"_infocaus_RcppGenGridLag", (DL_FUNC) &_infocaus_RcppGenGridLag, 3},
     {"_infocaus_RcppGenTSLag", (DL_FUNC) &_infocaus_RcppGenTSLag, 2},

@@ -53,6 +53,10 @@ RcppContCMI <- function(mat, target, interact, conds, k = 3L, alg = 0L, base = 2
     .Call(`_infocaus_RcppContCMI`, mat, target, interact, conds, k, alg, base, normalize)
 }
 
+RcppDiscTE <- function(mat, target, agent, lag_p = 3L, lag_q = 3L, base = 2.0, na_rm = TRUE, normalize = FALSE) {
+    .Call(`_infocaus_RcppDiscTE`, mat, target, agent, lag_p, lag_q, base, na_rm, normalize)
+}
+
 RcppGenLatticeLag <- function(mat, nb, lag = 1L) {
     .Call(`_infocaus_RcppGenLatticeLag`, mat, nb, lag)
 }
