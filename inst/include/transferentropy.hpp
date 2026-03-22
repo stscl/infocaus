@@ -1,4 +1,65 @@
-
+/**********************************************************************
+ *  File: transferentropy.hpp
+ *
+ *  Transfer Entropy estimation for discrete and continuous time series.
+ *
+ *  Algorithms:
+ *
+ *      Transfer Entropy via Conditional Mutual Information
+ *
+ *      TE(X → Y) = I(Y_t ; X_t | Y_{t-lag})
+ *
+ *  Data layout:
+ *      DiscMat = std::vector<std::vector<uint64_t>>
+ *                 // mat[var][obs]  (discrete state series)
+ *
+ *      ContMat = std::vector<std::vector<double>>
+ *                 // mat[var][obs]  (continuous observations)
+ *
+ *  Backend estimators:
+ *
+ *      Discrete Transfer Entropy
+ *      -------------------------
+ *      Uses discrete information theoretic estimators
+ *      implemented in:
+ *
+ *          InfoTheo::CMI
+ *
+ *      Continuous Transfer Entropy
+ *      ---------------------------
+ *      Uses k-nearest neighbour estimators implemented in:
+ *
+ *          KSGInfo::CMI
+ *
+ *      Based on:
+ *
+ *          Kraskov–Stögbauer–Grassberger (KSG) estimator
+ *
+ *  Parameters:
+ *
+ *      lag
+ *          Time lag between source and target variables.
+ *
+ *      k
+ *          k-nearest neighbours for KSG estimator.
+ *
+ *      alg
+ *          Estimator variant for continuous TE:
+ *
+ *              0  KSG estimator I (KSG1)
+ *              1  KSG estimator II (KSG2)
+ *
+ *      normalize
+ *          If true, normalize TE by conditional entropy.
+ *
+ *  Dependencies:
+ *
+ *      infotheo.hpp
+ *      ksginfo.hpp
+ *
+ *  Author: Wenbo Lyu (Github: @SpatLyu)
+ *  License: GPL-3
+ **********************************************************************/
 
 #ifndef TRANSFERENTROPY_HPP
 #define TRANSFERENTROPY_HPP
