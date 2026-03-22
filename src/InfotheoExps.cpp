@@ -478,12 +478,11 @@ double RcppContTE(const Rcpp::NumericMatrix& mat,
 {
     std::vector<std::vector<double>> m = mat_r2std(mat, false);
 
-    std::vector<size_t> t = Rcpp::as<std::vector<size_t>>(target);
-    std::vector<size_t> i = Rcpp::as<std::vector<size_t>>(interact);
-    std::vector<size_t> c = Rcpp::as<std::vector<size_t>>(conds);
+    std::vector<size_t> tg = Rcpp::as<std::vector<size_t>>(target);
+    std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
 
     const size_t n_cols = m.size();
-    for (auto& idx : t) {
+    for (auto& idx : tg) {
         if (idx < 1 || idx > n_cols) {
             Rcpp::stop("Target index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
@@ -491,7 +490,7 @@ double RcppContTE(const Rcpp::NumericMatrix& mat,
         }
         idx -= 1;  // to 0-based
     }
-    for (auto& idx : i) {
+    for (auto& idx : ag) {
         if (idx < 1 || idx > n_cols) {
             Rcpp::stop("Interact index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
@@ -499,15 +498,10 @@ double RcppContTE(const Rcpp::NumericMatrix& mat,
         }
         idx -= 1;  // to 0-based
     }
-    for (auto& idx : c) {
-        if (idx < 1 || idx > n_cols) {
-            Rcpp::stop("Conds index %d out of bounds [1, %d]", 
-                       static_cast<int>(idx), 
-                       static_cast<int>(n_cols));
-        }
-        idx -= 1;  // to 0-based
-    }
     
-    return KSGInfo::CMI(m, t, i, c, static_cast<size_t>(std::abs(k)), 
+    return TE::TE4Cont(m, tg, ag, 
+                       static_cast<size_t>(std::abs(lag_p)), 
+                       static_cast<size_t>(std::abs(lag_q)), 
+                       static_cast<size_t>(std::abs(k)), 
                        static_cast<size_t>(std::abs(alg)), base, normalize);
 }
