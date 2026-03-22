@@ -213,6 +213,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RcppContTE
+double RcppContTE(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& agent, int lag_p, int lag_q, int k, int alg, double base, bool normalize);
+RcppExport SEXP _infocaus_RcppContTE(SEXP matSEXP, SEXP targetSEXP, SEXP agentSEXP, SEXP lag_pSEXP, SEXP lag_qSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type agent(agentSEXP);
+    Rcpp::traits::input_parameter< int >::type lag_p(lag_pSEXP);
+    Rcpp::traits::input_parameter< int >::type lag_q(lag_qSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
+    Rcpp::traits::input_parameter< double >::type base(baseSEXP);
+    Rcpp::traits::input_parameter< bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppContTE(mat, target, agent, lag_p, lag_q, k, alg, base, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
 // RcppGenLatticeLag
 Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat, const Rcpp::List& nb, int lag);
 RcppExport SEXP _infocaus_RcppGenLatticeLag(SEXP matSEXP, SEXP nbSEXP, SEXP lagSEXP) {
@@ -320,6 +338,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppDiscCMI", (DL_FUNC) &_infocaus_RcppDiscCMI, 7},
     {"_infocaus_RcppContCMI", (DL_FUNC) &_infocaus_RcppContCMI, 8},
     {"_infocaus_RcppDiscTE", (DL_FUNC) &_infocaus_RcppDiscTE, 8},
+    {"_infocaus_RcppContTE", (DL_FUNC) &_infocaus_RcppContTE, 9},
     {"_infocaus_RcppGenLatticeLag", (DL_FUNC) &_infocaus_RcppGenLatticeLag, 3},
     {"_infocaus_RcppGenGridLag", (DL_FUNC) &_infocaus_RcppGenGridLag, 3},
     {"_infocaus_RcppGenTSLag", (DL_FUNC) &_infocaus_RcppGenTSLag, 2},
