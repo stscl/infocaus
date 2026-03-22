@@ -103,12 +103,13 @@ namespace TE
      * Transfer Entropy for Continuous Data
      ***********************************************************/
     inline double TE4Cont(
-        const DiscMat& mat,
+        const ContMat& mat,
         const std::vector<size_t>& target,
         const std::vector<size_t>& agent,
         size_t lag = 3,
+        size_t k = 3,
+        size_t alg = 0,
         double base = 2.0,
-        bool na_rm = true,
         bool normalize = false)
     {
         if (mat.empty())
