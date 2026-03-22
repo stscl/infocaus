@@ -219,15 +219,25 @@ namespace TE
         
         // Construct joint state matrix
         ContMat pm(tg.size()*2 + ag.size(),std::vector<double>(n_obs,std::numeric_limits<double>::quiet_NaN()));
-
+        
+        // Y_t
         for (size_t i = 0; i < tg.size(); ++i)
         {   
             pm[i] = mat[tg[i]];
         }
+
+        // X_{t-lag}
         for (size_t i = 0; i < ag.size(); ++i)
         {   
-            pm[i + tg.size()] = mat[ag[i]];
+            for (size_t t = lag; t < n_obs; ++t)
+            {
+                double v = mat[ag[i]][t - lag];
+                if (!std::isnan(v))
+                    pm[i + tg.size()][t] = v;
+            }
         }
+
+        // Y_{t-lag}
         for (size_t i = 0; i < tg.size(); ++i)
         {   
             for (size_t t = lag; t < n_obs; ++t)
