@@ -7,7 +7,7 @@
  *
  *      Transfer Entropy via Conditional Mutual Information
  *
- *      TE(X → Y) = I(Y_t ; X_t | Y_{t-lag})
+ *      TE(X → Y) = I(Y_t ; X_{t-lag} | Y_{t-lag})
  *
  *  Data layout:
  *      DiscMat = std::vector<std::vector<uint64_t>>
