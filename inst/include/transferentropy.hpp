@@ -114,7 +114,7 @@ namespace TE
     {
         if (mat.empty())
             return std::numeric_limits<double>::quiet_NaN();
-        if (lag == 0)
+        if (lag == 0 || k <= 1)
             return 0.0;
 
         const size_t n_obs  = mat[0].size();
@@ -147,7 +147,7 @@ namespace TE
             return std::numeric_limits<double>::quiet_NaN();
         
         // Construct joint state matrix
-        DiscMat pm(tg.size()*2 + ag.size(),std::vector<uint64_t>(n_obs,0));
+        ContMat pm(tg.size()*2 + ag.size(),std::vector<double>(n_obs,std::numeric_limits<double>::quiet_NaN()));
 
         for (size_t i = 0; i < tg.size(); ++i)
         {   
@@ -161,8 +161,8 @@ namespace TE
         {   
             for (size_t t = lag; t < n_obs; ++t)
             {
-                uint64_t v = mat[tg[i]][t - lag];
-                if (v != 0)
+                double v = mat[tg[i]][t - lag];
+                if (!std::isnan(v))
                     pm[i + tg.size() + ag.size()][t] = v;
             }
         }
