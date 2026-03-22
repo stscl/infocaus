@@ -274,8 +274,15 @@ namespace KSGInfo
             {
                 if (i == j) continue;
 
-                if (!std::isnan(d_x[i][j]) && d_x[i][j] < eps) nx++;
-                if (!std::isnan(d_y[i][j]) && d_y[i][j] < eps) ny++;
+                if (alg == 0)
+                {
+                    if (!std::isnan(d_x[i][j]) && d_x[i][j] < eps) nx++;
+                    if (!std::isnan(d_y[i][j]) && d_y[i][j] < eps) ny++;
+                }
+                else 
+                    if (!std::isnan(d_x[i][j]) && d_x[i][j] <= eps) nx++;
+                    if (!std::isnan(d_y[i][j]) && d_y[i][j] <= eps) ny++;                {
+                } 
             }
 
             if (alg == 0)
