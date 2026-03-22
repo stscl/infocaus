@@ -126,9 +126,9 @@ namespace KSGInfo
         avg /= static_cast<double>(n);
 
         double H = NumericUtils::Digamma(n)
-                - NumericUtils::Digamma(k)
-                + avg
-                + std::log(2.0);
+                 - NumericUtils::Digamma(k)
+                 + avg
+                 + std::log(2.0);
 
         if (alg == 1)
             H += 1.0 / k;
