@@ -1,6 +1,6 @@
-je = \(df, indices, base = 2, type = c("disc", "cont"), k = 3) {
+je = \(data, indices, base = 2, type = c("disc", "cont"), k = 3) {
   type = match.arg(type)
-  mat = as.matrix(df)
+  mat = as.matrix(data)
   if (type == "disc") {
     return(RcppDiscJE(mat, indices, base, TRUE))
   } else {
