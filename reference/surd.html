@@ -159,8 +159,11 @@ Defaults to <code>exp(1)</code> (nats). Use <code>2</code> for bits or <code>10<
 </dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p><code>surd</code> only support numeric data.</p>
-    </div>
+    <p><code>surd</code> only supports numeric input data. Both <code>bin</code> and <code>method</code>
+support variable-specific settings using R-style recycling:</p><ul><li><p>length 1: applied to the target and all agent variables</p></li>
+<li><p>length 2: first for the target, second for all agents</p></li>
+<li><p>length &gt; 2: first for the target, remaining values are recycled across agents</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Martinez-Sanchez, A., Arranz, G., Lozano-Duran, A., 2024. Decomposing causality into its synergistic, unique, and redundant components. Nature Communications 15.</p>

@@ -117,7 +117,15 @@ A list.
 
 ## Note
 
-`surd` only support numeric data.
+`surd` only supports numeric input data. Both `bin` and `method` support
+variable-specific settings using R-style recycling:
+
+- length 1: applied to the target and all agent variables
+
+- length 2: first for the target, second for all agents
+
+- length \> 2: first for the target, remaining values are recycled
+  across agents
 
 ## References
 

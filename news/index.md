@@ -2,6 +2,12 @@
 
 ## infoxtr 0.2
 
+#### enhancements
+
+- Support variable-specific discretization settings via vectorized `bin`
+  and `method` arguments in `surd` generic
+  ([\#68](https://github.com/stscl/infoxtr/issues/68)).
+
 #### breaking changes
 
 - Rename combination order limit parameter in `surd` generic to
