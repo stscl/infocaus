@@ -119,8 +119,9 @@ namespace KSGInfo
 
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
-
-            avg += std::log(eps*2.0);
+            
+            avg += (NumericUtils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+                    ? 0.0 : std::log(eps * 2.0);
         }
 
         avg /= static_cast<double>(n);
