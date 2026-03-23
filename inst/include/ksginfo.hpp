@@ -73,7 +73,6 @@ namespace KSGInfo
     inline double Entropy(
         const Series& series,
         size_t k = 3,
-        size_t alg = 0,
         double base = 2.0)
     {
         const size_t n = series.size();
@@ -119,9 +118,6 @@ namespace KSGInfo
         double H = NumericUtils::Digamma(n)
                  - NumericUtils::Digamma(k)
                  + avg;
-
-        if (alg == 1)
-            H += 1.0 / k;
 
         if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
