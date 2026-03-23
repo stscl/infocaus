@@ -64,15 +64,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppContEntropy
-double RcppContEntropy(const Rcpp::NumericVector& vec, int k, int alg, double base);
-RcppExport SEXP _infocaus_RcppContEntropy(SEXP vecSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP) {
+double RcppContEntropy(const Rcpp::NumericVector& vec, int k, double base);
+RcppExport SEXP _infocaus_RcppContEntropy(SEXP vecSEXP, SEXP kSEXP, SEXP baseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type vec(vecSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
     Rcpp::traits::input_parameter< double >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppContEntropy(vec, k, alg, base));
+    rcpp_result_gen = Rcpp::wrap(RcppContEntropy(vec, k, base));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -90,16 +89,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppContJE
-double RcppContJE(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& vars, int k, int alg, double base);
-RcppExport SEXP _infocaus_RcppContJE(SEXP matSEXP, SEXP varsSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP) {
+double RcppContJE(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& vars, int k, double base);
+RcppExport SEXP _infocaus_RcppContJE(SEXP matSEXP, SEXP varsSEXP, SEXP kSEXP, SEXP baseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type vars(varsSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
     Rcpp::traits::input_parameter< double >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppContJE(mat, vars, k, alg, base));
+    rcpp_result_gen = Rcpp::wrap(RcppContJE(mat, vars, k, base));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -118,17 +116,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppContCE
-double RcppContCE(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& conds, int k, int alg, double base);
-RcppExport SEXP _infocaus_RcppContCE(SEXP matSEXP, SEXP targetSEXP, SEXP condsSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP) {
+double RcppContCE(const Rcpp::NumericMatrix& mat, const Rcpp::IntegerVector& target, const Rcpp::IntegerVector& conds, int k, double base);
+RcppExport SEXP _infocaus_RcppContCE(SEXP matSEXP, SEXP targetSEXP, SEXP condsSEXP, SEXP kSEXP, SEXP baseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type target(targetSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type conds(condsSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
     Rcpp::traits::input_parameter< double >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppContCE(mat, target, conds, k, alg, base));
+    rcpp_result_gen = Rcpp::wrap(RcppContCE(mat, target, conds, k, base));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -328,11 +325,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_infocaus_RcppDist4Mat", (DL_FUNC) &_infocaus_RcppDist4Mat, 4},
     {"_infocaus_RcppDist4MatSub", (DL_FUNC) &_infocaus_RcppDist4MatSub, 6},
     {"_infocaus_RcppDiscEntropy", (DL_FUNC) &_infocaus_RcppDiscEntropy, 3},
-    {"_infocaus_RcppContEntropy", (DL_FUNC) &_infocaus_RcppContEntropy, 4},
+    {"_infocaus_RcppContEntropy", (DL_FUNC) &_infocaus_RcppContEntropy, 3},
     {"_infocaus_RcppDiscJE", (DL_FUNC) &_infocaus_RcppDiscJE, 4},
-    {"_infocaus_RcppContJE", (DL_FUNC) &_infocaus_RcppContJE, 5},
+    {"_infocaus_RcppContJE", (DL_FUNC) &_infocaus_RcppContJE, 4},
     {"_infocaus_RcppDiscCE", (DL_FUNC) &_infocaus_RcppDiscCE, 5},
-    {"_infocaus_RcppContCE", (DL_FUNC) &_infocaus_RcppContCE, 6},
+    {"_infocaus_RcppContCE", (DL_FUNC) &_infocaus_RcppContCE, 5},
     {"_infocaus_RcppDiscMI", (DL_FUNC) &_infocaus_RcppDiscMI, 6},
     {"_infocaus_RcppContMI", (DL_FUNC) &_infocaus_RcppContMI, 7},
     {"_infocaus_RcppDiscCMI", (DL_FUNC) &_infocaus_RcppDiscCMI, 7},
