@@ -232,7 +232,6 @@ double RcppContCE(const Rcpp::NumericMatrix& mat,
                   const Rcpp::IntegerVector& target,
                   const Rcpp::IntegerVector& conds,
                   int k = 3, 
-                  int alg = 0,
                   double base = 2.0)
 {
     std::vector<std::vector<double>> m = mat_r2std(mat, false);
@@ -258,8 +257,7 @@ double RcppContCE(const Rcpp::NumericMatrix& mat,
         idx -= 1;  // to 0-based
     }
     
-    return KSGInfo::CE(m, t, c, static_cast<size_t>(std::abs(k)), 
-                       static_cast<size_t>(std::abs(alg)), base);
+    return KSGInfo::CE(m, t, c, static_cast<size_t>(std::abs(k)), base);
 }
 
 // Wrapper function to calculate mutual information for discrete data
