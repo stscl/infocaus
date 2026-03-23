@@ -82,6 +82,7 @@ namespace KSGInfo
     inline double Entropy(
         const Series& series,
         size_t k = 3,
+        size_t alg = 0,
         double base = 2.0)
     {
         const size_t n = series.size();
@@ -141,6 +142,7 @@ namespace KSGInfo
         const Matrix& mat,
         const std::vector<size_t>& vars,
         size_t k = 3,
+        size_t alg = 0,
         double base = 2.0)
     {
         Matrix sub = subset(mat,vars);
@@ -200,6 +202,7 @@ namespace KSGInfo
         const std::vector<size_t>& target,
         const std::vector<size_t>& cond,
         size_t k = 3,
+        size_t alg = 0,
         double base = 2.0)
     {
         std::vector<size_t> tc = cond;
