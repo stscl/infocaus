@@ -1,4 +1,4 @@
-je = \(data, indices, base = 2, type = c("disc", "cont"), k = 3) {
+je = \(data, indices, base = exp(1), type = c("cont", "disc"), k = 3) {
   type = match.arg(type)
   mat = as.matrix(data)
   if (type == "disc") {
@@ -8,7 +8,7 @@ je = \(data, indices, base = 2, type = c("disc", "cont"), k = 3) {
   }
 }
 
-ce = \(data, target, conds, base = 2, type = c("disc", "cont"), k = 3) {
+ce = \(data, target, conds, base = exp(1), type = c("cont", "disc"), k = 3) {
   type = match.arg(type)
   mat = as.matrix(data)
   if (type == "disc") {
