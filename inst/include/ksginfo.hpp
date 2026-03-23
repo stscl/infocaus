@@ -393,7 +393,8 @@ namespace KSGInfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg_log_eps += std::log(eps*2.0);
+            avg_log_eps += (NumericUtils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+                            ? 0.0 : std::log(eps * 2.0);
 
             size_t nxz = 0, nyz = 0, nz = 0;
 
