@@ -15,15 +15,6 @@
  *
  *  Estimator variants (alg parameter):
  *
- *      Entropy / Joint Entropy / Conditional Entropy
- *      ---------------------------------------------
- *      alg = 0
- *            Kozachenko–Leonenko entropy estimator
- *
- *      alg = 1
- *            Bias corrected KL estimator
- *            (adds +1/k correction)
- *
  *      Mutual Information / Conditional Mutual Information
  *      ---------------------------------------------------
  *      alg = 0
