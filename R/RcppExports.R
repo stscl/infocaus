@@ -101,7 +101,7 @@ RcppNN4DistMatSub <- function(distmat, lib, pred, k, include_self = FALSE) {
     .Call(`_infoxtr_RcppNN4DistMatSub`, distmat, lib, pred, k, include_self)
 }
 
-RcppSURD <- function(mat, target, agent, lag = 1L, n = 5L, max_order = 3L, threads = 1L, base = 2.0, normalize = TRUE, method = "equal", nb = NULL, nrows = NULL) {
-    .Call(`_infoxtr_RcppSURD`, mat, target, agent, lag, n, max_order, threads, base, normalize, method, nb, nrows)
+RcppSURD <- function(mat, target, agent, lag = 1L, max_order = 3L, threads = 1L, base = 2.0, normalize = TRUE, bin = as.integer( c(5)), method = as.character( c("equal")), nb = NULL, nrows = NULL) {
+    .Call(`_infoxtr_RcppSURD`, mat, target, agent, lag, max_order, threads, base, normalize, bin, method, nb, nrows)
 }
 

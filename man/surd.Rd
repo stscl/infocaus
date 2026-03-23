@@ -85,7 +85,13 @@ A list.
 Synergistic-Unique-Redundant Decomposition
 }
 \note{
-\code{surd} only support numeric data.
+\code{surd} only supports numeric input data. Both \code{bin} and \code{method}
+support variable-specific settings using R-style recycling:
+\itemize{
+\item length 1: applied to the target and all agent variables
+\item length 2: first for the target, second for all agents
+\item length > 2: first for the target, remaining values are recycled across agents
+}
 }
 \examples{
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))

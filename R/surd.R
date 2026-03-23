@@ -1,30 +1,36 @@
 .surd_ts = \(data, target, agent, lag = 1, bin = 5, method = "equal",
              max.order = 10, threads = 1, base = 2.0, normalize = TRUE) {
   mat = .convert2mat(data, contain_type = FALSE)
-  return(RcppSURD(mat, target, agent, lag, bin, max.order, 
-                  threads, base, normalize, method))
+  return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
+                  threads, base, normalize, abs(bin), method))
 }
 
 .surd_lattice = \(data, target, agent, lag = 1, bin = 5, method = "equal", 
                   max.order = 10, threads = 1, base = 2.0, normalize = TRUE, nb = NULL) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
   mat = .convert2mat(data, contain_type = FALSE)
-  return(RcppSURD(mat, target, agent, lag, bin, max.order, 
-                  threads, base, normalize, method, nb))
+  return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
+                  threads, base, normalize, abs(bin), method, nb))
 }
 
 .surd_grid = \(data, target, agent, lag = 1, bin = 5, method = "equal",
                max.order = 10, threads = 1, base = 2.0, normalize = TRUE) {
   mat = .convert2mat(data, contain_type = FALSE)
-  return(RcppSURD(mat, target, agent, lag, bin, max.order, 
-                  threads, base, normalize, method, NULL, terra::nrow(data[[1]])))
+  return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, threads, base, 
+                  normalize, abs(bin), method, NULL, terra::nrow(data[[1]])))
 }
 
 #' SURD
 #' 
 #' Synergistic-Unique-Redundant Decomposition
 #' 
-#' @note `surd` only support numeric data.
+#' @note `surd` only supports numeric input data. Both `bin` and `method`
+#'   support variable-specific settings using R-style recycling:
+#'   \itemize{
+#'     \item length 1: applied to the target and all agent variables
+#'     \item length 2: first for the target, second for all agents
+#'     \item length > 2: first for the target, remaining values are recycled across agents
+#'   }
 #'
 #' @inheritParams te
 #' @param lag (optional) Lag of the agent variables.

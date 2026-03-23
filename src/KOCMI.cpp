@@ -158,7 +158,7 @@ Rcpp::NumericVector RcppKOCMI(
             static_cast<size_t>(std::abs(nboots)),
             static_cast<size_t>(std::abs(threads)),
             static_cast<uint64_t>(std::abs(seed)),
-            contain_null, base
+            contain_null, std::abs(base)
         );
     }
 
