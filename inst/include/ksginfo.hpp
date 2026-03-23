@@ -128,6 +128,9 @@ namespace KSGInfo
         double H = NumericUtils::Digamma(n)
                  - NumericUtils::Digamma(k)
                  + avg;
+        
+        if (alg == 1)
+            H += 1.0 / k;
 
         if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
@@ -187,6 +190,9 @@ namespace KSGInfo
         double H = NumericUtils::Digamma(n)
                  - NumericUtils::Digamma(k)
                  + d * avg;
+
+        if (alg == 1)
+            H += 1.0 / k;
 
         if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
