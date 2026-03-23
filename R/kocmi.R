@@ -49,6 +49,6 @@ kocmi = \(data, target, agent, conds, knockoff, null_knockoff = NULL,
   mat = .convert2mat(data, contain_type = FALSE)
   knockoff = .convert2mat(knockoff, contain_type = FALSE)
   null_knockoff = .convert2mat(null_knockoff, contain_type = FALSE)
-  return(RcppKOCMI(mat, target, agent, conds, knockoff, null_knockoff, type,
-                   nboots, k, 0, threads, seed, base, method, contain_null))
+  return(RcppKOCMI(mat, abs(target), abs(agent), abs(conds), knockoff, null_knockoff, 
+                   type, nboots, k, 0, threads, seed, base, method, contain_null))
 }
