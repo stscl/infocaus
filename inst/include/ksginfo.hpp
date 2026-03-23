@@ -371,7 +371,7 @@ namespace KSGInfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg_log_eps += std::log(eps);
+            avg_log_eps += std::log(eps*2.0);
 
             size_t nxz = 0, nyz = 0, nz = 0;
 
@@ -418,9 +418,7 @@ namespace KSGInfo
 
         double hxy_z = NumericUtils::Digamma(n)
                      - NumericUtils::Digamma(k)
-                     + d * avg_log_eps
-                     + d * std::log(2.0);
-        if (alg == 1) hxy_z += 1.0 / k;
+                     + d * avg_log_eps;
 
         if (hxy_z <= 0)
         {
