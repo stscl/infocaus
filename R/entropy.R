@@ -52,6 +52,20 @@ je = \(data, indices, base = exp(1), type = c("cont", "disc"), k = 3) {
   }
 }
 
+#' Conditional Entropy
+#'
+#' Estimate the conditional entropy of target variables given conditioning variables.
+#'
+#' @inheritParams entropy
+#' @param target Integer vector of column indices for the target variables.
+#' @param conds Integer vector of column indices for the conditioning variables.
+#'
+#' @returns A numerical value.
+#' @export
+#'
+#' @examples
+#' infocaus::ce(matrix(1:100,ncol=2),1,2)
+#'
 ce = \(data, target, conds, base = exp(1), type = c("cont", "disc"), k = 3) {
   type = match.arg(type)
   mat = as.matrix(data)
