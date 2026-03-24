@@ -1,3 +1,16 @@
+#' Estimate entropy
+#'
+#' Estimate entropy for discrete or continuous vector.
+#'
+#' @param vec The input vector.
+#' @param base (optional) Logarithm base for entropy (`2` for bits, `exp(1)` for nats, `10` for dits).
+#' @param type (optional) Estimation method: `"disc"` for discrete, `"cont"` for continuous (KSG).
+#' @param k (optional) Number of nearest neighbors for continuous entropy estimation (ignored for discrete input).
+#'
+#' @returns A numerical value.
+#' @export
+#'
+#' @examples
 entropy = \(vec, base = exp(1), type = c("cont", "disc"), k = 3) {
   type = match.arg(type)
   if (type == "disc") {
