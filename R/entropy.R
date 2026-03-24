@@ -106,6 +106,7 @@ mi = \(data, target, interact, base = exp(1), type = c("cont", "disc"), k = 3, n
 #' variables given conditioning variables.
 #'
 #' @inheritParams mi
+#' @param conds Integer vector of column indices for the conditioning variables.
 #'
 #' @returns A numerical value.
 #' @export
