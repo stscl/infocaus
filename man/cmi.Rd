@@ -22,6 +22,8 @@ cmi(
 
 \item{interact}{Integer vector of column indices for the interacting variables.}
 
+\item{conds}{Integer vector of column indices for the conditioning variables.}
+
 \item{base}{(optional) Logarithm base of the entropy.
 Defaults to \code{exp(1)} (nats). Use \code{2} for bits or \code{10} for dits.}
 
