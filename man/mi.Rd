@@ -15,6 +15,10 @@ mi(
 )
 }
 \arguments{
+\item{data}{Observation data.}
+
+\item{target}{Integer vector of column indices for the target variables.}
+
 \item{interact}{Integer vector of column indices for the interacting variables.}
 
 \item{base}{(optional) Logarithm base of the entropy.

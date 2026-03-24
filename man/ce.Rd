@@ -7,6 +7,8 @@
 ce(data, target, conds, base = exp(1), type = c("cont", "disc"), k = 3)
 }
 \arguments{
+\item{data}{Observation data.}
+
 \item{target}{Integer vector of column indices for the target variables.}
 
 \item{conds}{Integer vector of column indices for the conditioning variables.}
