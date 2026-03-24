@@ -16,8 +16,8 @@
 #'
 #' @examples
 #' set.seed(42)
-#' entropy(rnorm(100), type = "cont")
-#' entropy(sample(letters[1:5], 100, TRUE), base = 2, type = "disc")
+#' infocaus::entropy(rnorm(100), type = "cont")
+#' infocaus::entropy(sample(letters[1:5], 100, TRUE), base = 2, type = "disc")
 #'
 entropy = \(vec, base = exp(1), type = c("cont", "disc"), k = 3) {
   type = match.arg(type)
