@@ -76,6 +76,20 @@ ce = \(data, target, conds, base = exp(1), type = c("cont", "disc"), k = 3) {
   }
 }
 
+#' Mutual Information
+#'
+#' Estimate the mutual information between target and interacting variables.
+#'
+#' @inheritParams entropy
+#' @param interact Integer vector of column indices for the interacting variables.
+#' @param normalize (optional) Logical; if `TRUE`, return normalized mutual information.
+#'
+#' @returns A numerical value.
+#' @export
+#'
+#' @examples
+#' infocaus::mi(matrix(1:100,ncol=2),1,2)
+#'
 mi = \(data, target, interact, base = exp(1), type = c("cont", "disc"), k = 3, normalize = FALSE) {
   type = match.arg(type)
   mat = as.matrix(data)
