@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' set.seed(42)
-#' infocaus::entropy(rnorm(100), type = "cont")
+#' infocaus::entropy(stats::rnorm(100), type = "cont")
 #' infocaus::entropy(sample(letters[1:5], 100, TRUE), base = 2, type = "disc")
 #'
 entropy = \(vec, base = exp(1), type = c("cont", "disc"), k = 3) {
@@ -100,6 +100,20 @@ mi = \(data, target, interact, base = exp(1), type = c("cont", "disc"), k = 3, n
   }
 }
 
+#' Conditional Mutual Information
+#'
+#' Estimate the conditional mutual information between target and interacting
+#' variables given conditioning variables.
+#'
+#' @inheritParams mi
+#'
+#' @returns A numerical value.
+#' @export
+#'
+#' @examples
+#' set.seed(42)
+#' infocaus::cmi(matrix(stats::rnorm(99,1,10),ncol=3),1,2,3)
+#'
 cmi = \(data, target, interact, conds, base = exp(1), type = c("cont", "disc"), k = 3, normalize = FALSE) {
   type = match.arg(type)
   mat = as.matrix(data)
