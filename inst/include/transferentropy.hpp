@@ -228,7 +228,6 @@ namespace TE
         // Construct joint state matrix
         size_t t0 = std::max(lag_p, lag_q);
         size_t N  = n_obs - t0;
-
         ContMat pm(tg.size()*2 + ag.size(),
                 std::vector<double>(N,
                 std::numeric_limits<double>::quiet_NaN()));
