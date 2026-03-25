@@ -49,18 +49,6 @@
  *      lag_q
  *          Agent history length.
  *
- *      lag_single
- *
- *          true  → use only single lag
- *
- *              X_{t-lag_q}
- *              Y_{t-lag_p}
- *
- *          false → use full lag embedding
- *
- *              (X_{t-1} ... X_{t-lag_q})
- *              (Y_{t-1} ... Y_{t-lag_p})
- *
  *      k
  *          k-nearest neighbours for KSG estimator.
  *
@@ -72,6 +60,18 @@
  *
  *      normalize
  *          If true, normalize TE by conditional entropy.
+ *
+ *      lag_single
+ *
+ *          true  → use only single lag
+ *
+ *              X_{t-lag_q}
+ *              Y_{t-lag_p}
+ *
+ *          false → use full lag embedding
+ *
+ *              (X_{t-1} ... X_{t-lag_q})
+ *              (Y_{t-1} ... Y_{t-lag_p})
  *
  *  Dependencies:
  *
@@ -111,7 +111,8 @@ namespace TE
         size_t lag_q = 3,
         double base = 2.0,
         bool na_rm = true,
-        bool normalize = false)
+        bool normalize = false,
+        bool lag_single = true)
     {
         const size_t n_obs  = mat[0].size();
         const size_t n_cols = mat.size();
@@ -210,7 +211,8 @@ namespace TE
         size_t k = 3,
         size_t alg = 0,
         double base = 2.0,
-        bool normalize = false)
+        bool normalize = false,
+        bool lag_single = true)
     {
         const size_t n_obs  = mat[0].size();
         const size_t n_cols = mat.size();
