@@ -113,12 +113,17 @@ namespace TE
         bool na_rm = true,
         bool normalize = false,
         bool lag_single = true)
-    {
-        const size_t n_obs  = mat[0].size();
+    {   
+        const size_t n_obs = mat[0].size();
         const size_t n_cols = mat.size();
 
-        if (mat.empty() || n_obs <= lag_p + 1 || n_obs <= lag_q + 1)
+        if (mat.empty())
             return std::numeric_limits<double>::quiet_NaN();
+
+        size_t t0 = std::max(lag_p, lag_q);
+        if (n_obs <= t0 + 1)
+            return std::numeric_limits<double>::quiet_NaN();
+
         if (lag_p == 0 || lag_q == 0)
             return 0.0;
 
@@ -149,10 +154,11 @@ namespace TE
             return std::numeric_limits<double>::quiet_NaN();
         
         // Construct joint state matrix
-        size_t t0 = std::max(lag_p, lag_q);
-        size_t N  = n_obs - t0;
-        DiscMat pm(tg.size()*2 + ag.size(),
-                   std::vector<uint64_t>(N, 0));
+        size_t tg_lag = lag_single ? tg.size() : tg.size() * lag_p;
+        size_t ag_lag = lag_single ? ag.size() : ag.size() * lag_q;
+        size_t N = n_obs - t0;
+        DiscMat pm(tg.size() + ag_lag + tg_lag,
+                   std::vector<uint64_t>(N,0));
         
         // Y_t
         for (size_t i = 0; i < tg.size(); ++i)
