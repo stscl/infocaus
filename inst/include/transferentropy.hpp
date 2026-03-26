@@ -78,7 +78,7 @@
  *      infotheo.hpp
  *      ksginfo.hpp
  *
- *  Author: Wenbo Lyu
+ *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
  **********************************************************************/
 
