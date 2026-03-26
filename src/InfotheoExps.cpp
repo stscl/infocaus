@@ -435,7 +435,8 @@ double RcppDiscTE(SEXP mat,
                   int lag_q = 3,
                   double base = 2.0,
                   bool na_rm = true,
-                  bool normalize = false)
+                  bool normalize = false,
+                  bool lag_single = false)
 {
     InfoTheo::Matrix m = pat_r2std(mat,false);
 
@@ -461,7 +462,8 @@ double RcppDiscTE(SEXP mat,
     }
 
     return TE::TE4Disc(m, tg, ag, static_cast<size_t>(std::abs(lag_p)), 
-                       static_cast<size_t>(std::abs(lag_q)), base, na_rm, normalize);
+                       static_cast<size_t>(std::abs(lag_q)), base, 
+                       na_rm, normalize, lag_single);
 }
 
 // Wrapper function to calculate transfer entropy for continuous time series data
@@ -474,7 +476,8 @@ double RcppContTE(const Rcpp::NumericMatrix& mat,
                   int k = 3, 
                   int alg = 0,
                   double base = 2.0,
-                  bool normalize = false)
+                  bool normalize = false,
+                  bool lag_single = false)
 {
     std::vector<std::vector<double>> m = mat_r2std(mat, false);
 
@@ -503,5 +506,6 @@ double RcppContTE(const Rcpp::NumericMatrix& mat,
                        static_cast<size_t>(std::abs(lag_p)), 
                        static_cast<size_t>(std::abs(lag_q)), 
                        static_cast<size_t>(std::abs(k)), 
-                       static_cast<size_t>(std::abs(alg)), base, normalize);
+                       static_cast<size_t>(std::abs(alg)), 
+                       base, normalize, lag_single);
 }
