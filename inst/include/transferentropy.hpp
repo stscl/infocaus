@@ -186,16 +186,23 @@ namespace TE
                         pm[col + i * lag_q + (l - 1)][t - t0] = mat[ag[i]][t - l];
             }
         }
+
         col += ag_lag;
 
-        // Y_{t-lag}
+        // Y_past
+
         for (size_t i = 0; i < tg.size(); ++i)
-        {   
-            for (size_t t = t0; t < n_obs; ++t)
+        {
+            if (lag_single)
             {
-                uint64_t v = mat[tg[i]][t - lag_p];
-                if (v != 0)
-                    pm[i + tg.size() + ag.size()][t - t0] = v;
+                for (size_t t = t0; t < n_obs; ++t)
+                    pm[col + i][t - t0] = mat[tg[i]][t - lag_p];
+            }
+            else
+            {
+                for (size_t l = 1; l <= lag_p; ++l)
+                    for (size_t t = t0; t < n_obs; ++t)
+                        pm[col + i * lag_p + (l - 1)][t - t0] = mat[tg[i]][t - l];
             }
         }
 
