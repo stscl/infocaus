@@ -112,7 +112,7 @@ namespace TE
         double base = 2.0,
         bool na_rm = true,
         bool normalize = false,
-        bool lag_single = true)
+        bool lag_single = false)
     {   
         const size_t n_obs = mat[0].size();
         const size_t n_cols = mat.size();
@@ -232,7 +232,7 @@ namespace TE
         size_t alg = 0,
         double base = 2.0,
         bool normalize = false,
-        bool lag_single = true)
+        bool lag_single = false)
     {   
         const size_t n_obs = mat[0].size();
         const size_t n_cols = mat.size();
