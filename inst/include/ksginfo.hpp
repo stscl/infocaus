@@ -159,8 +159,8 @@ namespace KSGInfo
         double avg = 0.0;
 
         for (size_t i = 0; i < n; ++i)
-        {
-            std::vector<double> row = dist[i];
+        {   
+            auto& row = dist[i];
 
             if (i < row.size())
                 row[i] = std::numeric_limits<double>::quiet_NaN();
