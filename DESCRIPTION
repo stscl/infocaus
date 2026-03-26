@@ -20,3 +20,5 @@ LinkingTo:
 Imports: 
     sf,
     terra
+Suggests: 
+    lmtest
