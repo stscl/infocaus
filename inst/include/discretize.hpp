@@ -334,8 +334,8 @@ inline std::vector<double> jenksBreaks(
 inline std::vector<size_t> naturalDisc(
     const std::vector<double>& vec,
     size_t n,
-    double sample_prob = 1.0,
-    uint64_t seed = 123456)
+    double sample_prob = 0.15,
+    uint64_t seed = 123456789)
 {
     bool has_nan = false;
     auto x = remove_nan(vec, has_nan);
