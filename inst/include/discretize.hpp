@@ -574,6 +574,6 @@ inline std::vector<size_t> Disc(
     throw std::invalid_argument("Unknown discretization method");
 }
 
-}
+} // namespace Disc
 
-#endif
+#endif // DISCRETIZE_HPP
