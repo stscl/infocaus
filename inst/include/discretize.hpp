@@ -453,6 +453,10 @@ inline std::vector<size_t> htDisc(
     if (has_nan)
         std::cerr << "[Discretize] Warning: NaN values detected, assigned to class 0\n";
 
+    std::vector<size_t> result(vec.size(), 0);
+
+    if (x.empty()) return result;
+
     std::vector<double> head = x;
 
     std::vector<double> breaks;
@@ -493,8 +497,6 @@ inline std::vector<size_t> htDisc(
     breaks.erase(
         std::unique(breaks.begin(), breaks.end()),
         breaks.end());
-
-    std::vector<size_t> result(vec.size(), 0);
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
