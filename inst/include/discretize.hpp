@@ -562,7 +562,7 @@ inline std::vector<size_t> Disc(
         return quantileDisc(vec, n);
 
     if (method == "natural")
-        return naturalDisc(vec, n, sample_prob, seed);
+        return naturalDisc(vec, n, sample_begin, sample_prob, seed);
 
     if (method == "headtail")  
         return htDisc(vec, threshold);
