@@ -126,7 +126,7 @@ inline std::vector<size_t> sdDisc(
     {
         if (std::isnan(vec[i])) continue;
 
-        long idx = std::floor((vec[i] - m) / sd + n / 2.0)
+        long idx = std::floor((vec[i] - m) / sd + n / 2.0);
         idx = std::max<long>(1, std::min<long>(idx, n));
 
         res[i] = static_cast<size_t>(idx);
