@@ -113,7 +113,7 @@ inline std::vector<size_t> sdDisc(
     double m = mean(x);
     double sd = stddev(x);
 
-    std::vector<size_t> res(vec.size(),0);
+    std::vector<size_t> res(vec.size(), 0);
 
     if (NumericUtils::doubleNearlyEqual(sd, 0.0)) 
     {
@@ -155,15 +155,18 @@ inline std::vector<size_t> equalDisc(
 
     double interval = (maxx - minx) / n;
 
-    std::vector<size_t> res(vec.size());
+    std::vector<size_t> res(vec.size(), 0);
+
+    if (NumericUtils::doubleNearlyEqual(interval, 0.0)) 
+    {
+        for (size_t i = 0; i < vec.size(); ++i)
+            if (!std::isnan(vec[i])) res[i] = 1;
+        return res;
+    }
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
-        if (std::isnan(vec[i]))
-        {
-            res[i] = 0;
-            continue;
-        }
+        if (std::isnan(vec[i])) continue;
 
         long idx = std::ceil((vec[i] - minx) / interval);
         idx = std::max<long>(1, std::min<long>(idx, n));
