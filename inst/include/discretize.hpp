@@ -542,6 +542,7 @@ inline std::vector<size_t> htDisc(
  ***********************************************************/
 inline std::vector<size_t> Disc(
     const std::vector<double>& vec,
+    const std::vector<double>& breakpoints,
     std::string method,
     size_t n = 5,
     size_t sample_begin = 3000,
@@ -557,6 +558,9 @@ inline std::vector<size_t> Disc(
 
     if (method == "geometric")
         return geometricDisc(vec, n);
+
+    if (method == "manual")
+        return manualDisc(vec, breakpoints);
 
     if (method == "quantile")
         return quantileDisc(vec, n);
