@@ -41,8 +41,10 @@
 #include <numeric>
 #include <random>
 #include <limits>
+#include <string>
 #include <iostream>
 #include <stdexcept>
+#include "numericutils.hpp"
 
 namespace Disc
 {
@@ -111,15 +113,18 @@ inline std::vector<size_t> sdDisc(
     double m = mean(x);
     double sd = stddev(x);
 
-    std::vector<size_t> res(vec.size());
+    std::vector<size_t> res(vec.size(),0);
+
+    if (NumericUtils::doubleNearlyEqual(sd, 0.0)) 
+    {
+        for (size_t i = 0; i < vec.size(); ++i)
+            if (!std::isnan(vec[i])) res[i] = 1;
+        return res;
+    }
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
-        if (std::isnan(vec[i]))
-        {
-            res[i] = 0;
-            continue;
-        }
+        if (std::isnan(vec[i])) continue;
 
         double diff = (vec[i] - m) / sd;
         long idx = std::floor((diff + n / 2.0) / n * n);
