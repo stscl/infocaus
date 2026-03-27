@@ -329,13 +329,13 @@ inline std::vector<double> jenksBreaks(
     for (size_t i = 1; i <= n_classes; ++i)
     {
         lower[1][i] = 1;
-        var[1][i] = 0;
+        var[1][i] = 0.0;
     }
 
     for (size_t l = 2; l <= n; ++l)
     {
-        double sum = 0;
-        double sumsq = 0;
+        double sum = 0.0;
+        double sumsq = 0.0;
 
         for (size_t m = 1; m <= l; ++m)
         {
@@ -372,8 +372,13 @@ inline std::vector<double> jenksBreaks(
 
     for (size_t c = n_classes - 1; c > 0; --c)
     {
-        breaks[c - 1] = data[lower[k][c + 1] - 2];
-        k = lower[k][c + 1] - 1;
+        size_t break_idx = lower[k][c + 1];
+        if (break_idx < 2 || break_idx - 2 >= data.size()) {
+            breaks[c - 1] = (c == n_classes - 1) ? data.back() : data.front();
+        } else {
+            breaks[c - 1] = data[break_idx - 2];
+        }
+        k = break_idx - 1;
     }
 
     return breaks;
