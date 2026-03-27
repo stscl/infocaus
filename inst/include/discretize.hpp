@@ -193,7 +193,7 @@ inline std::vector<size_t> geometricDisc(
     double minx = min_val(x);
     double maxx = max_val(x);
 
-    if (NumericUtils::doubleNearlyEqual(minx, 0.0) || minx <= 0)
+    if (minx <= 0)
         throw std::invalid_argument(
             "[Discretize] geometricDisc requires strictly positive data");
 
@@ -240,15 +240,11 @@ inline std::vector<size_t> quantileDisc(
         q[i] = sorted[idx];
     }
 
-    std::vector<size_t> res(vec.size());
+    std::vector<size_t> res(vec.size(), 0);
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
-        if (std::isnan(vec[i]))
-        {
-            res[i] = 0;
-            continue;
-        }
+        if (std::isnan(vec[i])) continue;
 
         for (size_t j = 0; j < n; ++j)
         {
@@ -283,17 +279,13 @@ inline std::vector<size_t> manualDisc(
 
     std::sort(bp.begin(), bp.end());
 
-    std::vector<size_t> res(vec.size());
+    std::vector<size_t> res(vec.size(), 0);
 
     size_t n = bp.size() + 1;
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
-        if (std::isnan(vec[i]))
-        {
-            res[i] = 0;
-            continue;
-        }
+        if (std::isnan(vec[i])) continue;
 
         bool assigned = false;
 
@@ -424,15 +416,11 @@ inline std::vector<size_t> naturalDisc(
 
     auto breaks = jenksBreaks(data, n);
 
-    std::vector<size_t> res(vec.size());
+    std::vector<size_t> res(vec.size(), 0);
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
-        if (std::isnan(vec[i]))
-        {
-            res[i] = 0;
-            continue;
-        }
+        if (std::isnan(vec[i])) continue;
 
         bool assigned = false;
 
@@ -507,15 +495,11 @@ inline std::vector<size_t> htDisc(
         std::unique(breaks.begin(), breaks.end()),
         breaks.end());
 
-    std::vector<size_t> result(vec.size());
+    std::vector<size_t> result(vec.size(), 0);
 
     for (size_t i = 0; i < vec.size(); ++i)
     {
-        if (std::isnan(vec[i]))
-        {
-            result[i] = 0;
-            continue;
-        }
+        if (std::isnan(vec[i])) continue;
 
         size_t label = 1;
 
