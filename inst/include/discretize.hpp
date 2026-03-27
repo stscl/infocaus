@@ -542,7 +542,7 @@ inline std::vector<size_t> htDisc(
  ***********************************************************/
 inline std::vector<size_t> Disc(
     const std::vector<double>& vec,
-    const std::string& method,
+    std::string method,
     size_t n = 5,
     size_t sample_begin = 3000,
     double sample_prob = 0.15,
