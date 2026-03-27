@@ -414,13 +414,12 @@ inline std::vector<size_t> naturalDisc(
 
         std::vector<size_t> idx(x.size());
         std::iota(idx.begin(), idx.end(), 0);
-
         std::shuffle(idx.begin(), idx.end(), rng);
 
-        data.resize(sample_size);
-
+        std::vector<double> data;
+        data.reserve(sample_size);
         for (size_t i = 0; i < sample_size; ++i)
-            data[i] = x[idx[i]];
+            data.push_back(x[idx[i]]);
     }
 
     auto breaks = jenksBreaks(data, n);
