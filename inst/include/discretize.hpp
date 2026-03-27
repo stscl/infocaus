@@ -388,6 +388,7 @@ inline std::vector<double> jenksBreaks(
 inline std::vector<size_t> naturalDisc(
     const std::vector<double>& vec,
     size_t n,
+    size_t sample_begin = 3000,
     double sample_prob = 0.15,
     uint64_t seed = 123456789)
 {
@@ -399,7 +400,7 @@ inline std::vector<size_t> naturalDisc(
 
     std::vector<double> data = x;
 
-    if (x.size() > 3000)
+    if (x.size() > sample_begin)
     {
         std::mt19937_64 rng(seed);
 
@@ -543,9 +544,10 @@ inline std::vector<size_t> Disc(
     const std::vector<double>& vec,
     const std::string& method,
     size_t n = 5,
-    double threshold = 0.4,
+    size_t sample_begin = 3000,
     double sample_prob = 0.15,
-    uint64_t seed = 123456789)
+    uint64_t seed = 123456789,
+    double threshold = 0.4)
 {
     if (method == "sd")
         return sdDisc(vec, n);
