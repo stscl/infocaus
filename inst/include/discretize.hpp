@@ -489,6 +489,7 @@ inline std::vector<size_t> Disc(
     const std::vector<double>& vec,
     const std::string& method,
     size_t n = 5,
+    double threshold = 0.4,
     double sample_prob = 0.15,
     uint64_t seed = 123456789)
 {
@@ -506,6 +507,9 @@ inline std::vector<size_t> Disc(
 
     if (method == "natural")
         return naturalDisc(vec, n, sample_prob, seed);
+
+    if (method == "headtail")  
+        return htDisc(vec, threshold);
 
     throw std::invalid_argument("Unknown discretization method");
 }
