@@ -236,8 +236,11 @@ inline std::vector<size_t> quantileDisc(
 
     for (size_t i = 0; i <= n; ++i)
     {
-        size_t idx = i * (sorted.size() - 1) / n;
-        q[i] = sorted[idx];
+        double pos = i * (sorted.size() - 1) / static_cast<double>(n);
+        size_t lo = static_cast<size_t>(std::floor(pos));
+        size_t hi = std::min(lo + 1, sorted.size() - 1);
+        double frac = pos - lo;
+        q[i] = sorted[lo] * (1 - frac) + sorted[hi] * frac;
     }
 
     std::vector<size_t> res(vec.size(), 0);
