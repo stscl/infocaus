@@ -394,8 +394,6 @@ inline std::vector<size_t> naturalDisc(
     if (has_nan)
         std::cerr << "[Discretize] Warning: NaN values detected, assigned to class 0\n";
 
-    std::vector<double> data = x;
-
     if (x.size() > sample_begin)
     {
         std::mt19937_64 rng(seed);
