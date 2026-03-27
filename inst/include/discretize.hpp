@@ -18,7 +18,7 @@
  *
  *  Output
  *      std::vector<size_t>
- *          0  -> NaN values
+ *          0  -> NaN / NA values
  *          1..n -> discretized classes
  *
  *  Behaviour
