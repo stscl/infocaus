@@ -177,11 +177,19 @@ inline std::vector<size_t> equalDisc(
         
         double val = (vec[i] - minx) / interval;
 
-        long idx;
-        if (right_closed)
-            idx = std::ceil(val);
-        else
-            idx = std::floor(val);
+        if(NumericUtils::doubleNearlyEqual(val, 0.0))
+        {
+            res[i] = 1;
+            continue;
+        }
+
+        long idx = std::ceil(val);
+        if (NumericUtils::doubleNearlyEqual(
+            val - static_cast<double>(std::ceil(val)), 0.0))
+        {
+            if (!right_closed)
+                idx += 1;
+        }
         idx = std::max<long>(1, std::min<long>(idx, n));
 
         res[i] = static_cast<size_t>(idx);
