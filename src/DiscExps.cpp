@@ -18,7 +18,7 @@ Rcpp::IntegerVector RcppDisc(
     int seed = 123456789,
     double threshold = 0.4,
     int iter_step = 100,
-    const Rcpp::NumericVector& breakpoints = {},
+    Rcpp::Nullable<Rcpp::NumericVector> breakpoints = R_NilValue,
     bool right_closed = true
 ) {
     // Convert Rcpp::NumericVector to std::vector<double>
