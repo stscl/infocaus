@@ -267,14 +267,23 @@ inline std::vector<size_t> quantileDisc(
     {
         if (std::isnan(vec[i])) continue;
 
+        bool assigned = false;
+
         for (size_t j = 0; j < n; ++j)
-        {
-            if (vec[i] <= q[j + 1])
+        {   
+            bool in_bin = right_closed ? (vec[i] <= q[j + 1])
+                                       : (vec[i] < q[j + 1]);
+            if (in_bin)
             {
                 res[i] = j + 1;
+                assigned = true;
                 break;
             }
         }
+
+        if (!assigned)
+                res[i] = n;
+            
     }
 
     return res;
