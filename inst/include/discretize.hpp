@@ -148,7 +148,8 @@ inline std::vector<size_t> sdDisc(
  ***********************************************************/
 inline std::vector<size_t> equalDisc(
     const std::vector<double>& vec,
-    size_t n)
+    size_t n,
+    bool right_closed = true)
 {
     bool has_nan = false;
     auto x = remove_nan(vec, has_nan);
@@ -173,8 +174,14 @@ inline std::vector<size_t> equalDisc(
     for (size_t i = 0; i < vec.size(); ++i)
     {
         if (std::isnan(vec[i])) continue;
+        
+        double val = (vec[i] - minx) / interval;
 
-        long idx = std::ceil((vec[i] - minx) / interval);
+        long idx;
+        if (right_closed)
+            idx = std::ceil(val);
+        else
+            idx = std::floor(val);
         idx = std::max<long>(1, std::min<long>(idx, n));
 
         res[i] = static_cast<size_t>(idx);
