@@ -283,7 +283,7 @@ inline std::vector<size_t> quantileDisc(
 
         if (!assigned)
                 res[i] = n;
-            
+
     }
 
     return res;
@@ -583,28 +583,29 @@ inline std::vector<size_t> Disc(
     uint64_t seed = 123456789,
     double threshold = 0.4,
     size_t iter_step = 100,
-    const std::vector<double>& breakpoints = {})
+    const std::vector<double>& breakpoints = {},
+    bool right_closed = true)
 {
     if (method == "sd")
-        return sdDisc(vec, n);
+        return sdDisc(vec, n, right_closed);
 
     if (method == "equal")
-        return equalDisc(vec, n);
+        return equalDisc(vec, n, right_closed);
 
     if (method == "geometric")
-        return geometricDisc(vec, n);
+        return geometricDisc(vec, n, right_closed);
 
     if (method == "manual")
-        return manualDisc(vec, breakpoints);
+        return manualDisc(vec, breakpoints, right_closed);
 
     if (method == "quantile")
-        return quantileDisc(vec, n);
+        return quantileDisc(vec, n, right_closed);
 
     if (method == "natural")
-        return naturalDisc(vec, n, sample_begin, sample_prob, seed);
+        return naturalDisc(vec, n, sample_begin, sample_prob, seed, right_closed);
 
     if (method == "headtail")  
-        return htDisc(vec, threshold, iter_step);
+        return htDisc(vec, threshold, iter_step, right_closed);
 
     throw std::invalid_argument("Unknown discretization method");
 }
