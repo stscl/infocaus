@@ -14,7 +14,7 @@ Rcpp::IntegerVector RcppDisc(
     int n = 5,
     std::string method = "natural",
     int sample_begin = 3000,
-    int sample_prob = 0.15,
+    double sample_prob = 0.15,
     int seed = 123456789,
     double threshold = 0.4,
     int iter_step = 100,
