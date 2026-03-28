@@ -54,20 +54,15 @@ namespace Disc
  * Utility helpers
  ***********************************************************/
 
-inline std::vector<double> remove_nan(const std::vector<double>& v, 
-                                      bool& has_nan)
+inline std::vector<double> remove_nan(const std::vector<double>& v)
 {
     std::vector<double> out;
     out.reserve(v.size());
 
     for (double x : v)
     {
-        if (std::isnan(x))
-        {
-            has_nan = true;
-            continue;
-        }
-        out.push_back(x);
+        if (!std::isnan(x))
+            out.push_back(x);
     }
 
     return out;
