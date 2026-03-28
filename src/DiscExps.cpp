@@ -25,6 +25,24 @@ Rcpp::IntegerVector RcppDisc(
     std::vector<double> vec_std = Rcpp::as<std::vector<double>>(vec);
     std::vector<double> bp_std = Rcpp::as<std::vector<double>>(breakpoints);
 
+    static const std::vector<std::string> methods = {
+        "sd",
+        "equal",
+        "geometric",
+        "quantile",
+        "manual",
+        "natural",
+        "headtail"
+    };
+
+    if (std::find(methods.begin(), methods.end(), method) == methods.end())
+    {
+        Rcpp::stop(
+            "Unknown discretization method. Available methods are: "
+            "sd, equal, geometric, quantile, manual, natural, headtail"
+        );
+    }
+
     // Call the discretization function
     std::vector<size_t> discv = 
         Disc::Disc(vec_std, method, 
