@@ -134,7 +134,7 @@ inline std::vector<size_t> sdDisc(
         if (right_closed)
             idx = std::ceil(z);
         else
-            idx = std::floor(z);
+            idx = std::floor(z) + 1;
         idx = std::max<long>(1, std::min<long>(idx, n));
 
         res[i] = static_cast<size_t>(idx);
@@ -221,8 +221,11 @@ inline std::vector<size_t> geometricDisc(
     {
         if (std::isnan(vec[i])) continue;
 
-        long idx =
-            std::floor(std::log(vec[i] / minx) / std::log(factor)) + 1;
+        long idx;
+        if (right_closed)
+            idx = std::ceil(std::log(vec[i] / minx) / std::log(factor));
+        else
+            idx = std::floor(std::log(vec[i] / minx) / std::log(factor)) + 1;
 
         idx = std::max<long>(1, std::min<long>(idx, n));
 
