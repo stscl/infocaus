@@ -528,7 +528,8 @@ inline std::vector<size_t> htDisc(
         std::unique(breaks.begin(), breaks.end()),
         breaks.end());
 
-    if (breaks.size() < 2) {
+    if (breaks.size() < 2) 
+    {
         for (size_t i = 0; i < vec.size(); ++i)
             if (!std::isnan(vec[i])) result[i] = 1;
         return result;
@@ -538,25 +539,21 @@ inline std::vector<size_t> htDisc(
     {
         if (std::isnan(vec[i])) continue;
 
-        size_t label = 1;
+        bool assigned = false;
 
         for (size_t j = 0; j < breaks.size() - 1; ++j)
         {
             if (right_closed ? vec[i] <= breaks[j + 1]
                              : vec[i] < breaks[j + 1])
             {
-                label = j + 1;
+                result[i] = j + 1;
+                assigned = true;
                 break;
             }
         }
 
-        if (right_closed ? vec[i] > breaks.back()
-                         : vec[i] >= breaks.back())
-        {
-            label = breaks.size() - 1;
-        }
-
-        result[i] = label;
+        if (!assigned)
+            result[i] = breaks.size() - 1;
     }
 
     return result;
