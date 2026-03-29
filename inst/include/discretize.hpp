@@ -79,7 +79,10 @@ namespace Disc
     }
 
     inline double stddev(const std::vector<double>& v)
-    {
+    {   
+        if (v.size() <= 1)
+            return 0.0;
+
         double m = mean(v);
         double s = 0.0;
 
