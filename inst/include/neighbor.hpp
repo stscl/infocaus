@@ -55,8 +55,8 @@
  *  License: GPL-3
  ********************************************************************/
 
-#ifndef NEIGHBOUR_HPP
-#define NEIGHBOUR_HPP
+#ifndef NEIGHBOR_HPP
+#define NEIGHBOR_HPP
 
 #include <vector>
 #include <cmath>
@@ -517,4 +517,4 @@ namespace neighbor
 
 } // namespace neighbor
 
-#endif // NEIGHBOUR_HPP
+#endif // NEIGHBOR_HPP

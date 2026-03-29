@@ -9,7 +9,7 @@
 
 /********************************************************************
  *
- *  Spatial Neighbour Structure Conversion Utilities
+ *  Spatial Neighbor Structure Conversion Utilities
  *
  *  These functions convert between:
  *

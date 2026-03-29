@@ -104,7 +104,7 @@ namespace KSGInfo
                 row.end());
 
             if (row.size() < k)
-                throw std::runtime_error("k larger than valid neighbour count");
+                throw std::runtime_error("k larger than valid neighbor count");
 
             std::nth_element(
                 row.begin(),
@@ -165,7 +165,7 @@ namespace KSGInfo
                 row.end());
 
             if (row.size() < k)
-                throw std::runtime_error("k larger than valid neighbour count");
+                throw std::runtime_error("k larger than valid neighbor count");
 
             std::nth_element(
                 row.begin(),
@@ -249,7 +249,7 @@ namespace KSGInfo
                 row.end());
 
             if (row.size() < k)
-                throw std::runtime_error("k larger than valid neighbour count");
+                throw std::runtime_error("k larger than valid neighbor count");
 
             std::nth_element(row.begin(),row.begin()+k-1,row.end());
             
@@ -374,7 +374,7 @@ namespace KSGInfo
                 row.end());
 
             if (row.size() < k)
-                throw std::runtime_error("k larger than valid neighbour count");
+                throw std::runtime_error("k larger than valid neighbor count");
 
             std::nth_element(row.begin(),row.begin()+k-1,row.end());
 

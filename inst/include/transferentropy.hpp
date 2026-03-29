@@ -33,7 +33,7 @@
  *
  *      Continuous Transfer Entropy
  *      ---------------------------
- *      Uses k-nearest neighbour estimators implemented in:
+ *      Uses k-nearest neighbor estimators implemented in:
  *
  *          KSGInfo::CMI
  *
@@ -50,7 +50,7 @@
  *          Agent history length.
  *
  *      k
- *          k-nearest neighbours for KSG estimator.
+ *          k-nearest neighbors for KSG estimator.
  *
  *      alg
  *          Estimator variant for continuous TE:
