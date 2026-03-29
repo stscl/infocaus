@@ -194,7 +194,7 @@ namespace NN
                     candidates.end(),
                     [](const auto& a, const auto& b)
                     {
-                        if (!NumericUtils::doubleNearlyEqual(a.first,b.first))
+                        if (!numericutils::doubleNearlyEqual(a.first,b.first))
                             return a.first < b.first;
                         return a.second < b.second;
                     });
@@ -332,7 +332,7 @@ namespace NN
                     candidates.end(),
                     [](const auto& a, const auto& b)
                     {
-                        if (!NumericUtils::doubleNearlyEqual(a.first,b.first))
+                        if (!numericutils::doubleNearlyEqual(a.first,b.first))
                             return a.first < b.first;
                         return a.second < b.second;
                     });
@@ -404,7 +404,7 @@ namespace NN
             candidates.end(),
             [](const std::pair<double, size_t>& a,
               const std::pair<double, size_t>& b) {
-              if (!NumericUtils::doubleNearlyEqual(a.first, b.first)) {
+              if (!numericutils::doubleNearlyEqual(a.first, b.first)) {
                 return a.first < b.first;
               } else {
                 return a.second < b.second;
@@ -496,7 +496,7 @@ namespace NN
             candidates.end(),
             [](const std::pair<double, size_t>& a,
               const std::pair<double, size_t>& b) {
-              if (!NumericUtils::doubleNearlyEqual(a.first, b.first)) {
+              if (!numericutils::doubleNearlyEqual(a.first, b.first)) {
                 return a.first < b.first;
               } else {
                 return a.second < b.second;
