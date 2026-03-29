@@ -66,6 +66,10 @@ namespace Disc
                 out.push_back(x);
         }
 
+        if (out.empty())
+            throw std::invalid_argument(
+                "[Discretize] Input vector contains no valid numeric values (all values are NaN).");
+
         return out;
     }
 
