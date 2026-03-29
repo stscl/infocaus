@@ -36,7 +36,7 @@
  *      Dist::Dist (Chebyshev metric)
  *
  *  Special functions:
- *      NumericUtils::Digamma
+ *      numericutils::digamma
  *
  *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
@@ -114,20 +114,20 @@ namespace KSGInfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
             
-            avg += (NumericUtils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                     ? 0.0 : std::log(eps * 2.0);
         }
 
         avg /= static_cast<double>(n);
 
-        double H = NumericUtils::Digamma(n)
-                 - NumericUtils::Digamma(k)
+        double H = numericutils::digamma(n)
+                 - numericutils::digamma(k)
                  + avg;
         
         if (alg == 1)
             H += 1.0 / k;
 
-        if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+        if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
 
         return H;
@@ -175,20 +175,20 @@ namespace KSGInfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg += (NumericUtils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                     ? 0.0 : std::log(eps * 2.0);
         }
 
         avg /= static_cast<double>(n);
 
-        double H = NumericUtils::Digamma(n)
-                 - NumericUtils::Digamma(k)
+        double H = numericutils::digamma(n)
+                 - numericutils::digamma(k)
                  + d * avg;
 
         if (alg == 1)
             H += 1.0 / k;
 
-        if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+        if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
 
         return H;
@@ -256,7 +256,7 @@ namespace KSGInfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg_log_eps += (NumericUtils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg_log_eps += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                             ? 0.0 : std::log(eps * 2.0);
 
             size_t nx = 0, ny = 0;
@@ -278,11 +278,11 @@ namespace KSGInfo
             }
 
             if (alg == 0)
-                sum += NumericUtils::Digamma(nx+1)
-                     + NumericUtils::Digamma(ny+1);
+                sum += numericutils::digamma(nx+1)
+                     + numericutils::digamma(ny+1);
             else
-                sum += NumericUtils::Digamma(nx)
-                     + NumericUtils::Digamma(ny);
+                sum += numericutils::digamma(nx)
+                     + numericutils::digamma(ny);
         }
 
         avg_log_eps /= n;
@@ -290,32 +290,32 @@ namespace KSGInfo
         double mi;
 
         if (alg == 0)
-            mi = NumericUtils::Digamma(k)
-               + NumericUtils::Digamma(n)
+            mi = numericutils::digamma(k)
+               + numericutils::digamma(n)
                - sum / n;
         else
-            mi = NumericUtils::Digamma(k)
+            mi = numericutils::digamma(k)
                - 1.0 / k
-               + NumericUtils::Digamma(n)
+               + numericutils::digamma(n)
                - sum / n;
 
         mi = std::max(0.0, mi);
 
         if (!normalize) 
         {
-            if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 mi /= std::log(base);
 
             return mi;
         } 
 
-        double hxy = NumericUtils::Digamma(n)
-                   - NumericUtils::Digamma(k)
+        double hxy = numericutils::digamma(n)
+                   - numericutils::digamma(k)
                    + d * avg_log_eps;
         if (alg == 1) hxy += 1.0 / k;
 
         if (hxy <= 0) {
-            if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 mi /= std::log(base);
 
             return mi;
@@ -381,7 +381,7 @@ namespace KSGInfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg_log_eps += (NumericUtils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg_log_eps += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                             ? 0.0 : std::log(eps * 2.0);
 
             size_t nxz = 0, nyz = 0, nz = 0;
@@ -405,36 +405,36 @@ namespace KSGInfo
             }
 
             if (alg == 0)
-                sum += NumericUtils::Digamma(nxz+1)
-                     + NumericUtils::Digamma(nyz+1)
-                     - NumericUtils::Digamma(nz+1);
+                sum += numericutils::digamma(nxz+1)
+                     + numericutils::digamma(nyz+1)
+                     - numericutils::digamma(nz+1);
             else
-                sum += NumericUtils::Digamma(nxz)
-                     + NumericUtils::Digamma(nyz)
-                     - NumericUtils::Digamma(nz);
+                sum += numericutils::digamma(nxz)
+                     + numericutils::digamma(nyz)
+                     - numericutils::digamma(nz);
         }
 
         avg_log_eps /= n;
 
-        double cmi = NumericUtils::Digamma(k) - sum / n;
+        double cmi = numericutils::digamma(k) - sum / n;
         if (alg == 1) cmi -= 1.0 / k;
 
         if (!normalize)
         {
-            if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 cmi /= std::log(base);
 
             return cmi;
         } 
 
-        double hxy_z = NumericUtils::Digamma(n)
-                     - NumericUtils::Digamma(k)
+        double hxy_z = numericutils::digamma(n)
+                     - numericutils::digamma(k)
                      + d * avg_log_eps;
         if (alg == 1) hxy_z += 1.0 / k;
 
         if (hxy_z <= 0)
         {
-            if (!NumericUtils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 cmi /= std::log(base);
 
             return cmi;

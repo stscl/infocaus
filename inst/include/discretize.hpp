@@ -116,7 +116,7 @@ namespace Disc
 
         std::vector<uint64_t> res(vec.size(), 0);
 
-        if (NumericUtils::doubleNearlyEqual(sd, 0.0)) 
+        if (numericutils::doubleNearlyEqual(sd, 0.0)) 
         {
             for (size_t i = 0; i < vec.size(); ++i)
                 if (!std::isnan(vec[i])) res[i] = 1;
@@ -158,7 +158,7 @@ namespace Disc
 
         std::vector<uint64_t> res(vec.size(), 0);
 
-        if (NumericUtils::doubleNearlyEqual(interval, 0.0)) 
+        if (numericutils::doubleNearlyEqual(interval, 0.0)) 
         {
             for (size_t i = 0; i < vec.size(); ++i)
                 if (!std::isnan(vec[i])) res[i] = 1;
