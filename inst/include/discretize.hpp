@@ -253,14 +253,14 @@ namespace Disc
                                         : (vec[i] < q[j + 1]);
                 if (in_bin)
                 {
-                    res[i] = j + 1;
+                    res[i] = static_cast<uint64_t>(j + 1);
                     assigned = true;
                     break;
                 }
             }
 
             if (!assigned)
-                res[i] = n;
+                res[i] = static_cast<uint64_t>(n);
 
         }
 
@@ -300,14 +300,14 @@ namespace Disc
                                                 : (vec[i] < bp[j]);
                 if (classify_val)
                 {
-                    res[i] = j + 1;
+                    res[i] = static_cast<uint64_t>(j + 1);
                     assigned = true;
                     break;
                 }
             }
 
             if (!assigned)
-                res[i] = n;
+                res[i] = static_cast<uint64_t>(n);
         }
 
         return res;
@@ -438,14 +438,14 @@ namespace Disc
                                                 : (vec[i] < breaks[j]);
                 if (classify_val)
                 {
-                    res[i] = j + 1;
+                    res[i] = static_cast<uint64_t>(j + 1);
                     assigned = true;
                     break;
                 }
             }
 
             if (!assigned)
-                res[i] = n;
+                res[i] = static_cast<uint64_t>(n);
         }
 
         return res;
@@ -524,14 +524,14 @@ namespace Disc
                 if (right_closed ? vec[i] <= breaks[j + 1]
                                 : vec[i] < breaks[j + 1])
                 {
-                    result[i] = j + 1;
+                    result[i] = static_cast<uint64_t>(j + 1);
                     assigned = true;
                     break;
                 }
             }
 
             if (!assigned)
-                result[i] = breaks.size() - 1;
+                result[i] = static_cast<uint64_t>(breaks.size() - 1);
         }
 
         return result;
