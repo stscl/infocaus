@@ -1,4 +1,4 @@
 ## usethis namespace: start
-#' @useDynLib infocaus, .registration = TRUE
+#' @useDynLib infoxtr, .registration = TRUE
 ## usethis namespace: end
 NULL
