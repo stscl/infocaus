@@ -17,7 +17,7 @@
  *      const std::vector<double>& vec
  *
  *  Output
- *      std::vector<size_t>
+ *      std::vector<uint64_t>
  *          0  -> NaN / NA values
  *          1..n -> discretized classes
  *
