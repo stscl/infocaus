@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' set.seed(42)
-#' infocaus::te(matrix(stats::rnorm(100,1,10),ncol=2),1,2)
+#' infoxtr::te(matrix(stats::rnorm(100,1,10),ncol=2),1,2)
 #'
 te = \(data, target, agent, lag_p = 3, lag_q = 3, base = exp(1), 
        type = c("cont", "disc"), k = 3, normalize = FALSE, lag_single = FALSE) {
