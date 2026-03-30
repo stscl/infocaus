@@ -287,17 +287,11 @@ namespace ksginfo
 
         avg_log_eps /= n;
 
-        double mival;
+        double mival = numericutils::digamma(k)
+                     + numericutils::digamma(n)
+                     - sum / n;
 
-        if (alg == 0)
-            mival = numericutils::digamma(k)
-                  + numericutils::digamma(n)
-                  - sum / n;
-        else
-            mival = numericutils::digamma(k)
-                  - 1.0 / k
-                  + numericutils::digamma(n)
-                  - sum / n;
+        if (alg == 1) mival -= 1.0 / k;
 
         mival = std::max(0.0, mival);
 
