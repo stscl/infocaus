@@ -19,7 +19,7 @@ Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat,
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
-    lag::genLatticeLag(cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
+    lag::lag(cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
 
   return mat_std2r(lagged_values, true);
 }
@@ -33,9 +33,9 @@ Rcpp::NumericMatrix RcppGenGridLag(const Rcpp::NumericMatrix& mat,
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
-    lag::genGridLag(cppMat, 
-                    static_cast<size_t>(std::abs(nrows)), 
-                    static_cast<size_t>(std::abs(lag)));
+    lag::lag(cppMat, 
+             static_cast<size_t>(std::abs(nrows)), 
+             static_cast<size_t>(std::abs(lag)));
 
   return mat_std2r(lagged_values, true);
 }
@@ -49,7 +49,7 @@ Rcpp::NumericMatrix RcppGenTSLag(const Rcpp::NumericMatrix& mat,
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
-    lag::genTSLag(cppMat, static_cast<size_t>(std::abs(lag)));
+    lag::lag(cppMat, static_cast<size_t>(std::abs(lag)));
 
   return mat_std2r(lagged_values, true);
 }
