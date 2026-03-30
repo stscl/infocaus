@@ -52,14 +52,15 @@ Rcpp::IntegerVector RcppDisc(
 
     // Call the discretization function
     std::vector<uint64_t> discv = 
-        Disc::Disc(vec_std, method, 
-                   static_cast<size_t>(std::abs(n)), 
-                   static_cast<size_t>(std::abs(sample_begin)),
-                   sample_prob,
-                   static_cast<uint64_t>(std::abs(seed)),
-                   threshold,
-                   static_cast<size_t>(std::abs(iter_step)),
-                   bp_std, right_closed);
+        discretize::discretize(
+            vec_std, method, 
+            static_cast<size_t>(std::abs(n)), 
+            static_cast<size_t>(std::abs(sample_begin)),
+            sample_prob,
+            static_cast<uint64_t>(std::abs(seed)),
+            threshold,
+            static_cast<size_t>(std::abs(iter_step)),
+            bp_std, right_closed);
 
     // Convert the result back to Rcpp::IntegerVector
     return Rcpp::wrap(discv);
