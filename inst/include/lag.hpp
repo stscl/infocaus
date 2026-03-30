@@ -43,10 +43,10 @@ namespace lag
     }
 
     /* ============================================================
-    LATTICE LAG
-    ============================================================ */
+     * LATTICE LAG
+     * ============================================================ */
 
-    inline Matrix genLatticeLag(
+    inline Matrix lag4Lattice(
         const Matrix& mat,
         const NeighborMat& nb,
         size_t lag
@@ -119,10 +119,10 @@ namespace lag
     }
 
     /* ============================================================
-    GRID LAG
-    ============================================================ */
+     *  GRID LAG
+     * ============================================================ */
 
-    inline Matrix genGridLag(
+    inline Matrix lag4Grid(
         const Matrix& mat,
         size_t nrows,
         size_t lag
@@ -194,10 +194,10 @@ namespace lag
     }
 
     /* ============================================================
-    TIME SERIES LAG
-    ============================================================ */
+     *  TIME SERIES LAG
+     * ============================================================ */
 
-    inline Matrix genTSLag(
+    inline Matrix lag4TS(
         const Matrix& mat,
         size_t lag
     )
