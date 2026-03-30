@@ -29,7 +29,7 @@
  *      Uses discrete information theoretic estimators
  *      implemented in:
  *
- *          InfoTheo::CMI
+ *          infotheo::CMI
  *
  *      Continuous Transfer Entropy
  *      ---------------------------
@@ -216,7 +216,7 @@ namespace TE
         std::iota(tgl_idx.begin(), tgl_idx.end(), tg.size() + ag_lag);
 
         // Compute conditional mutual information
-        return InfoTheo::CMI(pm, tg_idx, ag_idx, tgl_idx, base, na_rm, normalize);
+        return infotheo::CMI(pm, tg_idx, ag_idx, tgl_idx, base, na_rm, normalize);
     }
 
     /***********************************************************
