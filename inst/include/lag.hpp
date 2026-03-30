@@ -37,7 +37,7 @@ namespace lag
 
     static constexpr double NaN = std::numeric_limits<double>::quiet_NaN();
 
-    inline size_t GridIndex(size_t r, size_t c, size_t ncol)
+    inline size_t gridIndex(size_t r, size_t c, size_t ncol)
     {
         return r * ncol + c;
     }
@@ -158,7 +158,7 @@ namespace lag
         {
             for (size_t c = 0; c < ncols; ++c)
             {
-                const size_t id = GridIndex(r, c, ncols);
+                const size_t id = gridIndex(r, c, ncols);
 
                 for (size_t j = 0; j < p; ++j)
                 {
@@ -173,7 +173,7 @@ namespace lag
                         if (nr >= 0 && nr < (int)nrows &&
                             nc >= 0 && nc < (int)ncols)
                         {
-                            size_t nid = GridIndex(nr, nc, ncols);
+                            size_t nid = gridIndex(nr, nc, ncols);
                             double v = mat[nid][j];
 
                             if (!std::isnan(v))
