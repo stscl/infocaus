@@ -94,10 +94,10 @@ namespace neighbor
         bool include_self = false,
         bool byrow = true)
     {
-        const Dist::DistanceMethod dist_method =
-            Dist::parseDistanceMethod(method);
+        const distance::distanceMethod dist_method =
+            distance::parseDistanceMethod(method);
 
-        if (dist_method == Dist::DistanceMethod::Invalid)
+        if (dist_method == distance::distanceMethod::Invalid)
         {
             throw std::invalid_argument(
                 "Unsupported distance method: " + method);
@@ -136,15 +136,15 @@ namespace neighbor
 
                     switch (dist_method)
                     {
-                        case Dist::DistanceMethod::Euclidean:
+                        case distance::distanceMethod::Euclidean:
                             sum += diff * diff;
                             break;
 
-                        case Dist::DistanceMethod::Manhattan:
+                        case distance::distanceMethod::Manhattan:
                             sum += std::abs(diff);
                             break;
 
-                        case Dist::DistanceMethod::Maximum:
+                        case distance::distanceMethod::Maximum:
                         {
                             double ad = std::abs(diff);
                             if (ad > maxv) maxv = ad;
@@ -162,9 +162,9 @@ namespace neighbor
 
                 double distv;
 
-                if (dist_method == Dist::DistanceMethod::Euclidean)
+                if (dist_method == distance::distanceMethod::Euclidean)
                     distv = std::sqrt(sum);
-                else if (dist_method == Dist::DistanceMethod::Manhattan)
+                else if (dist_method == distance::distanceMethod::Manhattan)
                     distv = sum;
                 else
                     distv = maxv;
@@ -226,10 +226,10 @@ namespace neighbor
         bool include_self = false,
         bool byrow = true)
     {
-        const Dist::DistanceMethod dist_method =
-            Dist::parseDistanceMethod(method);
+        const distance::distanceMethod dist_method =
+            distance::parsedistanceMethod(method);
 
-        if (dist_method == Dist::DistanceMethod::Invalid)
+        if (dist_method == distance::distanceMethod::Invalid)
         {
             throw std::invalid_argument(
                 "Unsupported distance method: " + method);
@@ -274,15 +274,15 @@ namespace neighbor
 
                     switch (dist_method)
                     {
-                        case Dist::DistanceMethod::Euclidean:
+                        case distance::distanceMethod::Euclidean:
                             sum += diff * diff;
                             break;
 
-                        case Dist::DistanceMethod::Manhattan:
+                        case distance::distanceMethod::Manhattan:
                             sum += std::abs(diff);
                             break;
 
-                        case Dist::DistanceMethod::Maximum:
+                        case distance::distanceMethod::Maximum:
                         {
                             double ad = std::abs(diff);
                             if (ad > maxv) maxv = ad;
@@ -300,9 +300,9 @@ namespace neighbor
 
                 double distv;
 
-                if (dist_method == Dist::DistanceMethod::Euclidean)
+                if (dist_method == distance::distanceMethod::Euclidean)
                     distv = std::sqrt(sum);
-                else if (dist_method == Dist::DistanceMethod::Manhattan)
+                else if (dist_method == distance::distanceMethod::Manhattan)
                     distv = sum;
                 else
                     distv = maxv;
