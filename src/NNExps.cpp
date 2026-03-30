@@ -4,10 +4,10 @@
 #include <limits>
 #include <numeric>
 #include <algorithm>
-#include "neighbour.hpp"
+#include "neighbor.hpp"
 #include "DataTrans.h"
 
-// Wrapper function to compute the nearest neighbours for an input feature matrix
+// Wrapper function to compute the nearest neighbors for an input feature matrix
 // [[Rcpp::export(rng = false)]]
 Rcpp::List RcppNN4Mat(
     const Rcpp::NumericMatrix& mat,
@@ -20,15 +20,15 @@ Rcpp::List RcppNN4Mat(
     std::vector<std::vector<double>> cppMat = mat_r2std(mat, true);
 
     // Call the neighbpurbood function
-    std::vector<std::vector<size_t>> neighbours = NN::NN4Mat(
+    std::vector<std::vector<size_t>> neighbors = neighbor::NN4Mat(
         cppMat, static_cast<size_t>(std::abs(k)), 
         method, include_self, byrow);
 
     // Return nb object (List in R side)
-    return std2nb(neighbours);
+    return std2nb(neighbors);
 }
 
-// Wrapper function to compute the nearest neighbours for an input feature matrix subset
+// Wrapper function to compute the nearest neighbors for an input feature matrix subset
 // [[Rcpp::export(rng = false)]]
 Rcpp::List RcppNN4MatSub(
     const Rcpp::NumericMatrix& mat,
@@ -64,13 +64,13 @@ Rcpp::List RcppNN4MatSub(
     }
 
     // Call the neighbpurbood function
-    std::vector<std::vector<size_t>> neighbours = NN::NN4Mat(
+    std::vector<std::vector<size_t>> neighbors = neighbor::NN4Mat(
         cppMat, lib_std, pred_std, 
         static_cast<size_t>(std::abs(k)), 
         method, include_self, byrow);
 
     // Return nb object (List in R side)
-    return std2nb(neighbours);
+    return std2nb(neighbors);
 }
 
 // Wrapper function to compute the nearest neighbours for an input distance matrix
@@ -84,11 +84,11 @@ Rcpp::List RcppNN4DistMat(
     std::vector<std::vector<double>> cppMat = mat_r2std(distmat, true);
 
     // Call the neighbpurbood function
-    std::vector<std::vector<size_t>> neighbours = NN::NN4DistMat(
+    std::vector<std::vector<size_t>> neighbors = neighbor::NN4DistMat(
         cppMat, static_cast<size_t>(std::abs(k)), include_self);
 
     // Return nb object (List in R side)
-    return std2nb(neighbours);
+    return std2nb(neighbors);
 }
 
 // Wrapper function to compute the nearest neighbours for an input distance matrix subset
@@ -125,9 +125,9 @@ Rcpp::List RcppNN4DistMatSub(
     }
 
     // Call the neighbpurbood function
-    std::vector<std::vector<size_t>> neighbours = NN::NN4DistMat(
+    std::vector<std::vector<size_t>> neighbors = neighbor::NN4DistMat(
         cppMat, lib_std, pred_std, static_cast<size_t>(std::abs(k)), include_self);
 
     // Return nb object (List in R side)
-    return std2nb(neighbours);
+    return std2nb(neighbors);
 }
