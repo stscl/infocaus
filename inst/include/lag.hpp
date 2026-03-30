@@ -26,7 +26,7 @@
 #include <stdexcept>
 #include <cstddef>
 
-namespace Lag
+namespace lag
 {
 
     using Index        = std::size_t;
@@ -46,7 +46,7 @@ namespace Lag
     LATTICE LAG
     ============================================================ */
 
-    inline Matrix GenLatticeLag(
+    inline Matrix genLatticeLag(
         const Matrix& mat,
         const NeighborMat& nb,
         size_t lag
@@ -122,7 +122,7 @@ namespace Lag
     GRID LAG
     ============================================================ */
 
-    inline Matrix GenGridLag(
+    inline Matrix genGridLag(
         const Matrix& mat,
         size_t nrows,
         size_t lag
@@ -197,7 +197,7 @@ namespace Lag
     TIME SERIES LAG
     ============================================================ */
 
-    inline Matrix GenTSLag(
+    inline Matrix genTSLag(
         const Matrix& mat,
         size_t lag
     )
@@ -223,6 +223,6 @@ namespace Lag
         return out;
     }
 
-} // namespace Lag
+} // namespace lag
 
 #endif // LAG_HPP
