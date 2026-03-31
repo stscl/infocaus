@@ -33,17 +33,17 @@
  *            Kraskov–Stögbauer–Grassberger estimator II (KSG2)
  *
  *  Distance backend:
- *      distance::distance (Chebyshev metric)
+ *      infoxtr::distance::distance (Chebyshev metric)
  *
  *  Special functions:
- *      numericutils::digamma
+ *      infoxtr::numericutils::digamma
  *
  *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
  **********************************************************************/
 
-#ifndef KSGINFO_HPP
-#define KSGINFO_HPP
+#ifndef INFOXTR_KSGINFO_HPP
+#define INFOXTR_KSGINFO_HPP
 
 #include <vector>
 #include <cmath>
@@ -51,8 +51,11 @@
 #include <numeric>
 #include <algorithm>
 #include <stdexcept>
-#include "distance.hpp"
-#include "numericutils.hpp"
+#include "infoxtr/distance.hpp"
+#include "infoxtr/numericutils.hpp"
+
+namespace infoxtr
+{
 
 namespace ksginfo
 {
@@ -439,4 +442,6 @@ namespace ksginfo
 
 } // namespace ksginfo
 
-#endif // KSGINFO_HPP
+}
+
+#endif // INFOXTR_KSGINFO_HPP
