@@ -4,7 +4,7 @@
 #include <limits>
 #include <numeric>
 #include <algorithm>
-#include "discretize.hpp"
+#include "infoxtr.h"
 #include "DataTrans.h"
 
 // Wrapper function to discretize continuous numeric vector
@@ -52,7 +52,7 @@ Rcpp::IntegerVector RcppDisc(
 
     // Call the discretization function
     std::vector<uint64_t> discv = 
-        discretize::discretize(
+        infoxtr::discretize::discretize(
             vec_std, method, 
             static_cast<size_t>(std::abs(n)), 
             static_cast<size_t>(std::abs(sample_begin)),
