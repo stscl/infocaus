@@ -3,7 +3,7 @@
 #include <limits>
 #include <numeric>
 #include <algorithm>
-#include "lagg.hpp"
+#include "infoxtr.h"
 #include "DataTrans.h"
 
 // Wrapper function to calculate spatial lag value for vector spatial data
@@ -19,7 +19,7 @@ Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat,
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
-    lagg::lagg(cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
+    infoxtr::lagg::lagg(cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
 
   return mat_std2r(lagged_values, true);
 }
@@ -33,9 +33,9 @@ Rcpp::NumericMatrix RcppGenGridLag(const Rcpp::NumericMatrix& mat,
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
-    lagg::lagg(cppMat, 
-               static_cast<size_t>(std::abs(nrows)), 
-               static_cast<size_t>(std::abs(lag)));
+    infoxtr::lagg::lagg(cppMat, 
+                        static_cast<size_t>(std::abs(nrows)), 
+                        static_cast<size_t>(std::abs(lag)));
 
   return mat_std2r(lagged_values, true);
 }
@@ -49,7 +49,7 @@ Rcpp::NumericMatrix RcppGenTSLag(const Rcpp::NumericMatrix& mat,
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
-    lagg::lagg(cppMat, static_cast<size_t>(std::abs(lag)));
+    infoxtr::lagg::lagg(cppMat, static_cast<size_t>(std::abs(lag)));
 
   return mat_std2r(lagged_values, true);
 }
