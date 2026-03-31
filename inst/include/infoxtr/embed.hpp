@@ -29,8 +29,8 @@
  *  License: GPL-3
  *******************************************************************/
 
-#ifndef EMBED_HPP
-#define EMBED_HPP
+#ifndef INFOXTR_EMBED_HPP
+#define INFOXTR_EMBED_HPP
 
 #include <vector>
 #include <cmath>
@@ -42,6 +42,9 @@
 #include <stdexcept>
 #include <cstddef>
 #include <utility>
+
+namespace infoxtr 
+{
 
 namespace embed 
 {
@@ -777,4 +780,6 @@ namespace embed
 
 } // namespace embed
 
-#endif // EMBED_HPP
+}
+
+#endif // INFOXTR_EMBED_HPP
