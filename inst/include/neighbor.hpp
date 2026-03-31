@@ -85,7 +85,6 @@ namespace neighbor
      *      2. Compute distances to all other observations
      *      3. Exclude self unless include_self = true
      *      4. Partial sort to obtain k nearest
-     *
      ***********************************************************/
     inline std::vector<std::vector<size_t>> NN4Mat(
         const std::vector<std::vector<double>>& mat,
@@ -215,7 +214,6 @@ namespace neighbor
      * Returns:
      *      neighbor index list aligned to full matrix size,
      *      only pred position has values
-     *
      ***********************************************************/
     inline std::vector<std::vector<size_t>> NN4Mat(
         const std::vector<std::vector<double>>& mat,
@@ -352,7 +350,6 @@ namespace neighbor
      *
      * Returns:
      *      neighbor index list
-     *
      ***********************************************************/
     inline std::vector<std::vector<size_t>> NN4DistMat(
         const std::vector<std::vector<double>>& distmat,
@@ -429,7 +426,6 @@ namespace neighbor
      * Returns:
      *      neighbor index list aligned to full matrix size,
      *      only pred position has values
-     *
      ***********************************************************/
     inline std::vector<std::vector<size_t>> NN4DistMat(
         const std::vector<std::vector<double>>& distmat,
