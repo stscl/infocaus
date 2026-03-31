@@ -14,14 +14,17 @@
  * License: GPL-3
  ********************************************************************************/
 
-#ifndef NUMERICUTILS_HPP
-#define NUMERICUTILS_HPP
+#ifndef INFOXTR_NUMERICUTILS_HPP
+#define INFOXTR_NUMERICUTILS_HPP
 
 #include <cmath>
 #include <limits>
 #include <numeric>
 #include <algorithm>
 #include <initializer_list>
+
+namespace infoxtr
+{
 
 namespace numericutils
 {
@@ -146,4 +149,6 @@ namespace numericutils
 
 } // namespace numericutils
 
-#endif // NUMERICUTILS_HPP
+}
+
+#endif // INFOXTR_NUMERICUTILS_HPP
