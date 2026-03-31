@@ -90,7 +90,7 @@ namespace ksginfo
     {
         const size_t n = series.size();
 
-        auto dist = distance::distance(series);
+        auto dist = infoxtr::distance::distance(series);
 
         double avg = 0.0;
 
@@ -117,20 +117,20 @@ namespace ksginfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
             
-            avg += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg += (infoxtr::numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                     ? 0.0 : std::log(eps * 2.0);
         }
 
         avg /= static_cast<double>(n);
 
-        double H = numericutils::digamma(n)
-                 - numericutils::digamma(k)
+        double H = infoxtr::numericutils::digamma(n)
+                 - infoxtr::numericutils::digamma(k)
                  + avg;
         
         if (alg == 1)
             H += 1.0 / k;
 
-        if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
+        if (!infoxtr::numericutils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
 
         return H;
@@ -151,7 +151,7 @@ namespace ksginfo
         const size_t d = sub.size();
         const size_t n = sub[0].size();
 
-        auto dist = distance::distance(sub,"maximum",true,false);
+        auto dist = infoxtr::distance::distance(sub,"maximum",true,false);
 
         double avg = 0.0;
 
@@ -178,20 +178,20 @@ namespace ksginfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg += (infoxtr::numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                     ? 0.0 : std::log(eps * 2.0);
         }
 
         avg /= static_cast<double>(n);
 
-        double H = numericutils::digamma(n)
-                 - numericutils::digamma(k)
+        double H = infoxtr::numericutils::digamma(n)
+                 - infoxtr::numericutils::digamma(k)
                  + d * avg;
 
         if (alg == 1)
             H += 1.0 / k;
 
-        if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
+        if (!infoxtr::numericutils::doubleNearlyEqual(base,std::exp(1.0)))
             H /= std::log(base);
 
         return H;
@@ -229,9 +229,9 @@ namespace ksginfo
         std::vector<size_t> xy = target;
         xy.insert(xy.end(), interact.begin(), interact.end());
 
-        auto d_xy = distance::distance(subset(mat,xy),"maximum",true,false);
-        auto d_x  = distance::distance(subset(mat,target),"maximum",true,false);
-        auto d_y  = distance::distance(subset(mat,interact),"maximum",true,false);
+        auto d_xy = infoxtr::distance::distance(subset(mat,xy),"maximum",true,false);
+        auto d_x  = infoxtr::distance::distance(subset(mat,target),"maximum",true,false);
+        auto d_y  = infoxtr::distance::distance(subset(mat,interact),"maximum",true,false);
 
         const size_t n = d_xy.size();
         const size_t d = xy.size();
@@ -259,7 +259,7 @@ namespace ksginfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg_log_eps += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg_log_eps += (infoxtr::numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                             ? 0.0 : std::log(eps * 2.0);
 
             size_t nx = 0, ny = 0;
@@ -281,17 +281,17 @@ namespace ksginfo
             }
 
             if (alg == 0)
-                sum += numericutils::digamma(nx+1)
-                     + numericutils::digamma(ny+1);
+                sum += infoxtr::numericutils::digamma(nx+1)
+                     + infoxtr::numericutils::digamma(ny+1);
             else
-                sum += numericutils::digamma(nx)
-                     + numericutils::digamma(ny);
+                sum += infoxtr::numericutils::digamma(nx)
+                     + infoxtr::numericutils::digamma(ny);
         }
 
         avg_log_eps /= n;
 
-        double mival = numericutils::digamma(k)
-                     + numericutils::digamma(n)
+        double mival = infoxtr::numericutils::digamma(k)
+                     + infoxtr::numericutils::digamma(n)
                      - sum / n;
 
         if (alg == 1) mival -= 1.0 / k;
@@ -300,19 +300,19 @@ namespace ksginfo
 
         if (!normalize) 
         {
-            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!infoxtr::numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 mival /= std::log(base);
 
             return mival;
         } 
 
-        double hxy = numericutils::digamma(n)
-                   - numericutils::digamma(k)
+        double hxy = infoxtr::numericutils::digamma(n)
+                   - infoxtr::numericutils::digamma(k)
                    + d * avg_log_eps;
         if (alg == 1) hxy += 1.0 / k;
 
         if (hxy <= 0) {
-            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!infoxtr::numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 mival /= std::log(base);
 
             return mival;
@@ -347,10 +347,10 @@ namespace ksginfo
         std::vector<size_t> yz = conds;
         yz.insert(yz.end(), interact.begin(), interact.end());
 
-        auto d_xyz = distance::distance(subset(mat,xyz),"maximum",true,false);
-        auto d_xz  = distance::distance(subset(mat,xz),"maximum",true,false);
-        auto d_yz  = distance::distance(subset(mat,yz),"maximum",true,false);
-        auto d_z   = distance::distance(subset(mat,conds),"maximum",true,false);
+        auto d_xyz = infoxtr::distance::distance(subset(mat,xyz),"maximum",true,false);
+        auto d_xz  = infoxtr::distance::distance(subset(mat,xz),"maximum",true,false);
+        auto d_yz  = infoxtr::distance::distance(subset(mat,yz),"maximum",true,false);
+        auto d_z   = infoxtr::distance::distance(subset(mat,conds),"maximum",true,false);
 
         const size_t n = d_xyz.size();
         const size_t d = xy.size();
@@ -378,7 +378,7 @@ namespace ksginfo
             double eps = row[k-1];
             // double eps = std::max(row[k-1], 1e-15);
 
-            avg_log_eps += (numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
+            avg_log_eps += (infoxtr::numericutils::doubleNearlyEqual(eps*2.0, 0.0) || eps < 0) 
                             ? 0.0 : std::log(eps * 2.0);
 
             size_t nxz = 0, nyz = 0, nz = 0;
@@ -402,36 +402,36 @@ namespace ksginfo
             }
 
             if (alg == 0)
-                sum += numericutils::digamma(nxz+1)
-                     + numericutils::digamma(nyz+1)
-                     - numericutils::digamma(nz+1);
+                sum += infoxtr::numericutils::digamma(nxz+1)
+                     + infoxtr::numericutils::digamma(nyz+1)
+                     - infoxtr::numericutils::digamma(nz+1);
             else
-                sum += numericutils::digamma(nxz)
-                     + numericutils::digamma(nyz)
-                     - numericutils::digamma(nz);
+                sum += infoxtr::numericutils::digamma(nxz)
+                     + infoxtr::numericutils::digamma(nyz)
+                     - infoxtr::numericutils::digamma(nz);
         }
 
         avg_log_eps /= n;
 
-        double cmival = numericutils::digamma(k) - sum / n;
+        double cmival = infoxtr::numericutils::digamma(k) - sum / n;
         if (alg == 1) cmival -= 1.0 / k;
 
         if (!normalize)
         {
-            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!infoxtr::numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 cmival /= std::log(base);
 
             return cmival;
         } 
 
-        double hxy_z = numericutils::digamma(n)
-                     - numericutils::digamma(k)
+        double hxy_z = infoxtr::numericutils::digamma(n)
+                     - infoxtr::numericutils::digamma(k)
                      + d * avg_log_eps;
         if (alg == 1) hxy_z += 1.0 / k;
 
         if (hxy_z <= 0)
         {
-            if (!numericutils::doubleNearlyEqual(base,std::exp(1.0)))
+            if (!infoxtr::numericutils::doubleNearlyEqual(base,std::exp(1.0)))
                 cmival /= std::log(base);
 
             return cmival;
