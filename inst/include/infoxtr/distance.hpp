@@ -37,8 +37,8 @@
  *  License: GPL-3
  ************************************************************************/
 
-#ifndef DISTANCE_HPP
-#define DISTANCE_HPP
+#ifndef INFOXTR_DISTANCE_HPP
+#define INFOXTR_DISTANCE_HPP
 
 #include <vector>
 #include <cmath>
@@ -48,6 +48,9 @@
 #include <cstdint>
 #include <stdexcept>
 #include <algorithm>
+
+namespace infoxtr 
+{
 
 namespace distance
 {   
@@ -610,4 +613,6 @@ namespace distance
 
 } // namespace distance
 
-#endif // DISTANCE_HPP
+}
+
+#endif // INFOXTR_DISTANCE_HPP
