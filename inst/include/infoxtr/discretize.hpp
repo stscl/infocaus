@@ -119,7 +119,7 @@ namespace discretize
 
         std::vector<uint64_t> res(vec.size(), 0);
 
-        if (numericutils::doubleNearlyEqual(sd, 0.0)) 
+        if (infoxtr::numericutils::doubleNearlyEqual(sd, 0.0)) 
         {
             for (size_t i = 0; i < vec.size(); ++i)
                 if (!std::isnan(vec[i])) res[i] = 1;
@@ -161,7 +161,7 @@ namespace discretize
 
         std::vector<uint64_t> res(vec.size(), 0);
 
-        if (numericutils::doubleNearlyEqual(interval, 0.0)) 
+        if (infoxtr::numericutils::doubleNearlyEqual(interval, 0.0)) 
         {
             for (size_t i = 0; i < vec.size(); ++i)
                 if (!std::isnan(vec[i])) res[i] = 1;
@@ -216,7 +216,6 @@ namespace discretize
                 idx = std::ceil(std::log(vec[i] / minx) / std::log(factor));
             else
                 idx = std::floor(std::log(vec[i] / minx) / std::log(factor)) + 1;
-
             idx = std::max<long>(1, std::min<long>(idx, static_cast<long>(n)));
 
             res[i] = static_cast<uint64_t>(idx);
