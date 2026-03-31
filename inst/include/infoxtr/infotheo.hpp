@@ -23,8 +23,8 @@
  *  License: GPL-3
  **********************************************************************/
 
-#ifndef INFOTHEO_HPP
-#define INFOTHEO_HPP
+#ifndef INFOXTR_INFOTHEO_HPP
+#define INFOXTR_INFOTHEO_HPP
 
 #include <vector>
 #include <cmath>
@@ -35,6 +35,9 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <unordered_set>
+
+namespace infoxtr
+{
 
 namespace infotheo
 {
@@ -329,4 +332,6 @@ namespace infotheo
 
 } // namespace infotheo
 
-#endif // INFOTHEO_HPP
+}
+
+#endif // INFOXTR_INFOTHEO_HPP
