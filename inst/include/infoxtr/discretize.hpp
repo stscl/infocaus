@@ -32,8 +32,8 @@
  *  License: GPL-3
  **********************************************************************/
 
-#ifndef DISCRETIZE_HPP
-#define DISCRETIZE_HPP
+#ifndef INFOXTR_DISCRETIZE_HPP
+#define INFOXTR_DISCRETIZE_HPP
 
 #include <vector>
 #include <cmath>
@@ -46,7 +46,10 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
-#include "numericutils.hpp"
+#include "infoxtr/numericutils.hpp"
+
+namespace infoxtr
+{
 
 namespace discretize
 {
@@ -579,4 +582,6 @@ namespace discretize
 
 } // namespace discretize
 
-#endif // DISCRETIZE_HPP
+}
+
+#endif // INFOXTR_DISCRETIZE_HPP
