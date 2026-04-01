@@ -12,21 +12,21 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // RcppDisc
-Rcpp::IntegerVector RcppDisc(const Rcpp::NumericVector& vec, int n, const std::string& method, int sample_begin, double sample_prob, int seed, double threshold, int iter_step, Rcpp::Nullable<Rcpp::NumericVector> breakpoints, bool right_closed);
-RcppExport SEXP _infoxtr_RcppDisc(SEXP vecSEXP, SEXP nSEXP, SEXP methodSEXP, SEXP sample_beginSEXP, SEXP sample_probSEXP, SEXP seedSEXP, SEXP thresholdSEXP, SEXP iter_stepSEXP, SEXP breakpointsSEXP, SEXP right_closedSEXP) {
+Rcpp::IntegerVector RcppDisc(const Rcpp::NumericVector& vec, int n, const std::string& method, int sample_begin, double sample_prop, int seed, double threshold, int iter_step, Rcpp::Nullable<Rcpp::NumericVector> breakpoints, bool right_closed);
+RcppExport SEXP _infoxtr_RcppDisc(SEXP vecSEXP, SEXP nSEXP, SEXP methodSEXP, SEXP sample_beginSEXP, SEXP sample_propSEXP, SEXP seedSEXP, SEXP thresholdSEXP, SEXP iter_stepSEXP, SEXP breakpointsSEXP, SEXP right_closedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type vec(vecSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
     Rcpp::traits::input_parameter< int >::type sample_begin(sample_beginSEXP);
-    Rcpp::traits::input_parameter< double >::type sample_prob(sample_probSEXP);
+    Rcpp::traits::input_parameter< double >::type sample_prop(sample_propSEXP);
     Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
     Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
     Rcpp::traits::input_parameter< int >::type iter_step(iter_stepSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type breakpoints(breakpointsSEXP);
     Rcpp::traits::input_parameter< bool >::type right_closed(right_closedSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppDisc(vec, n, method, sample_begin, sample_prob, seed, threshold, iter_step, breakpoints, right_closed));
+    rcpp_result_gen = Rcpp::wrap(RcppDisc(vec, n, method, sample_begin, sample_prop, seed, threshold, iter_step, breakpoints, right_closed));
     return rcpp_result_gen;
 END_RCPP
 }

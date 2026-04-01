@@ -416,7 +416,7 @@ namespace discretize
             std::mt19937_64 rng(seed);
 
             size_t sample_size =
-                std::round(x.size() * sample_prob);
+                std::round(x.size() * sample_prop);
 
             sample_size = std::max<size_t>(1, sample_size);
 
