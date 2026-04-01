@@ -33,6 +33,6 @@ reference:
   contents:
   - te
 
-# - title: Miscellaneous Utility Functions
-#   contents:
-#   - discretize
+- title: Miscellaneous Utility Functions
+  contents:
+  - discretize
