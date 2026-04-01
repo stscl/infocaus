@@ -7,7 +7,7 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "##",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -16,40 +16,51 @@ knitr::opts_chunk$set(
 # infoxtr
 
 <!-- badges: start -->
+
+[![CRAN](https://www.r-pkg.org/badges/version/infoxtr)](https://CRAN.R-project.org/package=infoxtr)
+[![CRAN Release](https://www.r-pkg.org/badges/last-release/infoxtr)](https://CRAN.R-project.org/package=infoxtr)
+[![CRAN Checks](https://badges.cranchecks.info/worst/infoxtr.svg)](https://cran.r-project.org/web/checks/check_results_infoxtr.html)
+[![Downloads_all](https://badgen.net/cran/dt/infoxtr?color=orange)](https://CRAN.R-project.org/package=infoxtr)
+[![Downloads_month](https://cranlogs.r-pkg.org/badges/infoxtr)](https://CRAN.R-project.org/package=infoxtr)
+[![License](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-20b2aa.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![R-CMD-check](https://github.com/stscl/infoxtr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stscl/infoxtr/actions/workflows/R-CMD-check.yaml)
+[![R-universe](https://stscl.r-universe.dev/badges/infoxtr?color=cyan)](https://stscl.r-universe.dev/infoxtr)
+
 <!-- badges: end -->
 
-The goal of infoxtr is to ...
+<a href="https://stscl.github.io/infoxtr/"><img src="man/figures/infoxtr.png" align="right" hspace="5" vspace="0" width="15%" alt="infoxtr website: https://stscl.github.io/infoxtr/"/></a>
+
+***Information**-Theoretic Measures for Revealing Variable **Interactions***
+
+*infoxtr* is an R package for spatial causal discovery. It extends Empirical Dynamic Modeling (EDM) from time series to spatial cross-sectional data, provides seamless support for vector and raster spatial data via tight integration with the [*sf*](https://CRAN.R-project.org/package=sf) and [*terra*](https://CRAN.R-project.org/package=terra) packages, and enables data-driven causal inference from spatial snapshots.
+
+> *Refer to the package documentation <https://stscl.github.io/infoxtr/> for more detailed information.*
 
 ## Installation
 
-You can install the development version of infoxtr from [GitHub](https://github.com/) with:
+- Install from [CRAN](https://CRAN.R-project.org/package=infoxtr) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("stscl/infoxtr")
+install.packages("infoxtr", dep = TRUE)
 ```
 
-## Example
+- Install binary version from [R-universe](https://stscl.r-universe.dev/infoxtr) with:
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(infoxtr)
-## basic example code
+``` r
+install.packages("infoxtr",
+                 repos = c("https://stscl.r-universe.dev",
+                           "https://cloud.r-project.org"),
+                 dep = TRUE)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+- Install from source code on [GitHub](https://github.com/stscl/infoxtr) with:
 
-```{r cars}
-summary(cars)
+```r
+if (!requireNamespace("devtools")) {
+    install.packages("devtools")
+}
+devtools::install_github("stscl/infoxtr",
+                         build_vignettes = TRUE,
+                         dep = TRUE)
 ```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
