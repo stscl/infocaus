@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 
 ***Information**-Theoretic Measures for Revealing Variable **Interactions***
 
-*infoxtr* is an R package for analyzing variable interactions using information-theoretic measures. It extends Empirical Dynamic Modeling (EDM) from time series to spatial cross-sectional data, provides seamless support for vector and raster spatial data via tight integration with the [*sf*](https://CRAN.R-project.org/package=sf) and [*terra*](https://CRAN.R-project.org/package=terra) packages, and enables data-driven causal inference from spatial snapshots.
+*infoxtr* is an R package for analyzing variable interactions using information-theoretic measures. Originally tailored for time series, its methods extend seamlessly to spatial cross-sectional data. Powered by a pure C++ engine with a lightweight R interface, the package also exposes its headers for direct integration into other R packages.
 
 > *Refer to the package documentation <https://stscl.github.io/infoxtr/> for more detailed information.*
 
