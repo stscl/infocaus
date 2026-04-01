@@ -1,4 +1,39 @@
-url: ~
+url: https://stscl.github.io/infoxtr/
 template:
   bootstrap: 5
+  math-rendering: mathjax
+  light-switch: true
+
+navbar:
+  structure:
+    right:  [search, github]
+    left: [reference, articles, news]
+  bg: custom
+
+home:
+  title: |
+    infoxtr | Information-Theoretic Measures for Revealing Variable Interactions
+authors:
+  Wenbo Lyu:
+    href: https://spatlyu.github.io/
+
+reference:
+
+- title: Information-Theoretic Measures for Revealing Variable Interactions
+
+- subtitle: Basic uncertainty and pairwise dependency
+  contents:
+  - entropy
+  - je
+  - ce
+  - mi
+  - cmi
+
+- subtitle: Information transfer
+  contents:
+  - te
+
+# - title: Miscellaneous Utility Functions
+#   contents:
+#   - discretize
 
