@@ -21,6 +21,7 @@
 #'
 entropy = \(vec, base = exp(1), type = c("cont", "disc"), k = 3) {
   type = match.arg(type)
+  vec = .check_vec1d(vec)
   if (type == "disc") {
     return(RcppDiscEntropy(vec, base, TRUE))
   } else {
