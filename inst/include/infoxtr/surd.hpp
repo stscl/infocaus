@@ -8,6 +8,17 @@ namespace infoxtr
 
 namespace surd 
 {
+
+    using DiscMat = std::vector<std::vector<uint64_t>>;
+    using ContMat = std::vector<std::vector<double>>;
+
+    /***************************************************************
+     * Synergistic-Unique-Redundant Decomposition for Discrete Data
+     ***************************************************************/
+
+     /****************************************************************
+     * Synergistic-Unique-Redundant Decomposition for Continuous Data
+     *****************************************************************/
     
 } // namespace surd
 
