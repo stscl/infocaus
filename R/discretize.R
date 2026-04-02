@@ -1,6 +1,6 @@
 #' Discretization
 #'
-#' Discretizes a numeric vector into categorical classes using several
+#' Discretize a numeric vector into categorical classes using several
 #' commonly used discretization methods. Missing values (`NA`/`NaN`) are 
 #' ignored when computing breakpoints and returned as class `0`.
 #'
