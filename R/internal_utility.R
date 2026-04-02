@@ -1,5 +1,14 @@
-.convert2mat = \(data, type = "cont"){
+.check_vec1d = \(vec, type = "cont") {
+  if (type == "cont") {
+    if (!is.numeric(vec)) {
+      stop("The input vector must be numeric for continuous variables (`type = \"cont\"`). ")
+    }
+  }
+  
+  return(vec)
+}
 
+.convert2mat = \(data, type = "cont") {
   if (inherits(data, "sf")) {
     mat = as.matrix(sf::st_drop_geometry(data))
   } else if (inherits(data, "SpatRaster")) {
