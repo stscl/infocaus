@@ -56,6 +56,6 @@ If \code{x} is a character or factor vector, it will be converted to
 integer categories via \code{as.factor()}.
 }
 \examples{
-infocaus::discretize(1:100, n = 5, method = 'natural')
+infoxtr::discretize(1:100, n = 5, method = 'natural')
 
 }
