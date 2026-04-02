@@ -4,7 +4,7 @@
 #' commonly used discretization methods. Missing values (`NA`/`NaN`) 
 #' are ignored and returned as class `0`.
 #'
-#' @note If `x` is a non-numeric vector, it will be converted to
+#' @note If `x` is not numeric, it will be converted to
 #' integer categories via `as.factor()`.
 #'
 #' @param x A vector.
