@@ -47,7 +47,7 @@ and the input size exceeds \code{large}.}
 A discretized integer vector.
 }
 \description{
-Discretizes a numeric vector into categorical classes using several
+Discretize a numeric vector into categorical classes using several
 commonly used discretization methods. Missing values (\code{NA}/\code{NaN}) are
 ignored when computing breakpoints and returned as class \code{0}.
 }
