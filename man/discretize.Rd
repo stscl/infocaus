@@ -48,8 +48,8 @@ A discretized integer vector.
 }
 \description{
 Discretize a numeric vector into categorical classes using several
-commonly used discretization methods. Missing values (\code{NA}/\code{NaN}) are
-ignored when computing breakpoints and returned as class \code{0}.
+commonly used discretization methods. Missing values (\code{NA}/\code{NaN})
+are ignored and returned as class \code{0}.
 }
 \note{
 If \code{x} is a character or factor vector, it will be converted to
@@ -57,5 +57,4 @@ integer categories via \code{as.factor()}.
 }
 \examples{
 infoxtr::discretize(1:100, n = 5, method = 'natural')
-
 }
