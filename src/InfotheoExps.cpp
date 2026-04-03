@@ -579,10 +579,11 @@ Rcpp::List RcppDiscSURD(SEXP mat,
         }
     }
 
-    values.attr("names") = names;
+    // values.attr("names") = names;
 
     return Rcpp::List::create(
+        Rcpp::Named("vars")  = names,
+        Rcpp::Named("types")  = types,
         Rcpp::Named("values") = values,
-        Rcpp::Named("types")  = types
     );
 }
