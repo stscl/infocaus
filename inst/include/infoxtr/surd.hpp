@@ -12,6 +12,18 @@ namespace surd
     using DiscMat = std::vector<std::vector<uint64_t>>;
     using ContMat = std::vector<std::vector<double>>;
 
+    /***********************************************************
+    * Result structure
+    ***********************************************************/
+    struct SURDRes
+    {
+        std::vector<double> values;
+        std::vector<uint8_t> types;
+        std::vector<std::vector<size_t>> var_indices;
+
+        size_t size() const noexcept { return values.size(); }
+    };
+
     /***************************************************************
      * Synergistic-Unique-Redundant Decomposition for Discrete Data
      ***************************************************************/
