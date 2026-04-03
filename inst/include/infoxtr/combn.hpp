@@ -18,6 +18,7 @@
 #define INFOXTR_COMBN_HPP
 
 #include <vector>
+#include <limits>
 #include <functional>
 
 namespace infoxtr
@@ -82,24 +83,26 @@ namespace combn
     // ==============================
 
     /**
-     * @brief Generate all non-empty subsets of a given vector.
-     *
-     * Iteratively calls combn for sizes 1 to n,
-     * where n is the size of the input vector.
-     *
-     * @tparam T Element type
-     * @param vec Input vector
-     * @return std::vector<std::vector<T>> All non-empty subsets
-     */
+    * @brief Generate all non-empty subsets of a given vector up to a maximum order.
+    *
+    * Iteratively calls combn for sizes 1 to min(n, max_order),
+    * where n is the size of the input vector.
+    *
+    * @tparam T Element type
+    * @param vec Input vector
+    * @param max_order Maximum subset size (default: no limit)
+    * @return std::vector<std::vector<T>> All non-empty subsets up to max_order
+    */
     template <typename T>
-    inline std::vector<std::vector<T>> genSubsets(const std::vector<T>& vec)
+    inline std::vector<std::vector<T>> genSubsets(
+        const std::vector<T>& vec,
+        size_t max_order = std::numeric_limits<size_t>::max())
     {
         std::vector<std::vector<T>> allSubsets;
-
         const size_t n = vec.size();
+        const size_t limit = std::min(n, max_order);
 
-        for (size_t m = 1; m <= n; ++m)
-        {
+        for (size_t m = 1; m <= limit; ++m) {
             std::vector<std::vector<T>> combs = combn(vec, m);
             allSubsets.insert(allSubsets.end(), combs.begin(), combs.end());
         }
