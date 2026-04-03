@@ -19,6 +19,7 @@
 
 #include <vector>
 #include <limits>
+#include <algorithm> 
 #include <functional>
 
 namespace infoxtr
@@ -66,7 +67,7 @@ namespace combn
 
             size_t remaining = m - current.size();
 
-            for (size_t i = start; i <= vec_size - remaining; ++i)
+            for (size_t i = start; i + remaining <= vec_size; ++i)
             {
                 current.push_back(vec[i]);
                 helper(i + 1);
