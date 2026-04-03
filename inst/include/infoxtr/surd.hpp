@@ -1,4 +1,58 @@
-
+/******************************************************************************
+ * File: surd.hpp
+ *
+ * Synergistic–Unique–Redundant Decomposition (SURD) of mutual
+ * information between a target variable and multiple source variables.
+ *
+ * The SURD framework decomposes the mutual information structure into:
+ *
+ *   0 = Redundant information
+ *       Information shared among multiple variables.
+ *
+ *   1 = Unique information
+ *       Information uniquely provided by a single variable.
+ *
+ *   2 = Synergistic information
+ *       Information that only emerges from combinations of variables.
+ *
+ *   3 = Information loss
+ *       Remaining uncertainty in the target after conditioning on all sources.
+ *
+ * The algorithm operates as follows:
+ *
+ *   1. Generate all combinations of source variables up to max_order.
+ *   2. Compute mutual information I(Y ; X_set) for each combination.
+ *   3. Group combinations by order (number of variables).
+ *   4. Sort each group by mutual information.
+ *   5. Perform ladder-style decomposition:
+ *
+ *        Order 1:
+ *           Incremental differences determine redundant vs unique
+ *           contributions.
+ *
+ *        Higher orders:
+ *           Information exceeding the maximum lower-order mutual
+ *           information is attributed to synergy.
+ *
+ *   6. Optionally normalize contributions so they sum to one.
+ *   7. Append information loss as the final component.
+ *
+ * Two data types are supported:
+ *
+ *   Discrete data
+ *      Mutual information computed using joint entropy estimators.
+ *
+ *   Continuous data
+ *      Mutual information estimated via the KSG k-nearest neighbor method.
+ *
+ * Input data format:
+ *
+ *   Row 0  : target variable
+ *   Row 1+ : source variables
+ *
+ * Author: Wenbo Lyu (Github: @SpatLyu)
+ * License: GPL-3
+ ******************************************************************************/
 
 #ifndef INFOXTR_SURD_HPP
 #define INFOXTR_SURD_HPP
