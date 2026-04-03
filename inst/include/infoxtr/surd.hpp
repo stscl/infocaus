@@ -37,7 +37,7 @@ namespace surd
      ***************************************************************/
     inline SURDRes surd(
         const DiscMat& mat,
-        size_t max_order = std::numeric_limits<size_t>::max()
+        size_t max_order = std::numeric_limits<size_t>::max(),
         size_t threads = 1,
         double base = 2.0,
         bool normalize = false)
@@ -45,6 +45,14 @@ namespace surd
     /*****************************************************************
      * Synergistic-Unique-Redundant Decomposition for Continuous Data
      *****************************************************************/
+    inline SURDRes surd(
+        const ContMat& mat,
+        size_t max_order = std::numeric_limits<size_t>::max(),
+        size_t k = 3,
+        size_t alg = 0,
+        size_t threads = 1,
+        double base = 2.0,
+        bool normalize = false)
     
 } // namespace surd
 
