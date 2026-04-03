@@ -6,8 +6,8 @@
 #include <vector>
 #include <cmath>
 #include <limits>
-#include <cstdint>
 #include <thread>
+#include <cstdint>
 #include <algorithm>
 #include <stdexcept>
 
@@ -57,6 +57,5 @@ namespace surd
 } // namespace surd
 
 }
-
 
 #endif // INFOXTR_SURD_HPP
