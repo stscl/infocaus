@@ -18,6 +18,25 @@
 #ifndef INFOXTR_INFOXTR_H
 #define INFOXTR_INFOXTR_H
 
+// ============================================================
+// Dependency Guard: Encourage best practices (non-blocking)
+// ============================================================
+#if defined(Rcpp_hpp) && !defined(COMPILING_INFOXTR)
+    #warning "It is recommended to include <infoxtr.h> alone, 
+              as it already includes <Rcpp.h> and <RcppThread.h>."
+#endif
+
+// ============================================================
+// Core Dependencies (Auto-included for users)
+// ============================================================
+
+#include <Rcpp.h>
+#include <RcppThread.h>
+
+// ============================================================
+// Module Headers (Organized by functionality)
+// ============================================================
+
 #include "infoxtr/lagg.hpp"
 #include "infoxtr/embed.hpp"
 #include "infoxtr/combn.hpp"
