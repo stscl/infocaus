@@ -69,6 +69,10 @@ RcppDiscSURD <- function(mat, max_order = 3L, threads = 1L, base = 2.0, normaliz
     .Call(`_infoxtr_RcppDiscSURD`, mat, max_order, threads, base, normalize)
 }
 
+RcppContSURD <- function(mat, max_order = 3L, k, alg, threads = 1L, base = 2.0, normalize = TRUE) {
+    .Call(`_infoxtr_RcppContSURD`, mat, max_order, k, alg, threads, base, normalize)
+}
+
 RcppGenLatticeLag <- function(mat, nb, lag = 1L) {
     .Call(`_infoxtr_RcppGenLatticeLag`, mat, nb, lag)
 }
