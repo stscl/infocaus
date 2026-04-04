@@ -69,7 +69,7 @@
 #include "infoxtr/numericutils.hpp"
 #include "infoxtr/infotheo.hpp"
 #include "infoxtr/ksginfo.hpp"
-// #include <RcppThread.h>
+#include <RcppThread.h>
 
 namespace infoxtr 
 {
@@ -275,17 +275,30 @@ namespace surd
                                      std::numeric_limits<double>::quiet_NaN());
         double H_target = infoxtr::infotheo::je(mat, {0}, base, true);
 
-        for (size_t i = 0; i < combs.size(); ++i)
+        if (threads <= 1) 
         {   
-            std::vector<size_t> joint_idx = {0};
-            joint_idx.insert(joint_idx.end(), combs[i].begin(), combs[i].end());
-            H_sources[i] = infoxtr::infotheo::je(mat, combs[i], base, true);
-            H_joints[i] = infoxtr::infotheo::je(mat, joint_idx, base, true);
+            for (size_t i = 0; i < combs.size(); ++i)
+            {   
+                std::vector<size_t> joint_idx = {0};
+                joint_idx.insert(joint_idx.end(), combs[i].begin(), combs[i].end());
+                H_sources[i] = infoxtr::infotheo::je(mat, combs[i], base, true);
+                H_joints[i] = infoxtr::infotheo::je(mat, joint_idx, base, true);
+            }
+        } 
+        else 
+        {
+            RcppThread::parallelFor(0, combs.size()), [&](size_t i) {
+                std::vector<size_t> joint_idx = {0};
+                joint_idx.insert(joint_idx.end(), combs[i].begin(), combs[i].end());
+                H_sources[i] = infoxtr::infotheo::je(mat, combs[i], base, true);
+                H_joints[i] = infoxtr::infotheo::je(mat, joint_idx, base, true);
+            }
         }
 
         // Compute mutual information
         std::vector<double> mi_combs(combs.size(), 
                                      std::numeric_limits<double>::quiet_NaN());
+        
         for (size_t i = 0; i < combs.size(); ++i)
         {   
             mi_combs[i] = H_target + H_sources[i] - H_joints[i];
