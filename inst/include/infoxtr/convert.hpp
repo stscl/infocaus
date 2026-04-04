@@ -1,3 +1,6 @@
+#ifndef INFOXTR_CONVERT_HPP
+#define INFOXTR_CONVERT_HPP
+
 #include <vector>
 #include <cstdint>
 #include <string>
@@ -6,6 +9,12 @@
 #include <algorithm>
 #include <unordered_map> 
 #include <Rcpp.h>
+
+namespace infoxtr
+{
+
+namespace convert
+{
 
 /********************************************************************
  *
@@ -585,3 +594,9 @@ std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
 
     return mat;
 }
+
+} // namespace convert
+
+}
+
+#endif // INFOXTR_CONVERT_HPP
