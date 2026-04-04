@@ -5,7 +5,6 @@
 #include <numeric>
 #include <algorithm>
 #include "infoxtr.h"
-#include "DataTrans.h"
 
 // Wrapper function to compute the nearest neighbors for an input feature matrix
 // [[Rcpp::export(rng = false)]]
@@ -17,7 +16,7 @@ Rcpp::List RcppNN4Mat(
     bool byrow = true
 ) {
     // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
-    std::vector<std::vector<double>> cppMat = mat_r2std(mat, true);
+    std::vector<std::vector<double>> cppMat = infoxtr::convert::mat_r2std(mat, true);
 
     // Call the neighbpurbood function
     std::vector<std::vector<size_t>> neighbors = infoxtr::neighbor::NN4Mat(
@@ -25,7 +24,7 @@ Rcpp::List RcppNN4Mat(
         method, include_self, byrow);
 
     // Return nb object (List in R side)
-    return std2nb(neighbors);
+    return infoxtr::convert::std2nb(neighbors);
 }
 
 // Wrapper function to compute the nearest neighbors for an input feature matrix subset
@@ -40,7 +39,7 @@ Rcpp::List RcppNN4MatSub(
     bool byrow = true
 ) {
     // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
-    std::vector<std::vector<double>> cppMat = mat_r2std(mat, true);
+    std::vector<std::vector<double>> cppMat = infoxtr::convert::mat_r2std(mat, true);
 
     const int n_obs = byrow ? mat.nrow() : mat.ncol(); 
 
@@ -70,7 +69,7 @@ Rcpp::List RcppNN4MatSub(
         method, include_self, byrow);
 
     // Return nb object (List in R side)
-    return std2nb(neighbors);
+    return infoxtr::convert::std2nb(neighbors);
 }
 
 // Wrapper function to compute the nearest neighbours for an input distance matrix
@@ -81,14 +80,14 @@ Rcpp::List RcppNN4DistMat(
     bool include_self = false
 ) {
     // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
-    std::vector<std::vector<double>> cppMat = mat_r2std(distmat, true);
+    std::vector<std::vector<double>> cppMat = infoxtr::convert::mat_r2std(distmat, true);
 
     // Call the neighbpurbood function
     std::vector<std::vector<size_t>> neighbors = infoxtr::neighbor::NN4DistMat(
         cppMat, static_cast<size_t>(std::abs(k)), include_self);
 
     // Return nb object (List in R side)
-    return std2nb(neighbors);
+    return infoxtr::convert::std2nb(neighbors);
 }
 
 // Wrapper function to compute the nearest neighbours for an input distance matrix subset
@@ -101,7 +100,7 @@ Rcpp::List RcppNN4DistMatSub(
     bool include_self = false
 ) {
     // Convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
-    std::vector<std::vector<double>> cppMat = mat_r2std(distmat, true);
+    std::vector<std::vector<double>> cppMat = infoxtr::convert::mat_r2std(distmat, true);
 
     const int n_obs = distmat.nrow(); 
 
@@ -129,5 +128,5 @@ Rcpp::List RcppNN4DistMatSub(
         cppMat, lib_std, pred_std, static_cast<size_t>(std::abs(k)), include_self);
 
     // Return nb object (List in R side)
-    return std2nb(neighbors);
+    return infoxtr::convert::std2nb(neighbors);
 }
