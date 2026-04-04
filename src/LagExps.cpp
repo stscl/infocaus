@@ -14,7 +14,7 @@ Rcpp::NumericMatrix RcppGenLatticeLag(const Rcpp::NumericMatrix& mat,
   std::vector<std::vector<double>> cppMat = infoxtr::convert::mat_r2std(mat, true);
 
   // Convert Rcpp::List to std::vector<std::vector<size_t>>
-  std::vector<std::vector<size_t>> nb_std = nb2std(nb);
+  std::vector<std::vector<size_t>> nb_std = infoxtr::convert::nb2std(nb);
 
   // Calculate lagged values
   std::vector<std::vector<double>> lagged_values =
