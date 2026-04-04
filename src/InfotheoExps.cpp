@@ -607,13 +607,13 @@ Rcpp::List RcppContSURD(SEXP mat,
         static_cast<size_t>(std::abs(threads)), 
         base, normalize);
 
-    const size_t k = res.size();
+    const size_t n_vals = res.size();
 
-    Rcpp::NumericVector values(k);
-    Rcpp::CharacterVector types(k);
-    Rcpp::CharacterVector names(k);
+    Rcpp::NumericVector values(n_vals);
+    Rcpp::CharacterVector types(n_vals);
+    Rcpp::CharacterVector names(n_vals);
 
-    for (size_t i = 0; i < k; ++i)
+    for (size_t i = 0; i < n_vals; ++i)
     {
         values[i] = res.values[i];
 
