@@ -592,8 +592,8 @@ Rcpp::List RcppDiscSURD(SEXP mat,
 // [[Rcpp::export(rng = false)]]
 Rcpp::List RcppContSURD(SEXP mat,
                         int max_order = 3,
-                        int k,
-                        int alg,
+                        int k = 3,
+                        int alg = 0,
                         int threads = 1,
                         double base = 2.0,
                         bool normalize = true)
