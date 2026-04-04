@@ -365,10 +365,21 @@ namespace surd
         // Compute mutual information
         std::vector<double> mi_combs(combs.size(), 
                                      std::numeric_limits<double>::quiet_NaN());
-        for (size_t i = 0; i < combs.size(); ++i)
+
+        if (threads <= 1) 
         {   
-            mi_combs[i] = infoxtr::ksginfo::mi(
-                mat, {0}, combs[i], k, alg, base, false);
+            for (size_t i = 0; i < combs.size(); ++i)
+            {   
+                mi_combs[i] = infoxtr::ksginfo::mi(
+                    mat, {0}, combs[i], k, alg, base, false);
+            }
+        } 
+        else 
+        {
+            RcppThread::parallelFor(0, combs.size()), [&](size_t i) {
+                mi_combs[i] = infoxtr::ksginfo::mi(
+                    mat, {0}, combs[i], k, alg, base, false);
+            }
         }
         
         // Decompose mutual information
