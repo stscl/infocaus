@@ -64,7 +64,7 @@ namespace convert
  ********************************************************************/
 
 // Function to convert Rcpp::List to std::vector<std::vector<size_t>> (the `nb` object)
-std::vector<std::vector<size_t>> nb2std(const Rcpp::List& nb) {
+inline std::vector<std::vector<size_t>> nb2std(const Rcpp::List& nb) {
   // Get the number of elements in the nb object
   size_t n = static_cast<size_t>(nb.size());
   if (n <= 1) {
@@ -98,7 +98,7 @@ std::vector<std::vector<size_t>> nb2std(const Rcpp::List& nb) {
 }
 
 // Function to convert std::vector<std::vector<size_t>> (the `nb` object) to Rcpp::List
-Rcpp::List std2nb(const std::vector<std::vector<size_t>>& nb) {
+inline Rcpp::List std2nb(const std::vector<std::vector<size_t>>& nb) {
   size_t n = nb.size();
   Rcpp::List result(n);
 
@@ -171,7 +171,7 @@ Rcpp::List std2nb(const std::vector<std::vector<size_t>>& nb) {
  ********************************************************************/
 
 // Function to convert Rcpp::NumericMatrix to std::vector<std::vector<double>>
-std::vector<std::vector<double>> mat_r2std(
+inline std::vector<std::vector<double>> mat_r2std(
     const Rcpp::NumericMatrix& mat,
     bool byrow = true
 ) {
@@ -217,7 +217,7 @@ std::vector<std::vector<double>> mat_r2std(
 }
 
 // Function to convert std::vector<std::vector<double>> to Rcpp::NumericMatrix
-Rcpp::NumericMatrix mat_std2r(
+inline Rcpp::NumericMatrix mat_std2r(
     const std::vector<std::vector<double>>& mat,
     bool byrow = true
 ) {
@@ -324,7 +324,7 @@ Rcpp::NumericMatrix mat_std2r(
  *      NA encoded as {0}
  *
  ********************************************************************/
-std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
+inline std::vector<std::vector<uint64_t>> pat_r2std(SEXP x, bool byrow = true)
 {
     if (!Rf_isMatrix(x))
         Rcpp::stop("Input must be a matrix.");
