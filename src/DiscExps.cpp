@@ -5,7 +5,6 @@
 #include <numeric>
 #include <algorithm>
 #include "infoxtr.h"
-#include "DataTrans.h"
 
 // Wrapper function to discretize continuous numeric vector
 // [[Rcpp::export(rng = false)]]
