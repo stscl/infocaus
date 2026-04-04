@@ -22,8 +22,7 @@
 // Dependency Guard: Encourage best practices (non-blocking)
 // ============================================================
 #if defined(Rcpp_hpp) && !defined(COMPILING_INFOXTR)
-    #warning "It is recommended to include <infoxtr.h> alone, 
-              as it already includes <Rcpp.h> and <RcppThread.h>."
+    #warning "It is recommended to include <infoxtr.h> alone, as it already includes <Rcpp.h> and <RcppThread.h>."
 #endif
 
 // ============================================================
