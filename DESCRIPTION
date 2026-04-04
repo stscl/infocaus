@@ -16,7 +16,8 @@ BugReports: https://github.com/stscl/infoxtr/issues
 Depends: 
     R (>= 4.1.0)
 LinkingTo: 
-    Rcpp
+    Rcpp,
+    RcppThread,
 Imports: 
     sdsfun,
     sf,
@@ -24,4 +25,6 @@ Imports:
 Suggests: 
     lmtest,
     NlinTS,
+    Rcpp,
+    RcppThread,
     readr
