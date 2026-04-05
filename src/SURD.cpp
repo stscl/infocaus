@@ -62,6 +62,8 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     );
     
     // Generate lagged values for agent variables
+    std::vector<std::vector<double>> lagged_values;
+
     std::vector<std::vector<double>> cppMat(
         ag.size(), std::vector<double>(n_obs)
     );
@@ -75,13 +77,10 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
         }
     }
 
-    std::vector<std::vector<double>> lagged_values;
-
-    std::vector<std::vector<size_t>> nb_std;
     if (nb.isNotNull()) 
     {
         // Convert Rcpp::List to std::vector<std::vector<size_t>>
-        nb_std = infoxtr::convert::nb2std(nb);
+        std::vector<std::vector<size_t>> nb_std = infoxtr::convert::nb2std(nb);
         lagged_values = infoxtr::lagg::lagg(
             cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
     } 
