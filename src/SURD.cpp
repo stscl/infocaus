@@ -12,7 +12,9 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
                     int max_order = 3,
                     int threads = 1,
                     double base = 2.0,
-                    bool normalize = true)
+                    bool normalize = true,
+                    Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
+                    Rcpp::Nullable<int> nrow = R_NilValue)
 {
     infoxtr::surd::DiscMat m = infoxtr::convert::pat_r2std(mat, false);
 
