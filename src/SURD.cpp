@@ -18,7 +18,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
                     bool normalize = true,
                     const std::string& method = "equal",
                     Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
-                    Rcpp::Nullable<int> nrow = R_NilValue)
+                    Rcpp::Nullable<int> nrows = R_NilValue)
 {   
     const size_t n_cols = static_cast<size_t>(mat.ncol());
     const size_t n_obs = static_cast<size_t>(mat.nrow());
@@ -75,8 +75,34 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
         }
     }
 
-    // Discrete lagged values for agent variables
+    std::vector<std::vector<double>> lagged_values;
 
+    std::vector<std::vector<size_t>> nb_std;
+    if (nb.isNotNull()) 
+    {
+        // Convert Rcpp::List to std::vector<std::vector<size_t>>
+        nb_std = infoxtr::convert::nb2std(nb);
+        lagged_values = infoxtr::lagg::lagg(
+            cppMat, nb_std, static_cast<size_t>(std::abs(lag)));
+    } 
+    else if (nrows.isNotNull())
+    {
+        lagged_values = infoxtr::lagg::lagg(
+            cppMat, 
+            static_cast<size_t>(std::abs(nrows)), 
+            static_cast<size_t>(std::abs(lag)));
+    }
+    else  
+    {
+        lagged_values = infoxtr::lagg::lagg(
+            cppMat, static_cast<size_t>(std::abs(lag)));
+    }
+
+    // Discrete lagged values for agent variables
+    std::vector<std::vector<double>> discm;
+
+    
+    
         
 
         // Extract column vector from R matrix
@@ -102,11 +128,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
 
     
 
-    // Convert Rcpp::List to std::vector<std::vector<size_t>>
-    std::vector<std::vector<size_t>> nb_std;
-    if (nb.isNotNull()) {
-        nb_std = infoxtr::convert::nb2std(nb);
-    }
+    
 
     infoxtr::surd::SURDRes res = infoxtr::surd::surd(
         m, static_cast<size_t>(std::abs(max_order)),
