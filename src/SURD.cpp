@@ -65,7 +65,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     std::vector<std::vector<double>> lagged_values;
 
     std::vector<std::vector<double>> cppMat(
-        ag.size(), std::vector<double>(n_obs)
+        n_obs, std::vector<double>(ag.size())
     );
     for (size_t j = 0; j < ag.size(); ++j)
     {   
@@ -73,7 +73,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
 
         for (size_t r = 0; r < n_obs; ++r)
         {
-            cppMat[col_id][r] = mat(r, col_id);
+            cppMat[r][col_id] = mat(r, col_id);
         }
     }
 
