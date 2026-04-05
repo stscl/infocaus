@@ -193,16 +193,16 @@ namespace lagg
 
         Matrix out;
         if (byrow)
-            out.assign(n, Vector(p, NaN));
+            out.assign(N, Vector(p, NaN));
         else
-            out.assign(p, Vector(n, NaN));
+            out.assign(p, Vector(N, NaN));
 
         if (lag == 0)
         {
             if (byrow)
                 return mat;
 
-            for (size_t i = 0; i < n; ++i)
+            for (size_t i = 0; i < N; ++i)
                 for (size_t j = 0; j < p; ++j)
                     out[j][i] = mat[i][j];
 
