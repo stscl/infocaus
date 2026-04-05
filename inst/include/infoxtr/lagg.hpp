@@ -85,7 +85,8 @@ namespace lagg
     inline Matrix lagg(
         const Matrix& mat,
         const NeighborMat& nb,
-        size_t lag
+        size_t lag = 1,
+        bool byrow = true
     )
     {
         const size_t n = nb.size();
@@ -161,7 +162,8 @@ namespace lagg
     inline Matrix lagg(
         const Matrix& mat,
         size_t nrows,
-        size_t lag
+        size_t lag = 1,
+        bool byrow = true
     )
     {
         const size_t N = mat.size();
@@ -235,7 +237,8 @@ namespace lagg
 
     inline Matrix lagg(
         const Matrix& mat,
-        size_t lag
+        size_t lag = 1,
+        bool byrow = true
     )
     {
         const size_t n = mat.size();
