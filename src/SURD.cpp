@@ -20,6 +20,9 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
 
     // Convert Rcpp::List to std::vector<std::vector<size_t>>
     std::vector<std::vector<size_t>> nb_std = infoxtr::convert::nb2std(nb);
+    if (nb.isNotNull()) {
+        nb_std = infoxtr::convert::nb2std(nb);
+    }
 
     infoxtr::surd::SURDRes res = infoxtr::surd::surd(
         m, static_cast<size_t>(std::abs(max_order)),
