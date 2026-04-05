@@ -48,8 +48,9 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
         Rcpp::stop("Agent indices should not be empty");
 
     // Construct discrete data matrix
-    std::vector<std::vector<uint64_t>> pm;
-    pm.reserve(ag.size() + 1);
+    std::vector<std::vector<uint64_t>> pm(
+        ag.size() + 1, std::vector<uint64_t>(n_obs, 0)
+    );
     
     // Preserve original values in target variable and discretize it
     std::vector<double> vec(n_obs);
@@ -98,7 +99,12 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     }
 
     // Discrete lagged values for agent variables
-    std::vector<std::vector<double>> discm;
+    for (size_t j = 0; j < lagged_values.size(); ++j)
+    {   
+        pm[j + 1] = infoxtr::discretize::discrete(
+            lagged_values[j], method, static_cast<size_t>(std::abs(n))
+        );
+    }
 
     infoxtr::surd::SURDRes res = infoxtr::surd::surd(
         m, static_cast<size_t>(std::abs(max_order)),
