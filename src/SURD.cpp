@@ -8,6 +8,8 @@
 // Wrapper function to preform synergistic–unique–redundant decomposition
 // [[Rcpp::export(rng = false)]]
 Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
+                    const Rcpp::IntegerVector& target,
+                    const Rcpp::IntegerVector& agent,
                     int lag = 1,
                     int n = 5,
                     int max_order = 3,
@@ -21,7 +23,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     std::vector<std::vector<double>> m = infoxtr::convert::mat_r2std(mat, false);
 
     // Convert Rcpp::List to std::vector<std::vector<size_t>>
-    std::vector<std::vector<size_t>> nb_std = infoxtr::convert::nb2std(nb);
+    std::vector<std::vector<size_t>> nb_std;
     if (nb.isNotNull()) {
         nb_std = infoxtr::convert::nb2std(nb);
     }
