@@ -44,7 +44,18 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
         ag.end()
     );
     if (ag.empty())
-        Rcpp::stop("Agent index should not be empty");
+        Rcpp::stop("Agent indices should not be empty");
+    
+    // Construct variable indices vector for SURD
+    std::vector<size_t> vars= {tg_idx};
+    vars.insert(vars.end(), ag.begin(), ag.end());
+    const size_t n_vars = vars.size();
+
+    // Construct discrete data matrix
+    std::vector<std::vector<std::vector<uint8_t>>> pm;
+    pm.resize(n_vars);
+
+    std::vector<std::vector<uint64_t>> pm(n_vars);
 
     std::vector<std::vector<double>> m = infoxtr::convert::mat_r2std(mat, false);
 
