@@ -23,12 +23,12 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     const size_t n_cols = static_cast<size_t>(mat.ncol());
     const size_t n_obs = static_cast<size_t>(mat.nrow());
 
-    if (tg[0] < 1 || tg[0] > n_cols) {
+    if (target[0] < 1 || target[0] > n_cols) {
             Rcpp::stop("Target index %d out of bounds [1, %d]", 
-                       static_cast<int>(tg[0]), 
+                       static_cast<int>(target[0]), 
                        static_cast<int>(n_cols));
         }
-    const size_t tg_idx = tg[0] - 1; // to 0-based
+    const size_t tg_idx = target[0] - 1; // to 0-based
     
     std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
     for (auto& idx : ag) {
