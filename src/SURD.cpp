@@ -82,7 +82,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     if (nb.isNotNull()) 
     {
         // Convert Rcpp::List to std::vector<std::vector<size_t>>
-        std::vector<std::vector<size_t>> nb_std = infoxtr::convert::nb2std(nb);
+        std::vector<std::vector<size_t>> nb_std = infoxtr::convert::nb2std(nb.get());
         lagged_values = infoxtr::lagg::lagg(
             cppMat, nb_std, static_cast<size_t>(std::abs(lag)), false);
     } 
