@@ -22,13 +22,14 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
 {   
     const size_t n_cols = static_cast<size_t>(mat.ncol());
     const size_t n_obs = static_cast<size_t>(mat.nrow());
-
-    if (target[0] < 1 || target[0] > n_cols) {
-            Rcpp::stop("Target index %d out of bounds [1, %d]", 
-                       static_cast<int>(target[0]), 
-                       static_cast<int>(n_cols));
-        }
-    const size_t tg_idx = target[0] - 1; // to 0-based
+    
+    size_t tg_idx = target[0];
+    if (tg_idx < 1 || tg_idx > n_cols) {
+        Rcpp::stop("Target index %d out of bounds [1, %d]", 
+                   static_cast<int>(tg_idx), 
+                   static_cast<int>(n_cols));
+    }
+    tg_idx -= 1; // to 0-based
     
     std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
     for (auto& idx : ag) {
@@ -58,7 +59,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     {
         vec[r] = mat(r, tg_idx);
     }
-    pm[0] = infoxtr::discretize::discrete(
+    pm[0] = infoxtr::discretize::discretize(
         vec, method, static_cast<size_t>(std::abs(n))
     );
     
@@ -89,7 +90,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     {
         lagged_values = infoxtr::lagg::lagg(
             cppMat, 
-            static_cast<size_t>(std::abs(nrows)), 
+            static_cast<size_t>(std::abs(Rcpp::as<int>(nrows))), 
             static_cast<size_t>(std::abs(lag)), false);
     }
     else  
@@ -101,7 +102,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     // Discrete lagged values for agent variables
     for (size_t j = 0; j < lagged_values.size(); ++j)
     {   
-        pm[j + 1] = infoxtr::discretize::discrete(
+        pm[j + 1] = infoxtr::discretize::discretize(
             lagged_values[j], method, static_cast<size_t>(std::abs(n))
         );
     }
