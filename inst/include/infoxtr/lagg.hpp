@@ -1,15 +1,48 @@
 /*******************************************************************
  *  File: lagg.hpp
  *
- *  Lag utilities for matrices.
+ *  Lagged aggregation utilities for matrices.
  *
- *  Provides lagged aggregation operators for:
+ *  This module provides lag operators for three common structures
  *
- *    - Arbitrary lattice graphs
- *    - Regular grids
- *    - Time series
+ *      1. Arbitrary lattice graphs
+ *      2. Regular spatial grids
+ *      3. Time series
  *
- *  Each column of the input matrix is treated as a variable.
+ *  The input matrix follows the internal representation used in
+ *  the infoxtr library
+ *
+ *      Matrix = std::vector<std::vector<double>>
+ *
+ *  Each inner vector represents one observation unit and each
+ *  column corresponds to a variable.
+ *
+ *  Output Orientation
+ *
+ *  A boolean parameter `byrow` controls the orientation of the
+ *  returned matrix.
+ *
+ *      byrow = true
+ *          Output keeps the current layout
+ *          Each observation corresponds to one row vector
+ *
+ *      byrow = false
+ *          Output is stored in column major orientation
+ *          Each inner vector corresponds to one variable
+ *
+ *  This option allows direct compatibility with external matrix
+ *  layouts used by R or column oriented algorithms.
+ *
+ *  Supported operations
+ *
+ *      lagg(mat, nb, lag)
+ *          Lag aggregation on arbitrary neighbor graphs
+ *
+ *      lagg(mat, nrows, lag)
+ *          Lag aggregation on regular grids
+ *
+ *      lagg(mat, lag)
+ *          Temporal lag for time series
  *
  *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
