@@ -92,10 +92,22 @@ namespace lagg
         const size_t n = nb.size();
         const size_t p = mat.front().size();
 
-        Matrix out(n, Vector(p, NaN));
+        Matrix out;
+        if (byrow)
+            out.assign(n, Vector(p, NaN));
+        else
+            out.assign(p, Vector(n, NaN));
 
-        if (lag == 0) {
-            return mat;
+        if (lag == 0)
+        {
+            if (byrow)
+                return mat;
+
+            for (size_t i = 0; i < n; ++i)
+                for (size_t j = 0; j < p; ++j)
+                    out[j][i] = mat[i][j];
+
+            return out;
         }
 
         for (size_t i = 0; i < n; ++i)
@@ -174,10 +186,23 @@ namespace lagg
 
         const size_t ncols = N / nrows;
 
-        Matrix out(N, Vector(p, NaN));
+        Matrix out;
+        if (byrow)
+            out.assign(n, Vector(p, NaN));
+        else
+            out.assign(p, Vector(n, NaN));
 
         if (lag == 0)
-            return mat;
+        {
+            if (byrow)
+                return mat;
+
+            for (size_t i = 0; i < n; ++i)
+                for (size_t j = 0; j < p; ++j)
+                    out[j][i] = mat[i][j];
+
+            return out;
+        }
 
         std::vector<std::pair<int,int>> offsets;
 
@@ -243,11 +268,24 @@ namespace lagg
     {
         const size_t n = mat.size();
         const size_t p = mat.front().size();
-
-        Matrix out(n, Vector(p, NaN));
+        
+        Matrix out;
+        if (byrow)
+            out.assign(n, Vector(p, NaN));
+        else
+            out.assign(p, Vector(n, NaN));
 
         if (lag == 0)
-            return mat;
+        {
+            if (byrow)
+                return mat;
+
+            for (size_t i = 0; i < n; ++i)
+                for (size_t j = 0; j < p; ++j)
+                    out[j][i] = mat[i][j];
+
+            return out;
+        }
 
         for (size_t t = lag; t < n; ++t)
         {
