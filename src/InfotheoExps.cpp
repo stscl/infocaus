@@ -589,7 +589,7 @@ Rcpp::List RcppDiscSURD(SEXP mat,
 
 // Wrapper function to preform SURD decomposition for continuous data
 // [[Rcpp::export(rng = false)]]
-Rcpp::List RcppContSURD(SEXP mat,
+Rcpp::List RcppContSURD(const Rcpp::NumericMatrix& mat,
                         int max_order = 3,
                         int k = 3,
                         int alg = 0,
