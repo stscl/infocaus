@@ -82,7 +82,8 @@ namespace infotheo
                 states.push_back(mat[j][i]);
 
         std::vector<size_t> order(n_obs);
-        for(size_t i = 0; i < n_obs; i++) order[i] = i;
+        // for(size_t i = 0; i < n_obs; i++) order[i] = i;
+        std::iota(order.begin(), order.end(), 0);
 
         std::sort(order.begin(), order.end(),
         [&](size_t a, size_t b)
