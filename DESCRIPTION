@@ -24,10 +24,13 @@ Imports:
     sf,
     terra
 Suggests: 
+    knitr,
     lmtest,
     NlinTS,
     Rcpp,
     RcppThread,
     readr,
+    rmarkdown,
     spEDM,
     tEDM
+VignetteBuilder: knitr
