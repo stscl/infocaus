@@ -1,8 +1,9 @@
 ---
 title: "Synergistic-Unique-Redundant Decomposition of Causality (SURD)"
+author: "Wenbo Lyu"
 date: |
-  | Last update: 2025-10-30
-  | Last run: 2025-10-30
+  | Last update: 2026-03-15
+  | Last run: `r Sys.Date()`
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{surd}
@@ -10,7 +11,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = FALSE,
+  comment = "##",
+  fig.path = "man/figures/surd/"
+)
+```
 
 # Introduction
 
@@ -28,8 +36,7 @@ To simplify post-processing and visualization, two helper functions are provided
 
 `utils_process_surd_result()` converts a `surd_list` object (as returned by an SURD computation routine) into a tidy `tibble` for plotting and further analysis.
 
-
-``` r
+```{r}
 utils_process_surd_result = \(surd_list,threshold = 0){
   I_unique = surd_list$unique
   I_synergistic = surd_list$synergistic
@@ -61,8 +68,7 @@ utils_process_surd_result = \(surd_list,threshold = 0){
 
 `utils_plot_surd()` produces a SURD decomposition plot — a grouped bar chart of **unique (U)**, **synergistic (S)**, and **redundant (R)** components, along with a side panel showing the **information leak**.
 
-
-``` r
+```{r}
 utils_plot_surd = \(surd_list,threshold = 0,style = "shallow"){
   I_unique = surd_list$unique
   I_synergistic = surd_list$synergistic
@@ -132,23 +138,12 @@ The following sections demonstrate SURD decomposition in different contexts, ill
 
 ## Air Pollution and Cardiovascular Health in Hong Kong
 
-
-``` r
+```{r load_cvd_data}
 cvd = readr::read_csv(system.file("case/cvd.csv",package = "tEDM"))
 head(cvd)
-## # A tibble: 6 × 5
-##     cvd   rsp   no2   so2    o3
-##   <dbl> <dbl> <dbl> <dbl> <dbl>
-## 1   214  73.7  74.5  19.1 17.4 
-## 2   203  77.6  80.9  18.8 39.4 
-## 3   202  64.8  67.1  13.8 56.4 
-## 4   182  68.8  74.7  30.8  5.6 
-## 5   181  49.4  62.3  23.1  3.6 
-## 6   129  67.4  63.6  17.4  6.73
 ```
 
-
-``` r
+```{r fig_cvds_ts,fig.width=6.5,fig.height=3.75,fig.dpi=100,fig.cap=knitr::asis_output("**Figure 1**. Time series of air pollutants and confirmed CVD cases in Hong Kong from March 1995 to November 1997.")}
 cvd_long = cvd |>
   tibble::rowid_to_column("id") |>
   tidyr::pivot_longer(cols = -id,
@@ -165,195 +160,53 @@ fig_cvds_ts = ggplot2::ggplot(cvd_long, ggplot2::aes(x = id, y = value, color = 
 fig_cvds_ts
 ```
 
-![**Figure 1**. Time series of air pollutants and confirmed CVD cases in Hong Kong from March 1995 to November 1997.](../man/figures/surd/fig_cvds_ts-1.png)
-
 To investigate the causal influences of air pollutants on the incidence of cardiovascular diseases, we performed SURD analysis using a time lag step `3` and `10` discretization bins.
 
-
-``` r
+```{r surd_cvds}
 res_cvds = infocausality::surd(cvd, "cvd",
                                c("rsp", "no2", "so2", "o3"),
                                lag = 15, bin = 10, cores = 6)
-## 
-## SURD Decomposition Results:
-##   Unique (U):
-##     X1             : 0.0022
-##     X2             : 0.0162
-##     X3             : 0.0024
-##     X4             : 0.0000
-##   Synergistic (S):
-##     X1-X2          : 0.0181
-##     X1-X3          : 0.0198
-##     X1-X4          : 0.0339
-##     X2-X3          : 0.0293
-##     X2-X4          : 0.0332
-##     X3-X4          : 0.0477
-##     X1-X2-X3       : 0.0343
-##     X1-X2-X4       : 0.1084
-##     X1-X3-X4       : 0.1540
-##     X2-X3-X4       : 0.0426
-##     X1-X2-X3-X4    : 0.4093
-##   Redundant (R):
-##     X1-X2          : 0.0034
-##     X1-X3          : 0.0000
-##     X1-X4          : 0.0007
-##     X2-X3          : 0.0006
-##     X2-X4          : 0.0034
-##     X3-X4          : 0.0000
-##     X1-X2-X3       : 0.0050
-##     X1-X2-X4       : 0.0100
-##     X1-X3-X4       : 0.0008
-##     X2-X3-X4       : 0.0014
-##     X1-X2-X3-X4    : 0.0230
-##   Information Leak:  52.82%
 ```
 
 The SURD results are shown in the figure below:
 
-
-``` r
+```{r fig_surd_cvds,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 2**. SURD decomposition results between different air pollutants and cardiovascular diseases.")}
 utils_plot_surd(res_cvds)
 ```
 
-![**Figure 2**. SURD decomposition results between different air pollutants and cardiovascular diseases.](../man/figures/surd/fig_surd_cvds-1.png)
-
 ## Population Density and Its Drivers in Mainland China
 
-
-``` r
+```{r load_popd_data}
 popd_nb = spdep::read.gal(system.file("case/popd_nb.gal",package = "spEDM"))
-## Warning in spdep::read.gal(system.file("case/popd_nb.gal", package = "spEDM")):
-## neighbour object has 4 sub-graphs
 popd = readr::read_csv(system.file("case/popd.csv",package = "spEDM"))
 popd_sf = sf::st_as_sf(popd, coords = c("lon","lat"), crs = 4326)
 popd_sf
-## Simple feature collection with 2806 features and 5 fields
-## Geometry type: POINT
-## Dimension:     XY
-## Bounding box:  xmin: 74.9055 ymin: 18.2698 xmax: 134.269 ymax: 52.9346
-## Geodetic CRS:  WGS 84
-## # A tibble: 2,806 × 6
-##     popd  elev   tem   pre slope          geometry
-##  * <dbl> <dbl> <dbl> <dbl> <dbl>       <POINT [°]>
-##  1  780.     8  17.4 1528. 0.452 (116.912 30.4879)
-##  2  395.    48  17.2 1487. 0.842 (116.755 30.5877)
-##  3  261.    49  16.0 1456. 3.56  (116.541 30.7548)
-##  4  258.    23  17.4 1555. 0.932  (116.241 30.104)
-##  5  211.   101  16.3 1494. 3.34   (116.173 30.495)
-##  6  386.    10  16.6 1382. 1.65  (116.935 30.9839)
-##  7  350.    23  17.5 1569. 0.346 (116.677 30.2412)
-##  8  470.    22  17.1 1493. 1.88  (117.066 30.6514)
-##  9 1226.    11  17.4 1526. 0.208 (117.171 30.5558)
-## 10  137.   598  13.9 1458. 5.92  (116.208 30.8983)
-## # ℹ 2,796 more rows
 ```
 
-
-``` r
+```{r surd_popd}
 res_popd = infocausality::surd(popd_sf,"popd",c("elev","tem","pre","slope"),
                                lag = 3, bin = 10, nb = popd_nb, cores = 6)
-## 
-## SURD Decomposition Results:
-##   Unique (U):
-##     X1             : 0.0046
-##     X2             : 0.0000
-##     X3             : 0.0398
-##     X4             : 0.0036
-##   Synergistic (S):
-##     X1-X2          : 0.0369
-##     X1-X3          : 0.0471
-##     X1-X4          : 0.0885
-##     X2-X3          : 0.0468
-##     X2-X4          : 0.0765
-##     X3-X4          : 0.0877
-##     X1-X2-X3       : 0.0384
-##     X1-X2-X4       : 0.0597
-##     X1-X3-X4       : 0.0463
-##     X2-X3-X4       : 0.1577
-##     X1-X2-X3-X4    : 0.1095
-##   Redundant (R):
-##     X1-X2          : 0.0000
-##     X1-X3          : 0.0089
-##     X1-X4          : 0.0000
-##     X2-X3          : 0.0130
-##     X2-X4          : 0.0027
-##     X3-X4          : 0.0138
-##     X1-X2-X3       : 0.0056
-##     X1-X2-X4       : 0.0000
-##     X1-X3-X4       : 0.0120
-##     X2-X3-X4       : 0.0110
-##     X1-X2-X3-X4    : 0.0897
-##   Information Leak:  64.64%
 ```
 
-
-``` r
+```{r fig_surd_popd,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 3**. SURD decomposition results between population density and its Drivers.")}
 utils_plot_surd(res_popd)
 ```
 
-![**Figure 3**. SURD decomposition results between population density and its Drivers.](../man/figures/surd/fig_surd_popd-1.png)
-
 ## Influence of Climatic and Topographic Factors on Net Primary Productivity (NPP) in Mainland China
 
-
-``` r
+```{r load_npp_data}
 npp = terra::rast(system.file("case/npp.tif", package = "spEDM"))
 npp
-## class       : SpatRaster 
-## size        : 404, 483, 5  (nrow, ncol, nlyr)
-## resolution  : 10000, 10000  (x, y)
-## extent      : -2625763, 2204237, 1877078, 5917078  (xmin, xmax, ymin, ymax)
-## coord. ref. : CGCS2000_Albers 
-## source      : npp.tif 
-## names       :      npp,        pre,      tem,      elev,         hfp 
-## min values  :   164.00,   384.3409, -47.8194, -122.2004,  0.03390418 
-## max values  : 16606.33, 23878.3555, 263.6938, 5350.4902, 44.90312195
 ```
 
-
-``` r
+```{r surd_npp}
 res_npp = infocausality::surd(npp,"npp",c("pre","tem","elev","hfp"),
                               lag = 2, bin = 10, cores = 6)
-## 
-## SURD Decomposition Results:
-##   Unique (U):
-##     X1             : 0.2060
-##     X2             : 0.0004
-##     X3             : 0.0001
-##     X4             : 0.0000
-##   Synergistic (S):
-##     X1-X2          : 0.0477
-##     X1-X3          : 0.0734
-##     X1-X4          : 0.0360
-##     X2-X3          : 0.0268
-##     X2-X4          : 0.0049
-##     X3-X4          : 0.0010
-##     X1-X2-X3       : 0.0363
-##     X1-X2-X4       : 0.0171
-##     X1-X3-X4       : 0.0380
-##     X2-X3-X4       : 0.0201
-##     X1-X2-X3-X4    : 0.0796
-##   Redundant (R):
-##     X1-X2          : 0.2658
-##     X1-X3          : 0.0020
-##     X1-X4          : 0.0000
-##     X2-X3          : 0.0000
-##     X2-X4          : 0.0000
-##     X3-X4          : 0.0000
-##     X1-X2-X3       : 0.0439
-##     X1-X2-X4       : 0.0000
-##     X1-X3-X4       : 0.0065
-##     X2-X3-X4       : 0.0000
-##     X1-X2-X3-X4    : 0.0941
-##   Information Leak:  40.78%
 ```
 
-
-``` r
+```{r fig_surd_npp,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 4**. SURD decomposition results between climatic and topographic factors and npp.")}
 utils_plot_surd(res_npp)
 ```
-
-![**Figure 4**. SURD decomposition results between climatic and topographic factors and npp.](../man/figures/surd/fig_surd_npp-1.png)
 
 ---
 
