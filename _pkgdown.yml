@@ -9,6 +9,12 @@ navbar:
     right:  [search, github]
     left: [reference, articles, news]
   bg: custom
+  components:
+    articles:
+      text: Vignettes
+      menu:
+      - text: Synergistic-Unique-Redundant Decomposition of Causality
+        href: articles/surd.html
 
 home:
   title: |
