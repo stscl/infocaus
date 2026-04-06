@@ -19,6 +19,7 @@ LinkingTo:
     Rcpp,
     RcppThread,
 Imports: 
+    methods,
     sdsfun,
     sf,
     terra
@@ -27,4 +28,6 @@ Suggests:
     NlinTS,
     Rcpp,
     RcppThread,
-    readr
+    readr,
+    spEDM,
+    tEDM
