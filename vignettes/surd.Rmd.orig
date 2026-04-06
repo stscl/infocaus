@@ -28,13 +28,13 @@ Understanding how causal influences combine and interact is essential for both t
 * **Redundant** contributions — information shared by multiple drivers;
 * **Synergistic** contributions — information only revealed when drivers are considered together.
 
-This vignette demonstrates how to perform SURD analysis using the `infocausality` package. We will explore both temporal and spatial cases, showing how `infocausality` unifies **time-series** and **spatial cross-sectional** causal analysis via consistent interfaces to `data.frame`, `sf`, and `SpatRaster` objects.
+This vignette demonstrates how to perform SURD analysis using the `infoxtr` package. We will explore both temporal and spatial cases, showing how `infoxtr` unifies **time-series** and **spatial cross-sectional** causal analysis via consistent interfaces to `data.frame`, `sf`, and `SpatRaster` objects.
 
 # Utility Functions
 
 To simplify post-processing and visualization, two helper functions are provided below.
 
-`utils_process_surd_result()` converts a `surd_list` object (as returned by an SURD computation routine) into a tidy `tibble` for plotting and further analysis.
+`utils_process_surd_result()` converts a list object (as returned by an SURD computation routine) into a tidy `tibble` for plotting and further analysis.
 
 ```{r}
 utils_process_surd_result = \(surd_list,threshold = 0){
@@ -163,9 +163,9 @@ fig_cvds_ts
 To investigate the causal influences of air pollutants on the incidence of cardiovascular diseases, we performed SURD analysis using a time lag step `3` and `10` discretization bins.
 
 ```{r surd_cvds}
-res_cvds = infocausality::surd(cvd, "cvd",
-                               c("rsp", "no2", "so2", "o3"),
-                               lag = 15, bin = 10, cores = 6)
+res_cvds = infoxtr::surd(cvd, "cvd",
+                         c("rsp", "no2", "so2", "o3"),
+                         lag = 15, bin = 10, threads = 6)
 ```
 
 The SURD results are shown in the figure below:
@@ -184,8 +184,8 @@ popd_sf
 ```
 
 ```{r surd_popd}
-res_popd = infocausality::surd(popd_sf,"popd",c("elev","tem","pre","slope"),
-                               lag = 3, bin = 10, nb = popd_nb, cores = 6)
+res_popd = infoxtr::surd(popd_sf,"popd",c("elev","tem","pre","slope"),
+                         lag = 3, bin = 10, nb = popd_nb, threads = 6)
 ```
 
 ```{r fig_surd_popd,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 3**. SURD decomposition results between population density and its Drivers.")}
@@ -200,8 +200,8 @@ npp
 ```
 
 ```{r surd_npp}
-res_npp = infocausality::surd(npp,"npp",c("pre","tem","elev","hfp"),
-                              lag = 2, bin = 10, cores = 6)
+res_npp = infoxtr::surd(npp,"npp",c("pre","tem","elev","hfp"),
+                        lag = 2, bin = 10, threads = 6)
 ```
 
 ```{r fig_surd_npp,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 4**. SURD decomposition results between climatic and topographic factors and npp.")}
@@ -212,6 +212,6 @@ utils_plot_surd(res_npp)
 
 🧩 *See also*:
 
-* [`?infocausality::surd()`](https://stscl.github.io/infocausality/reference/surd.html) for function details.
+* [`?infoxtr::surd()`](https://stscl.github.io/infoxtr/reference/surd.html) for function details.
 * [`spEDM`](https://cran.r-project.org/package=spEDM) package for spatial empirical dynamic modeling.
 * [`tEDM`](https://cran.r-project.org/package=tEDM) package for temporal empirical dynamic modeling.
