@@ -242,6 +242,152 @@ namespace surd
         return result;
     }
 
+    inline SURDRes surd_pointwise(
+        const DiscMat& mat,
+        size_t max_order = std::numeric_limits<size_t>::max(),
+        size_t threads = 1,
+        double base = 2.0,
+        bool normalize = false)
+    {
+        SURDRes result;
+
+        if (mat.size() < 2)
+            throw std::invalid_argument("SURD requires >=2 variables");
+
+        const size_t n_vars = mat.size();
+        const size_t n_sources = n_vars - 1;
+        const size_t n_obs = mat[0].size();
+
+        max_order = std::min(max_order, n_sources);
+
+        double log_base = std::log(base);
+
+        /***********************************************************
+         * Generate subsets
+         ***********************************************************/
+        // Construct variable combination vector
+        std::vector<size_t> ag_idx(n_sources);
+        std::iota(ag_idx.begin(), ag_idx.end(), 1);
+        const std::vector<std::vector<size_t>> combs =
+            infoxtr::combn::genSubsets(ag_idx, max_order);
+        std::vector<std::vector<size_t>> combs;
+
+        size_t n_combs = combs.size();
+
+        std::vector<double> info(n_combs, 0.0);
+
+        /***********************************************************
+        * Loop over target states
+        ***********************************************************/
+        std::unordered_map<uint64_t,size_t> s_count;
+
+        for (size_t i=0;i<n_obs;i++)
+            s_count[mat[0][i]]++;
+
+        for (auto& s_pair : s_count)
+        {
+            uint64_t s_val = s_pair.first;
+            size_t s_n = s_pair.second;
+
+            double p_s = double(s_n)/n_obs;
+
+            std::vector<double> pointwise(n_combs,0.0);
+
+            /***********************************************************
+             * Compute pointwise MI for each subset
+             ***********************************************************/
+            for (size_t ci=0; ci<n_combs; ++ci)
+            {
+                auto& subset = combs[ci];
+
+                std::unordered_map<std::string,size_t> joint_count;
+                std::unordered_map<std::string,size_t> x_count;
+                std::unordered_map<std::string,size_t> sx_count;
+
+                for (size_t i=0;i<n_obs;i++)
+                {
+                    std::string key;
+
+                    for (auto v : subset)
+                    {
+                        key += std::to_string(mat[v][i]);
+                        key.push_back('|');
+                    }
+
+                    x_count[key]++;
+
+                    if (mat[0][i]==s_val)
+                        sx_count[key]++;
+                }
+
+                double sum = 0.0;
+
+                for (auto& p : sx_count)
+                {
+                    const std::string& key = p.first;
+
+                    double psx = double(p.second)/n_obs;
+                    double px  = double(x_count[key])/n_obs;
+
+                    double val = psx * std::log(psx/(p_s*px));
+                    sum += val;
+                }
+
+                if (p_s>0)
+                    pointwise[ci] = sum/p_s/log_base;
+            }
+
+            /***********************************************************
+            * SURD sorting
+            ***********************************************************/
+            std::vector<size_t> order(n_combs);
+            for (size_t i=0;i<n_combs;i++) order[i]=i;
+
+            std::sort(order.begin(),order.end(),
+            [&](size_t a,size_t b)
+            {
+                return pointwise[a] < pointwise[b];
+            });
+
+            /***********************************************************
+            * Diff decomposition
+            ***********************************************************/
+            double prev = 0.0;
+
+            for (size_t oi=0; oi<n_combs; ++oi)
+            {
+                size_t idx = order[oi];
+                double cur = pointwise[idx];
+
+                double delta = cur - prev;
+
+                if (delta < 0) delta = 0;
+
+                info[idx] += p_s * delta;
+
+                prev = std::max(prev, cur);
+            }
+        }
+
+        /***********************************************************
+        * Store results
+        ***********************************************************/
+        for (size_t i=0;i<n_combs;i++)
+        {
+            result.values.push_back(info[i]);
+
+            size_t k = combs[i].size();
+
+            if (k==1) result.types.push_back(0);
+            else if (k==2) result.types.push_back(1);
+            else result.types.push_back(2);
+
+            result.var_indices.push_back(combs[i]);
+        }
+
+        return result;
+    }
+
     /***************************************************************
      * Synergistic-Unique-Redundant Decomposition for Discrete Data
      ***************************************************************/
