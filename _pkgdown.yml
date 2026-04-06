@@ -32,6 +32,7 @@ reference:
 - subtitle: Information flow
   contents:
   - te
+  - surd
 
 - title: Miscellaneous Utility Functions
   contents:
