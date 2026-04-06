@@ -28,9 +28,9 @@
 #'
 #' @examples
 #' set.seed(42)
-#' infoxtr::discretize(stats::rnorm(99,1,10), n = 5, method = 'natural')
+#' infoxtr::discretize(stats::rnorm(99,1,10))
 #' 
-discretize = \(x, n = 5, method = 'natural', large = 3000, prop = 0.15,
+discretize = \(x, n = 5, method = "natural", large = 3000, prop = 0.15,
                seed = 123456789, thr = 0.4, iter = 100, bps = NULL, right_closed = TRUE){
   if (!is.numeric(x)){
     return(as.integer(as.factor(x)))
