@@ -266,82 +266,167 @@ namespace surd
          * Generate subsets
          ***********************************************************/
         // Construct variable combination vector
-        std::vector<size_t> ag_idx(n_sources);
-        std::iota(ag_idx.begin(), ag_idx.end(), 1);
-        const std::vector<std::vector<size_t>> combs =
-            infoxtr::combn::genSubsets(ag_idx, max_order);
+        // std::vector<size_t> ag_idx(n_sources);
+        // std::iota(ag_idx.begin(), ag_idx.end(), 1);
+        // const std::vector<std::vector<size_t>> combs =
+        //     infoxtr::combn::genSubsets(ag_idx, max_order);
+
         std::vector<std::vector<size_t>> combs;
+
+        for(size_t mask = 1; mask < (1ULL << n_sources); mask++)
+        {
+            std::vector<size_t> subset;
+
+            for(size_t j = 0; j < n_sources; j++)
+                if(mask & (1ULL << j))
+                    subset.push_back(j + 1);
+
+            if(subset.size() <= max_order)
+                combs.push_back(subset);
+        }
 
         size_t n_combs = combs.size();
 
         std::vector<double> info(n_combs, 0.0);
 
-        /***********************************************************
-        * Loop over target states
-        ***********************************************************/
-        std::unordered_map<uint64_t,size_t> s_count;
+        /**********************************************************************
+         * Generate joint table
+         **********************************************************************/
+        infoxtr::infotheo::JointTable jt = infoxtr::infotheo::joint_table(mat);
 
-        for (size_t i=0;i<n_obs;i++)
-            s_count[mat[0][i]]++;
+        size_t k = jt.k;
+        size_t n_states = jt.counts.size();
 
-        for (auto& s_pair : s_count)
+        size_t total_n = 0;
+        for(auto c: jt.counts) total_n += c;
+
+        /**************************************************
+         * Loop target states
+         **************************************************/
+        std::vector<uint64_t> s_vals;
+        std::vector<size_t> s_counts;
+
+        for(size_t i = 0; i < n_states; i++)
         {
-            uint64_t s_val = s_pair.first;
-            size_t s_n = s_pair.second;
+            uint64_t s = jt.states[i * k];
 
-            double p_s = double(s_n)/n_obs;
+            auto it = std::find(s_vals.begin(),s_vals.end(),s);
 
-            std::vector<double> pointwise(n_combs,0.0);
+            if(it == s_vals.end())
+            {
+                s_vals.push_back(s);
+                s_counts.push_back(jt.counts[i]);
+            }
+            else
+            {
+                size_t idx = it - s_vals.begin();
+                s_counts[idx] += jt.counts[i];
+            }
+        }
 
+        for(size_t si = 0; si < s_vals.size(); si++)
+        {
+            uint64_t s_val = s_vals[si];
+            size_t s_n = s_counts[si];
+
+            double p_s = static_cast<double>(s_n) / total_n;
+
+            std::vector<double> pointwise(n_combs, 0.0);
+            
             /***********************************************************
-             * Compute pointwise MI for each subset
+             * Compute pointwise count for each subset
              ***********************************************************/
-            for (size_t ci=0; ci<n_combs; ++ci)
+            for(size_t ci = 0; ci < n_combs; ci++)
             {
                 auto& subset = combs[ci];
 
-                std::unordered_map<std::string,size_t> joint_count;
-                std::unordered_map<std::string,size_t> x_count;
-                std::unordered_map<std::string,size_t> sx_count;
+                std::vector<uint64_t> proj;
+                std::vector<uint64_t> proj_s;
 
-                for (size_t i=0;i<n_obs;i++)
+                proj.reserve(n_states * subset.size());
+                proj_s.reserve(n_states * subset.size());
+
+                std::vector<size_t> weight;
+                std::vector<size_t> weight_s;
+
+                /**************************************************
+                 * projection
+                 **************************************************/
+                for(size_t i = 0;i < n_states; i++)
                 {
-                    std::string key;
+                    size_t base = i * k;
 
-                    for (auto v : subset)
+                    for(auto v:subset)
+                        proj.push_back(jt.states[base + v]);
+
+                    weight.push_back(jt.counts[i]);
+
+                    if (jt.states[base] == s_val)
                     {
-                        key += std::to_string(mat[v][i]);
-                        key.push_back('|');
+                        for(auto v:subset)
+                            proj_s.push_back(jt.states[base + v]);
+
+                        weight_s.push_back(jt.counts[i]);
+                    }
+                }
+
+                size_t kk = subset.size();
+
+                std::vector<size_t> order(weight.size());
+                for(size_t i = 0;i < order.size(); i++) order[i] = i;
+
+                std::sort(order.begin(), order.end(),
+                [&](size_t a,size_t b)
+                {
+                    size_t ia = a * kk;
+                    size_t ib = b * kk;
+
+                    for(size_t j = 0; j < kk; j++)
+                    {
+                        uint64_t va = proj[ia + j];
+                        uint64_t vb = proj[ib + j];
+
+                        if(va < vb) return true;
+                        if(va > vb) return false;
                     }
 
-                    x_count[key]++;
+                    return false;
+                });
 
-                    if (mat[0][i]==s_val)
-                        sx_count[key]++;
-                }
+                double sum = 0;
+                size_t run = weight[order[0]];
 
-                double sum = 0.0;
-
-                for (auto& p : sx_count)
+                auto equal=[&](size_t a, size_t b)
                 {
-                    const std::string& key = p.first;
+                    size_t ia = a * kk;
+                    size_t ib = b * kk;
 
-                    double psx = double(p.second)/n_obs;
-                    double px  = double(x_count[key])/n_obs;
+                    for(size_t j = 0; j < kk; j++)
+                        if(proj[ia + j] != proj[ib + j])
+                            return false;
 
-                    double val = psx * std::log(psx/(p_s*px));
-                    sum += val;
+                    return true;
+                };
+
+                for(size_t i = 1; i < order.size(); i++)
+                {
+                    if(equal(order[i], order[i-1]))
+                        run += weight[order[i]];
+                    else
+                    {
+                        double px = double(run) / total_n;
+                        run = weight[order[i]];
+                    }
                 }
 
-                if (p_s>0)
-                    pointwise[ci] = sum/p_s/log_base;
+                pointwise[ci] = 0; // placeholder for MI step
             }
 
-            /***********************************************************
-            * SURD sorting
-            ***********************************************************/
+            /**************************************************
+             *SURD diff decomposition
+             **************************************************/
             std::vector<size_t> order(n_combs);
-            for (size_t i=0;i<n_combs;i++) order[i]=i;
+            for(size_t i=0;i<n_combs;i++) order[i]=i;
 
             std::sort(order.begin(),order.end(),
             [&](size_t a,size_t b)
@@ -349,19 +434,15 @@ namespace surd
                 return pointwise[a] < pointwise[b];
             });
 
-            /***********************************************************
-            * Diff decomposition
-            ***********************************************************/
-            double prev = 0.0;
+            double prev=0;
 
-            for (size_t oi=0; oi<n_combs; ++oi)
+            for(size_t oi = 0; oi < n_combs; oi++)
             {
                 size_t idx = order[oi];
                 double cur = pointwise[idx];
 
                 double delta = cur - prev;
-
-                if (delta < 0) delta = 0;
+                if(delta < 0) delta = 0;
 
                 info[idx] += p_s * delta;
 
@@ -369,17 +450,14 @@ namespace surd
             }
         }
 
-        /***********************************************************
-        * Store results
-        ***********************************************************/
-        for (size_t i=0;i<n_combs;i++)
+        for(size_t i = 0; i < n_combs; i++)
         {
             result.values.push_back(info[i]);
 
             size_t k = combs[i].size();
 
-            if (k==1) result.types.push_back(0);
-            else if (k==2) result.types.push_back(1);
+            if(k == 1) result.types.push_back(0);
+            else if(k == 2) result.types.push_back(1);
             else result.types.push_back(2);
 
             result.var_indices.push_back(combs[i]);
