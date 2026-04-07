@@ -136,8 +136,17 @@ inline SURDRes surd(
     }
 
     const size_t n_combs = combs.size();
-
+    
+    // Initinalize containers for result
     std::vector<double> info(n_combs , 0.0);
+    std::vector<double> I_unique(n_sources , 0.0);
+    std::vector<std::vector<size_t>> unique_vars(n_sources);
+
+    for (size_t i = 0; i < n_sources; i++)
+        unique_vars[i] = {i + 1};
+
+    std::vector<double> I_R(n_combs , 0.0);
+    std::vector<double> I_S(n_combs , 0.0);
 
     /***********************************************************
      * Joint table
@@ -306,6 +315,13 @@ inline SURDRes surd(
             double pointwise = sum / p_s / log_base;
 
             I_s[ci] = pointwise;
+
+            double pointwise = sum / p_s / log_base;
+
+            I_s[ci] = pointwise;
+
+            // accumulate MI 
+            info[ci] += p_s * pointwise;
         }
 
         /**************************************************
@@ -388,9 +404,9 @@ inline SURDRes surd(
 
             if (subset.size() == 1)
             {
-                // redundant information
-                result.redundant_vars.push_back(red_vars);
-                result.redundant_vals.push_back(info_add);
+                size_t vid = subset[0] - 1;
+
+                I_unique[vid] += info_add;
 
                 auto it = std::find(
                     red_vars.begin(),
@@ -402,13 +418,74 @@ inline SURDRes surd(
             }
             else
             {
-                // synergy information
-                result.synergy_vars.push_back(subset);
-                result.synergy_vals.push_back(info_add);
+                I_S[n.idx] += info_add;
             }
+
+            // if (subset.size() == 1)
+            // {
+            //     // redundant information
+            //     result.redundant_vars.push_back(red_vars);
+            //     result.redundant_vals.push_back(info_add);
+
+            //     auto it = std::find(
+            //         red_vars.begin(),
+            //         red_vars.end(),
+            //         subset[0]);
+
+            //     if (it != red_vars.end())
+            //         red_vars.erase(it);
+            // }
+            // else
+            // {
+            //     // synergy information
+            //     result.synergy_vars.push_back(subset);
+            //     result.synergy_vals.push_back(info_add);
+            // }
 
             if (n.val > prev)
                 prev = n.val;
+        }
+    }
+
+    /**************************************************
+     * Unique
+     **************************************************/
+
+    for (size_t i = 0; i < n_sources; i++)
+    {
+        result.unique_vars.push_back(unique_vars[i]);
+        result.unique_vals.push_back(I_unique[i]);
+    }
+
+    /**************************************************
+     * Synergy
+     **************************************************/
+
+    for (size_t i = 0; i < n_combs; i++)
+    {
+        if (combs[i].size() > 1 && I_S[i] > 0)
+        {
+            result.synergy_vars.push_back(combs[i]);
+            result.synergy_vals.push_back(I_S[i]);
+        }
+    }
+
+    /**************************************************
+     * Redundant (derived from MI)
+     **************************************************/
+
+    for (size_t i = 0; i < n_combs; i++)
+    {
+        if (combs[i].size() > 1)
+        {
+            double red =
+                info[i] - I_S[i];
+
+            if (red > 0)
+            {
+                result.redundant_vars.push_back(combs[i]);
+                result.redundant_vals.push_back(red);
+            }
         }
     }
 
