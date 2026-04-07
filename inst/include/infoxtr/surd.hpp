@@ -516,8 +516,21 @@ inline SURDRes surd(
                     red_vars.end(),
                     subset[0]);
 
+                // NOTE (GCC13/CRAN):
+                // Avoid std::vector::erase() here. GCC13 may emit
+                // -Wstringop-overflow warnings due to internal
+                // memmove static analysis. We remove elements
+                // using swap + pop_back instead, which avoids
+                // the memmove path in STL.
+
+                // if (it != red_vars.end())
+                //     red_vars.erase(it);
+
                 if (it != red_vars.end())
-                    red_vars.erase(it);
+                {
+                    std::swap(*it, red_vars.back());
+                    red_vars.pop_back();
+                }
             }
             else
             {
@@ -531,11 +544,40 @@ inline SURDRes surd(
     }
 
     SURDRes result;
-    
+
     result.unique_vars.reserve(n_sources);
     result.redundant_vars.reserve(n_combs);
     result.synergy_vars.reserve(n_combs);
     result.mi_vars.reserve(n_combs);
+
+    /* 
+    ====================================================
+    * Result assembly
+    *
+    * NOTE:
+    * We intentionally use `emplace_back()` instead of
+    * `push_back()` when inserting vectors into the
+    * result containers (e.g. vector<vector<size_t>>).
+    *
+    * With GCC 13/14 (used by recent Rtools / CRAN),
+    * `push_back()` on nested vectors may trigger
+    * false-positive warnings such as:
+    *
+    *   -Warray-bounds
+    *   -Wstringop-overflow
+    *
+    * originating from STL internals (memmove inside
+    * vector copy construction). These warnings appear
+    * during template inlining even though the code is
+    * logically correct.
+    *
+    * Using `emplace_back()` avoids the extra copy
+    * construction path and prevents these warnings.
+    *
+    * Please do NOT replace these calls with push_back()
+    * unless the compiler behavior changes in the future.
+    ======================================================
+    */
 
     /**************************************************
      * Redundant + Unique
