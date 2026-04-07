@@ -105,7 +105,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
         );
     }
 
-    infoxtr::surd::SURDRes res = infoxtr::surd::surd_pointwise_fast(
+    infoxtr::surd::SURDRes res = infoxtr::surd::surd_pointwise_ultra(
         pm, static_cast<size_t>(std::abs(max_order)),
         static_cast<size_t>(std::abs(threads)), base, normalize);
 
