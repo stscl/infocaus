@@ -85,11 +85,17 @@ namespace surd
      ***********************************************************/
     struct SURDRes
     {
-        std::vector<double> values;
-        std::vector<uint8_t> types;
-        std::vector<std::vector<size_t>> var_indices;
+        std::vector<std::vector<size_t>> unique_vars;
+        std::vector<double>              unique_vals;
 
-        size_t size() const noexcept { return values.size(); }
+        std::vector<std::vector<size_t>> redundant_vars;
+        std::vector<double>              redundant_vals;
+
+        std::vector<std::vector<size_t>> synergy_vars;
+        std::vector<double>              synergy_vals;
+
+        std::vector<std::vector<size_t>> mi_vars;
+        std::vector<double>              mi_vals;
     };
 
     /***********************************************************
