@@ -966,57 +966,78 @@ inline SURDRes surd_pointwise_fast(
         }
 
         /**************************************************
-         * SURD decomposition
+         * SURD decomposition (Python aligned)
          **************************************************/
-        std::vector<size_t> order(n_combs);
+
+        struct Node
+        {
+            size_t idx;
+            size_t len;
+            double val;
+        };
+
+        std::vector<Node> nodes;
+        nodes.reserve(n_combs);
 
         for (size_t i = 0; i < n_combs; i++)
-            order[i] = i;
-
-        std::sort(order.begin(), order.end(),
-        [&](size_t a, size_t b)
         {
-            return I_s[a] < I_s[b];
+            Node nd;
+            nd.idx = i;
+            nd.len = combs[i].size();
+            nd.val = I_s[i];
+            nodes.push_back(nd);
+        }
+
+        /* sort by information */
+        std::sort(nodes.begin(), nodes.end(),
+        [](const Node & a, const Node & b)
+        {
+            return a.val < b.val;
         });
 
+        /* find max subset size */
         size_t max_len = 0;
+        for (auto & n : nodes)
+            if (n.len > max_len)
+                max_len = n.len;
 
-        for (auto & c : combs)
-            if (c.size() > max_len)
-                max_len = c.size();
-
+        /* SURD monotonicity filter */
         for (size_t l = 1; l < max_len; l++)
         {
             double Il1max = -1e300;
 
-            for (size_t i = 0; i < n_combs; i++)
-                if (combs[i].size() == l)
-                    if (I_s[i] > Il1max)
-                        Il1max = I_s[i];
+            for (auto & n : nodes)
+                if (n.len == l)
+                    if (n.val > Il1max)
+                        Il1max = n.val;
 
-            for (size_t i = 0; i < n_combs; i++)
-                if (combs[i].size() == l + 1)
-                    if (I_s[i] < Il1max)
-                        I_s[i] = 0.0;
+            for (auto & n : nodes)
+                if (n.len == l + 1)
+                    if (n.val < Il1max)
+                        n.val = 0.0;
         }
 
+        /* re-sort (python does argsort again) */
+        std::sort(nodes.begin(), nodes.end(),
+        [](const Node & a, const Node & b)
+        {
+            return a.val < b.val;
+        });
+
+        /* diff + distribute */
         double prev = 0.0;
 
-        for (size_t oi = 0; oi < n_combs; oi++)
+        for (auto & n : nodes)
         {
-            size_t idx = order[oi];
-
-            double cur = I_s[idx];
-
-            double delta = cur - prev;
+            double delta = n.val - prev;
 
             if (delta < 0)
                 delta = 0;
 
-            info[idx] += delta * p_s;
+            info[n.idx] += delta * p_s;
 
-            if (cur > prev)
-                prev = cur;
+            if (n.val > prev)
+                prev = n.val;
         }
     }
 
