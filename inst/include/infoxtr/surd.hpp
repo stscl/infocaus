@@ -68,7 +68,6 @@
 #include "infoxtr/combn.hpp"
 #include "infoxtr/numericutils.hpp"
 #include "infoxtr/infotheo.hpp"
-#include "infoxtr/ksginfo.hpp"
 #include <RcppThread.h>
 
 namespace infoxtr 
@@ -96,7 +95,7 @@ namespace surd
         std::vector<std::vector<size_t>> mi_vars;
         std::vector<double>              mi_vals;
 
-        double info_leak;
+        double info_leak = 0.0;
     };
 
     /***************************************************************
@@ -132,20 +131,6 @@ inline SURDRes surd(
 
     const std::vector<std::vector<size_t>> combs =
         infoxtr::combn::genSubsets(ag_idx, max_order);
-
-    // std::vector<std::vector<size_t>> combs;
-
-    // for (size_t mask = 1; mask < (1ULL << n_sources); mask++)
-    // {
-    //     std::vector<size_t> subset;
-
-    //     for (size_t j = 0; j < n_sources; j++)
-    //         if (mask & (1ULL << j))
-    //             subset.push_back(j + 1);
-
-    //     if (subset.size() <= max_order)
-    //         combs.push_back(subset);
-    // }
 
     const size_t n_combs = combs.size();
     
@@ -588,8 +573,9 @@ inline SURDRes surd(
     }
 
     // Information leak
-    double H_target = infoxtr::infotheo::je(mat, {0}, base, false);
-    double leak = infoxtr::infotheo::ce(mat, {0}, ag_idx, base, false) / H_target;
+    std::vector<size_t> target_idx = {0};
+    double leak = infoxtr::infotheo::ce(mat, target_idx, ag_idx, base, false) 
+                  / infoxtr::infotheo::je(mat, target_idx, base, false);
     result.info_leak = std::max(0.0, std::min(1.0, leak));
 
     /***********************************************************
