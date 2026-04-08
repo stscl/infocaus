@@ -606,7 +606,7 @@ namespace surd
 
             if (I_R[i] > 0)
             {
-                if (c.size() == 1)
+                if (combs[i].size() == 1)
                 {
                     result.unique_vars.insert(result.unique_vars.end(), combs[i]);
                     result.unique_vals.emplace_back(I_R[i]);
@@ -618,7 +618,7 @@ namespace surd
                 }
             }
 
-            if (c.size() > 1 && I_S[i] > 0)
+            if (combs[i].size() > 1 && I_S[i] > 0)
             {
                 result.synergy_vars.insert(result.synergy_vars.end(), combs[i]);
                 result.synergy_vals.emplace_back(I_S[i]);
