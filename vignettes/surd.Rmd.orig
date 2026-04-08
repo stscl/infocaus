@@ -32,7 +32,7 @@ This vignette demonstrates how to perform SURD analysis using the `infoxtr` pack
 
 # Utility Functions
 
-To simplify visualization, one plot function is provided below, which produces a SURD decomposition plot — a grouped bar chart of **unique (U)**, **synergistic (S)**, and **redundant (R)** components, along with a side panel showing the **information leak**.
+To simplify visualization, a plotting function is provided below, which produces a SURD decomposition plot — a grouped bar chart of **unique (U)**, **synergistic (S)**, and **redundant (R)** components, along with a side panel showing the **information leak**.
 
 ```{r}
 utils_plot_surd = \(surd_list,threshold = 0,style = "shallow") {
