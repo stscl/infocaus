@@ -1,6 +1,12 @@
-.check_vec1d = \(vec, type = "cont") {
+.check_vec1d = \(vec, type = "cont", contain_type = TRUE) {
   if (type == "cont") {
     if (!is.numeric(vec)) {
+      type_suffix = if (contain_type) " (`type = \"cont\"`)" else ""
+      msg = paste0(
+        "The input vector must be numeric for continuous variables ",
+        type_suffix, ". "
+      )
+      stop(msg, call. = FALSE)
       stop("The input vector must be numeric for continuous variables (`type = \"cont\"`). ")
     }
   }
