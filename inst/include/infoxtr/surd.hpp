@@ -1,49 +1,85 @@
 /******************************************************************************
  * File: surd.hpp
  *
- * Synergistic–Unique–Redundant Decomposition (SURD) of mutual
- * information between a target variable and multiple source variables.
+ * Synergistic–Unique–Redundant Decomposition (SURD)
+ * -------------------------------------------------
  *
- * The SURD framework decomposes the mutual information structure into:
+ * This module implements the SURD framework for decomposing the mutual
+ * information between a target variable and multiple source variables into
+ * interpretable components:
  *
- *   0 = Redundant information
- *       Information shared among multiple variables.
+ *   Redundant information
+ *       Information simultaneously provided by multiple sources.
  *
- *   1 = Unique information
- *       Information uniquely provided by a single variable.
+ *   Unique information
+ *       Information provided exclusively by a single source.
  *
- *   2 = Synergistic information
- *       Information that only emerges from combinations of variables.
+ *   Synergistic information
+ *       Information that only emerges when variables are considered jointly.
  *
- *   3 = Information loss
+ *   Information leak
  *       Remaining uncertainty in the target after conditioning on all sources.
  *
- * The algorithm operates as follows:
+ * ---------------------------------------------------------------------------
+ * Algorithm overview
+ * ---------------------------------------------------------------------------
  *
- *   1. Generate all combinations of source variables up to max_order.
- *   2. Compute mutual information I(Y ; X_set) for each combination.
- *   3. Group combinations by order (number of variables).
- *   4. Sort each group by mutual information.
- *   5. Perform ladder-style decomposition:
+ * Let Y denote the target variable and X = {X1, X2, ..., Xn} the source
+ * variables. The algorithm proceeds in the following stages:
  *
- *        Order 1:
- *           Incremental differences determine redundant vs unique
- *           contributions.
+ * 1. Subset enumeration
  *
- *        Higher orders:
- *           Information exceeding the maximum lower-order mutual
- *           information is attributed to synergy.
+ *      Generate all subsets of source variables up to order max_order.
+ *      Each subset represents a candidate information channel.
  *
- *   6. Optionally normalize contributions so they sum to one.
- *   7. Append information loss as the final component.
+ * 2. Joint distribution construction
  *
- * Two data types are supported:
+ *      A joint state table is constructed for the full variable set using
+ *      the joint entropy utilities in infotheo.hpp.
  *
- *   Discrete data
- *      Mutual information computed using joint entropy estimators.
+ * 3. Conditional pointwise mutual information
  *
- *   Continuous data
- *      Mutual information estimated via the KSG k-nearest neighbor method.
+ *      For each target state s, compute pointwise mutual information
+ *
+ *          I_s(X_set ; Y)
+ *
+ *      for every subset X_set using grouped projections of the joint
+ *      state table.
+ *
+ *      Mutual information is accumulated as:
+ *
+ *          I(X_set ; Y) = sum_s p(s) * I_s(X_set ; Y)
+ *
+ * 4. Monotonic SURD filtering
+ *
+ *      Subsets are sorted by their pointwise mutual information values.
+ *      A monotonic constraint is enforced so that higher-order subsets
+ *      cannot contain less information than the maximum of lower-order
+ *      subsets. Violations are clipped to zero.
+ *
+ * 5. Information layer decomposition
+ *
+ *      A ladder-style decomposition is applied to the sorted values.
+ *      Incremental differences between successive layers determine
+ *      the information contributions.
+ *
+ *          delta_i = max(I_i - I_{i-1}, 0)
+ *
+ *      Contributions are classified as:
+ *
+ *          |subset| = 1   → redundant / unique layer
+ *          |subset| > 1   → synergistic layer
+ *
+ * 6. Aggregation across target states
+ *
+ *      Contributions are weighted by p(s) and accumulated across
+ *      target states.
+ *
+ * 7. Information leak
+ *
+ *      Remaining uncertainty in the target is measured as
+ *
+ *          H(Y | X_all) / H(Y)
  *
  * Input data format:
  *
