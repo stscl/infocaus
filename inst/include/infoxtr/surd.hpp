@@ -600,7 +600,35 @@ namespace surd
         and portable across CRAN build systems.
         */
 
-        for (size_t i = 0; i < n_combs; i++)
+        // for (size_t i = 0; i < n_combs; i++)
+        // {
+        //     const auto & c = combs[i];
+
+        //     if (I_R[i] > 0)
+        //     {
+        //         if (c.size() == 1)
+        //         {
+        //             result.unique_vars.emplace_back(c);
+        //             result.unique_vals.emplace_back(I_R[i]);
+        //         }
+        //         else
+        //         {
+        //             result.redundant_vars.emplace_back(c);
+        //             result.redundant_vals.emplace_back(I_R[i]);
+        //         }
+        //     }
+
+        //     if (c.size() > 1 && I_S[i] > 0)
+        //     {
+        //         result.synergy_vars.emplace_back(c);
+        //         result.synergy_vals.emplace_back(I_S[i]);
+        //     }
+
+        //     result.mi_vars.emplace_back(c);
+        //     result.mi_vals.emplace_back(info[i]);
+        // }
+
+        for (size_t i = 0; i < n_combs; ++i)
         {
             const auto & c = combs[i];
 
@@ -608,23 +636,23 @@ namespace surd
             {
                 if (c.size() == 1)
                 {
-                    result.unique_vars.emplace_back(c);
+                    result.unique_vars.insert(result.unique_vars.end(), c);
                     result.unique_vals.emplace_back(I_R[i]);
                 }
                 else
                 {
-                    result.redundant_vars.emplace_back(c);
+                    result.redundant_vars.insert(result.redundant_vars.end(), c);
                     result.redundant_vals.emplace_back(I_R[i]);
                 }
             }
 
             if (c.size() > 1 && I_S[i] > 0)
             {
-                result.synergy_vars.emplace_back(c);
+                result.synergy_vars.insert(result.synergy_vars.end(), c);
                 result.synergy_vals.emplace_back(I_S[i]);
             }
 
-            result.mi_vars.emplace_back(c);
+            result.mi_vars.insert(result.mi_vars.end(), c);
             result.mi_vals.emplace_back(info[i]);
         }
 
