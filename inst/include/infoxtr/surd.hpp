@@ -588,49 +588,6 @@ namespace surd
         /*
         NOTE
 
-        We copy combinations (vector<size_t>) into the result
-        containers using push_back() with a local reference.
-
-        Older GCC versions (11–12) and newer ones (13–14) have
-        different false-positive warnings related to nested
-        STL containers and memmove detection.
-
-        Using a local reference here avoids triggering those
-        static analyzer paths while keeping the code simple
-        and portable across CRAN build systems.
-        */
-
-        // for (size_t i = 0; i < n_combs; i++)
-        // {
-        //     const auto & c = combs[i];
-
-        //     if (I_R[i] > 0)
-        //     {
-        //         if (c.size() == 1)
-        //         {
-        //             result.unique_vars.emplace_back(c);
-        //             result.unique_vals.emplace_back(I_R[i]);
-        //         }
-        //         else
-        //         {
-        //             result.redundant_vars.emplace_back(c);
-        //             result.redundant_vals.emplace_back(I_R[i]);
-        //         }
-        //     }
-
-        //     if (c.size() > 1 && I_S[i] > 0)
-        //     {
-        //         result.synergy_vars.emplace_back(c);
-        //         result.synergy_vals.emplace_back(I_S[i]);
-        //     }
-
-        //     result.mi_vars.emplace_back(c);
-        //     result.mi_vals.emplace_back(info[i]);
-        // }
-
-        /*
-        NOTE
-
         We use `insert(end(), ...)` instead of push_back/emplace_back
         for nested containers (vector<vector<size_t>>).
 
