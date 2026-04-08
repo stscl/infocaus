@@ -2,7 +2,7 @@
 title: "Synergistic-Unique-Redundant Decomposition of Causality (SURD)"
 author: "Wenbo Lyu"
 date: |
-  | Last update: 2026-03-15
+  | Last update: 2026-03-16
   | Last run: `r Sys.Date()`
 output: rmarkdown::html_vignette
 vignette: >
@@ -32,41 +32,7 @@ This vignette demonstrates how to perform SURD analysis using the `infoxtr` pack
 
 # Utility Functions
 
-To simplify post-processing and visualization, two helper functions are provided below.
-
-`utils_process_surd_result()` converts a list object (as returned by an SURD computation routine) into a tidy `tibble` for plotting and further analysis.
-
-```{r}
-utils_process_surd_result = \(surd_list,threshold = 0){
-  I_unique = surd_list$unique
-  I_synergistic = surd_list$synergistic
-  I_redundant = surd_list$redundant
-  info_leak = surd_list$info_leak
-
-  df = tibble::tibble(
-    label = c(
-      paste0("U[", names(I_unique), "]"),
-      paste0("S[", names(I_synergistic), "]"),
-      paste0("R[", names(I_redundant), "]")
-    ),
-    value = c(as.numeric(I_unique),
-              as.numeric(I_synergistic),
-              as.numeric(I_redundant)),
-    type = c(rep("unique", length(I_unique)),
-             rep("synergistic", length(I_synergistic)),
-             rep("redundant", length(I_redundant)))
-  )
-
-  df$value = df$value / sum(df$value)
-  if(threshold > 0){
-    df = dplyr::filter(df, value > threshold)
-  }
-  return(dplyr::bind_rows(df,tibble::tribble(~label,~value,~type,
-                                             "Info Leak", info_leak, "info leak")))
-}
-```
-
-`utils_plot_surd()` produces a SURD decomposition plot — a grouped bar chart of **unique (U)**, **synergistic (S)**, and **redundant (R)** components, along with a side panel showing the **information leak**.
+To simplify visualization, one plot function is provided below, which produces a SURD decomposition plot — a grouped bar chart of **unique (U)**, **synergistic (S)**, and **redundant (R)** components, along with a side panel showing the **information leak**.
 
 ```{r}
 utils_plot_surd = \(surd_list,threshold = 0,style = "shallow") {
