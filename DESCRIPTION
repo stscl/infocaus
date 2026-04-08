@@ -1,6 +1,6 @@
 Package: infoxtr
 Title: Information-Theoretic Measures for Revealing Variable Interactions
-Version: 0.0.0.9000
+Version: 0.1
 Authors@R: 
     person(given = "Wenbo", family = "Lyu",
            email = "lyu.geosocial@gmail.com", 
