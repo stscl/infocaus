@@ -36,11 +36,28 @@ To simplify visualization, one plot function is provided below, which produces a
 
 ```{r}
 utils_plot_surd = \(surd_list,threshold = 0,style = "shallow") {
-  df = dplyr::filter(tibble::as_tibble(surd_list), vars != "InfoLeak")
+  df = surd_list |> 
+    tibble::as_tibble() |> 
+    dplyr::filter(vars != "InfoLeak") 
+
   if(threshold > 0){
-    df = dplyr::filter(df, value > threshold)
+    df = dplyr::filter(df, values > threshold)
   }
-  df$vars = factor(df$vars, levels = unique(df$vars))
+
+  df = df |> 
+    dplyr::mutate(
+      var_nums = stringr::str_extract_all(vars, "(?<=V)\\d+"),
+      nums_joined = sapply(var_nums, \(x) paste(x, collapse = "_")),
+      vars_formatted = paste0(types, "[", nums_joined, "]"),
+      type_order = dplyr::case_when(
+        types == "U" ~ 1,  
+        types == "S" ~ 2, 
+        types == "R" ~ 3 
+      ),
+      var_count = lengths(var_nums) 
+    )  |> 
+    dplyr::arrange(type_order, var_count) |> 
+    dplyr::mutate(vars = factor(vars_formatted, levels = unique(vars_formatted)))
 
   if (style == "shallow") {
     colors = c(U = "#ec9e9e", S = "#fac58c", R = "#668392", InfoLeak = "#7f7f7f")
