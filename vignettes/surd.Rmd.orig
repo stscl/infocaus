@@ -165,6 +165,7 @@ To investigate the causal influences of air pollutants on the incidence of cardi
 ```{r surd_cvds}
 res_cvds = infoxtr::surd(cvd, 1, 2:5,
                          lag = 15, bin = 10, threads = 6)
+tibble::as_tibble(res_cvds)
 ```
 
 The SURD results are shown in the figure below:
@@ -185,6 +186,7 @@ popd_sf
 ```{r surd_popd}
 res_popd = infoxtr::surd(popd_sf, 1, 2:5,
                          lag = 3, bin = 10, nb = popd_nb, threads = 6)
+tibble::as_tibble(res_popd)
 ```
 
 ```{r fig_surd_popd,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 3**. SURD decomposition results between population density and its Drivers.")}
@@ -201,6 +203,7 @@ npp
 ```{r surd_npp}
 res_npp = infoxtr::surd(npp,1, 2:5,
                         lag = 2, bin = 10, threads = 6)
+tibble::as_tibble(res_npp)
 ```
 
 ```{r fig_surd_npp,fig.width=10,fig.height=3,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 4**. SURD decomposition results between climatic and topographic factors and npp.")}
