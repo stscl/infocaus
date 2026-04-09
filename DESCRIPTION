@@ -6,7 +6,7 @@ Authors@R:
            email = "lyu.geosocial@gmail.com", 
            role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0002-6003-3800"))
-Description: Methods for detecting temporal and spatial causality using information flow and information decomposition, following the framework described in Martinez-Sanchez et al. (2024) <doi:10.1038/s41467-024-53373-4>.
+Description: Implements information-theoretic measures to explore variable interactions, including KSG-based mutual information estimation for continuous variables, Knockoff Conditional Mutual Information (KOCMI, doi:...), Synergistic-Unique-Redundant Decomposition (SURD, Martinez-Sanchez et al., 2024, doi:10.1038/s41467-024-53373-4), allowing detection of complex and diverse relationships among variables.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
