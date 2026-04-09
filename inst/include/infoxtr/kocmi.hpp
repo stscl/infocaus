@@ -60,11 +60,11 @@ namespace kocmi
         KOCMIRes result;
         // If all values are NaN or only have one non-NaN value
         if (n < 2) {
-            return KOCMIRes;
+            return result;
         }
         
         // Compute observed statistic
-        const double observed_mean = sum / static_cast<double>(n)
+        const double observed_mean = sum / static_cast<double>(n);
         const double observed_stat = std::abs(observed_mean);
 
         double observed_sdval = 0.0;
@@ -72,8 +72,12 @@ namespace kocmi
         {
             observed_sdval += (v - observed_mean) * (v - observed_mean);
         }
-
-        result.t_stat = observed_mean / std::sqrt(observed_sdval / static_cast<double>(n - 1));
+        observed_sdval = std::sqrt(observed_sdval / static_cast<double>(n - 1));
+        
+        if (infoxtr::numericutils::doubleNearlyEqual(observed_sdval, 0.0))
+        {
+            result.t_stat = observed_mean / observed_sdval;
+        }
 
         /*
          * The single RNG version implementation is retained here for reference.
@@ -134,10 +138,10 @@ namespace kocmi
         // Compute p-value
         size_t perm_count = 0;
         for (size_t f : perm_flags) {
-            perm_sum += f;
+            perm_count += f;
         }
         
-        result.p_value = static_cast<double>(perm_sum) / static_cast<double>(nboots);
+        result.p_value = static_cast<double>(perm_count) / static_cast<double>(nboots);
 
         return result;
     }
