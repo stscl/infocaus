@@ -179,19 +179,16 @@ namespace kocmi
         const ContMat& conds,
         size_t k = 3,
         size_t alg = 0)
-    {
+    {   
         ContMat xyz = conds;
-        xyz.insert(xyz.end(), target.begin(), target.end());
-        xyz.insert(xyz.end(), interact.begin(), interact.end());
-
-        ContMat xy = target;
-        xy.insert(xy.end(), interact.begin(), interact.end());
+        xyz.push_back(target);  
+        xyz.push_back(interact);  
 
         ContMat xz = conds;
-        xz.insert(xz.end(), target.begin(), target.end());
+        xz.push_back(target);  
 
         std::vector<size_t> yz = conds;
-        yz.insert(yz.end(), interact.begin(), interact.end());
+        yz.push_back(interact);
 
         auto d_xyz = infoxtr::distance::distance(xyz,"maximum",true,false);
         auto d_xz  = infoxtr::distance::distance(xz,"maximum",true,false);
