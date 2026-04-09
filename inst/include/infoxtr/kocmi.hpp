@@ -255,7 +255,41 @@ namespace kocmi
         return cmival;
     }
 
-    
+    inline double cmi(
+        const DiscVec& target,
+        const DiscVec& interact,
+        const DiscMat& conds,
+        double base = 2.0)
+    {   
+        ContMat mat = conds;
+        mat.push_back(target);  
+        mat.push_back(interact);  
+
+        std::vector<size_t> z(conds.size());
+        std::iota(z.begin(), z.end(), 0);
+
+        std::vector<size_t> xyz(conds.size() + 2);
+        std::iota(xyz.begin(), xyz.end(), 0);
+
+        std::vector<size_t> xz;
+        xz.reserve(conds.size() + 1);
+        xz.push_back(cond.size());
+        for (size_t idx : z) xz.push_back(idx);
+
+        std::vector<size_t> yz;
+        yz.reserve(conds.size() + 1);
+        yz.push_back(cond.size() + 1);
+        for (size_t idx : z) yz.push_back(idx);
+
+        double h_xz  = je(mat, xz, base, true);
+        double h_yz  = je(mat, yz, base, true);
+        double h_z   = je(mat, z, base, true);
+        double h_xyz = je(mat, xyz, base, true);
+
+        double cmival = h_xz + h_yz - h_z - h_xyz;
+
+        return cmival;
+    }
 
     /*****************************************************************
      * Knockoff Conditional Mutual Information for Continuous Data
