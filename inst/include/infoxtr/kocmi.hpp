@@ -24,6 +24,17 @@ namespace kocmi
     using ContVec = std::vector<double>;
     using DiscMat = std::vector<std::vector<double>>;
 
+    /***********************************************************
+     * Result structure
+     ***********************************************************/
+    struct KOCMIRes
+    {
+        double t_stat = std::numeric_limits<double>::quiet_NaN();
+        double p_value = std::numeric_limits<double>::quiet_NaN();
+    };
+
+    
+
 } // namespace kocmi
 
 }
