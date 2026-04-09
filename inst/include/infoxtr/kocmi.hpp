@@ -33,7 +33,15 @@ namespace kocmi
         double p_value = std::numeric_limits<double>::quiet_NaN();
     };
 
-    
+    /*****************************************************************
+     * Knockoff Conditional Mutual Information for Continuous Data
+     *****************************************************************/
+
+     /*****************************************************************
+     * Knockoff Conditional Mutual Information for Discrete Data
+     *****************************************************************/
+
+
 
 } // namespace kocmi
 
