@@ -53,7 +53,7 @@ namespace kocmi
                 sum += v;
             }
         }
-        
+
         // If all values are NaN
         if (vec.empty()) {
             return std::numeric_limits<double>::quiet_NaN();
@@ -63,7 +63,12 @@ namespace kocmi
         // Compute observed statistic
         const double observed_stat = std::abs(sum / static_cast<double>(n));
 
-        // RNG
+        /*
+         * The single RNG version implementation is retained here for reference.
+         * To facilitate parallelization of the permutation process without compromising randomness,
+         * we adopted a strategy of pre-constructing an RNG pool to compute permutation statistics.
+         * The pre-constructed RNG pool is initialized independently using the user-provided seed.
+        */
         std::mt19937_64 rng(seed);
         std::uniform_int_distribution<int> sign_dist(0, 1);
 
