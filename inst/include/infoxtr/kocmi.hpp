@@ -39,30 +39,28 @@ namespace kocmi
      *****************************************************************/
     inline double permutation_test_mean(const std::vector<double>& diffs,
                                         size_t nboots = 10000,
-                                        uint64_t seed = 123456789) {
-
-        // Extract non-NaN values
+                                        uint64_t seed = 123456789) 
+    {
         std::vector<double> vec;
         vec.reserve(diffs.size());
-
-        for (double v : diffs) {
-            if (!std::isnan(v)) {
+        
+        double sum = 0.0;
+        for (double v : diffs) 
+        {
+            if (!std::isnan(v)) 
+            {
                 vec.push_back(v);
+                sum += v;
             }
         }
-
+        
         // If all values are NaN
         if (vec.empty()) {
             return std::numeric_limits<double>::quiet_NaN();
         }
-
         const size_t n = vec.size();
 
         // Compute observed statistic
-        double sum = 0.0;
-        for (double v : vec) {
-            sum += v;
-        }
         const double observed_stat = std::abs(sum / static_cast<double>(n));
 
         // RNG
