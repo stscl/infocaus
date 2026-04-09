@@ -70,12 +70,9 @@ namespace kocmi
         double observed_sdval = 0.0;
         for (double v : vec) 
         {
-            if (!std::isnan(v)) 
-            {
-                vec.push_back(v);
-                sum += v;
-            }
+            observed_sdval += (v - observed_mean) * (v - observed_mean);
         }
+        result.t_stat = observed_mean / std::sqrt(observed_sdval / static_cast<double>(n - 1));
 
         /*
          * The single RNG version implementation is retained here for reference.
