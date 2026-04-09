@@ -6,7 +6,7 @@ Authors@R:
            email = "lyu.geosocial@gmail.com", 
            role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0002-6003-3800"))
-Description: Implements information-theoretic measures to explore variable interactions, including Kraskov mutual information estimation for continuous variables, Knockoff Conditional Mutual Information (KOCMI, doi:...), Synergistic-Unique-Redundant Decomposition (SURD, Martinez-Sanchez et al., 2024, doi:10.1038/s41467-024-53373-4), allowing detection of complex and diverse relationships among variables.
+Description: Implements information-theoretic measures to explore variable interactions, including Kraskov mutual information estimation for continuous variables, knockoff conditional mutual information (KOCMI, doi:...), synergistic-unique-redundant decomposition (SURD, Martinez-Sanchez et al., 2024, doi:10.1038/s41467-024-53373-4), allowing detection of complex and diverse relationships among variables.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
