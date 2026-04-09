@@ -40,6 +40,7 @@ namespace kocmi
     inline KOCMIRes permutation_test_mean(
         const std::vector<double>& diffs,
         size_t nboots = 10000,
+        size_t threads = 1,
         uint64_t seed = 123456789) 
     {
         std::vector<double> vec;
@@ -62,6 +63,10 @@ namespace kocmi
         if (n < 2) {
             return result;
         }
+
+        if (threads == 0) threads = 1;
+        size_t hw = std::thread::hardware_concurrency();
+        if (hw > 0) threads = std::min(threads, hw);
         
         // Compute observed statistic
         const double observed_mean = sum / static_cast<double>(n);
