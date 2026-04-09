@@ -182,6 +182,8 @@ namespace kocmi
         const ContVec& target,
         const ContVec& agent,
         const ContMat& conds,
+        const ContMat& all_knockoff,
+        const ContMat& target_knockoff,
         size_t k = 3,
         size_t alg = 0,
         size_t threads = 1,
