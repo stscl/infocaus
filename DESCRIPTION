@@ -6,7 +6,7 @@ Authors@R:
            email = "lyu.geosocial@gmail.com", 
            role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0002-6003-3800"))
-Description: Implements information-theoretic measures to explore variable interactions, including ksg mutual information estimation for continuous variables from Kraskov et al. (2004) <doi:10.1103/PhysRevE.69.066138>, knockoff conditional mutual information as introduced by Zhang & Chen (2025) <doi:10.1126/sciadv.adu6464>, synergistic-unique-redundant decomposition (SURD, Martinez-Sanchez et al., 2024, doi:10.1038/s41467-024-53373-4), allowing detection of complex and diverse relationships among variables.
+Description: Implements information-theoretic measures to explore variable interactions, including ksg mutual information estimation for continuous variables from Kraskov et al. (2004) <doi:10.1103/PhysRevE.69.066138>, knockoff conditional mutual information as introduced by Zhang & Chen (2025) <doi:10.1126/sciadv.adu6464>, synergistic-unique-redundant decomposition following the approach of Martinez-Sanchez et al. (2024) <doi:10.1038/s41467-024-53373-4>, allowing detection of complex and diverse relationships among variables.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
