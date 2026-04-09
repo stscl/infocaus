@@ -54,16 +54,28 @@ namespace kocmi
                 sum += v;
             }
         }
+
+        const size_t n = vec.size();
         
         KOCMIRes result;
-        // If all values are NaN
-        if (vec.empty()) {
+        // If all values are NaN or only have one non-NaN value
+        if (n < 2) {
             return KOCMIRes;
         }
-        const size_t n = vec.size();
-
+        
         // Compute observed statistic
-        const double observed_stat = std::abs(sum / static_cast<double>(n));
+        const double observed_mean = sum / static_cast<double>(n)
+        const double observed_stat = std::abs(observed_mean);
+
+        double observed_sdval = 0.0;
+        for (double v : vec) 
+        {
+            if (!std::isnan(v)) 
+            {
+                vec.push_back(v);
+                sum += v;
+            }
+        }
 
         /*
          * The single RNG version implementation is retained here for reference.
