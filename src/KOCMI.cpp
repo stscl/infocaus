@@ -12,7 +12,7 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
                      const Rcpp::IntegerVector& agent,
                      const Rcpp::IntegerVector& conds,
                      const Rcpp::NumericMatrix& knockoff,
-                     Rcpp::Nullable<Rcpp::NumericMatrix> null_knockoff= R_NilValue,
+                     Rcpp::Nullable<Rcpp::NumericMatrix> null_knockoff = R_NilValue,
                      const std::string& type = "cont",
                      int nboots = 10000,
                      int k = 5,
@@ -23,6 +23,11 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
                      const std::string& method = "equal",
                      bool contain_null = true)
 {   
+    if (contain_null || !null_knockoff.isNotNull())
+    {
+        Rcpp::stop("[KOCMI] When `contain_null` is true, the `null_knockoff` matrix for the source variable must be supplied.")
+    }
+    
     const size_t n_cols = static_cast<size_t>(mat.ncol());
     const size_t n_obs = static_cast<size_t>(mat.nrow());
     
@@ -50,6 +55,13 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
     );
     if (ag.empty())
         Rcpp::stop("Agent indices should not be empty");
+    
+    std::vector<std::vector<double>> nkm;
+    if (null_knockoff.isNotNull())
+    {
+        nkm = infoxtr::convert::mat_r2std(null_knockoff, false);
+    }
+    std::vector<std::vector<double>> km = infoxtr::convert::mat_r2std(knockoff, false);
 
     // Construct discrete data matrix
     std::vector<std::vector<uint64_t>> pm(
