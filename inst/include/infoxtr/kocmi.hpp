@@ -300,9 +300,11 @@ namespace kocmi
         const ContMat& conds,
         const ContMat& knockoff,
         const ContMat& null_knockoff,
+        size_t nboots = 10000,
         size_t k = 3,
         size_t alg = 0,
         size_t threads = 1,
+        uint64_t seed = 123456789,
         double base = 2.0,
         bool contain_null = true)
     { 
@@ -328,9 +330,8 @@ namespace kocmi
                 diffs[mi] = cmi_val - cmi_knockoff;
             }
         } 
-
-
-
+        
+        return permutation_test_mean(diffs, nboots, threads, seed);
     }
 
      /*****************************************************************
