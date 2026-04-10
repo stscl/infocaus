@@ -298,13 +298,38 @@ namespace kocmi
         const ContVec& target,
         const ContVec& agent,
         const ContMat& conds,
-        const ContMat& all_knockoff,
-        const ContMat& target_knockoff,
+        const ContMat& knockoff,
+        const ContMat& null_knockoff,
         size_t k = 3,
         size_t alg = 0,
         size_t threads = 1,
-        double base = 2.0)
-    {
+        double base = 2.0,
+        bool contain_null = true)
+    { 
+        const size_t monte_size = knockoff.size();
+        if (contain_null && monte_size != null_knockoff.size())
+            throw std::invalid_argument("The sizes between agent_knockoff and all_knockoff should be same");
+
+        double cmi_val = std::numeric_limits<double>::quiet_NaN();
+        if (!contain_null) cmi_val = cmi(target, agent, conds, k, alg);
+        
+        std::vector<double> diffs(monte_size, std::numeric_limits<double>::quiet_NaN());
+
+        for (size_t mi = 0; mi < monte_size; ++mi)
+        { 
+            double cmi_knockoff = cmi(target, knockoff[mi], conds, k, alg);
+
+            if (contain_null)
+            {
+                diffs[mi] = cmi(target, null_knockoff[mi], conds, k, alg) - cmi_knockoff;
+            }
+            else 
+            {
+                diffs[mi] = cmi_val - cmi_knockoff;
+            }
+        } 
+
+
 
     }
 
