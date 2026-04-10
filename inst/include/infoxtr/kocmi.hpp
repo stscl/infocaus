@@ -352,8 +352,8 @@ namespace kocmi
     }
 
      /*****************************************************************
-     * Knockoff Conditional Mutual Information for Discrete Data
-     *****************************************************************/
+      * Knockoff Conditional Mutual Information for Discrete Data
+      *****************************************************************/
     inline KOCMIRes kocmi(
         const DiscVec& target,
         const DiscVec& agent,
