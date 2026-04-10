@@ -94,7 +94,7 @@ Rcpp::NumericVector RcppKOCMI(
     std::vector<std::vector<double>> nkm;
     if (null_knockoff.isNotNull())
     {
-        nkm = infoxtr::convert::mat_r2std(null_knockoff, false);
+        nkm = infoxtr::convert::mat_r2std(null_knockoff.get(), false);
     }
     std::vector<std::vector<double>> km = infoxtr::convert::mat_r2std(knockoff, false);
     
