@@ -27,7 +27,7 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
     {
         Rcpp::stop("[KOCMI] When `contain_null` is true, the `null_knockoff` matrix for the source variable must be supplied.")
     }
-    
+
     const size_t n_cols = static_cast<size_t>(mat.ncol());
     const size_t n_obs = static_cast<size_t>(mat.nrow());
     
@@ -38,23 +38,31 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
                    static_cast<int>(n_cols));
     }
     tg_idx -= 1; // to 0-based
+
+    size_t ag_idx = agent[0];
+    if (ag_idx < 1 || ag_idx > n_cols) {
+        Rcpp::stop("Agent index %d out of bounds [1, %d]", 
+                   static_cast<int>(ag_idx), 
+                   static_cast<int>(n_cols));
+    }
+    ag_idx -= 1; // to 0-based
     
-    std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
-    for (auto& idx : ag) {
+    std::vector<size_t> cg = Rcpp::as<std::vector<size_t>>(conds);
+    for (auto& idx : cg) {
         if (idx < 1 || idx > n_cols) {
-            Rcpp::stop("Agent index %d out of bounds [1, %d]", 
+            Rcpp::stop("Conditioning index %d out of bounds [1, %d]", 
                        static_cast<int>(idx), 
                        static_cast<int>(n_cols));
         }
         idx -= 1;  // to 0-based
     }
-    std::sort(ag.begin(), ag.end());
-    ag.erase(
-        std::unique(ag.begin(), ag.end()),
-        ag.end()
+    std::sort(cg.begin(), cg.end());
+    cg.erase(
+        std::unique(cg.begin(), cg.end()),
+        cg.end()
     );
-    if (ag.empty())
-        Rcpp::stop("Agent indices should not be empty");
+    if (cg.empty())
+        Rcpp::stop("Conditioning indices should not be empty");
     
     std::vector<std::vector<double>> nkm;
     if (null_knockoff.isNotNull())
