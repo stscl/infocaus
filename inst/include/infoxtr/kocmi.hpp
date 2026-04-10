@@ -1,3 +1,122 @@
+/******************************************************************************
+ * File: kocmi.hpp
+ *
+ * Knockoff Conditional Mutual Information (KOCMI)
+ * ------------------------------------------------
+ *
+ * This module implements the Knockoff Conditional Mutual Information (KOCMI)
+ * framework for detecting variable interactions using information-theoretic
+ * measures with knockoff variables.
+ *
+ * KOCMI evaluates the statistical significance of the conditional mutual
+ * information between a target variable and an agent variable given a set
+ * of conditioning variables by comparing it with knockoff counterparts.
+ *
+ * The framework supports both continuous and discrete variables and uses
+ * permutation testing to assess significance.
+ *
+ * ---------------------------------------------------------------------------
+ * Algorithm overview
+ * ---------------------------------------------------------------------------
+ *
+ * Let Y denote the target variable, X the agent variable of interest, and
+ * Z = {Z1, Z2, ..., Zm} a set of conditioning variables.
+ *
+ * Knockoff variables are generated for X (and optionally for the null case).
+ * The algorithm proceeds as follows:
+ *
+ * 1. Conditional Mutual Information estimation
+ *
+ *      Compute conditional mutual information
+ *
+ *          I(Y ; X | Z)
+ *
+ *      using:
+ *
+ *          • k-nearest neighbor estimator (continuous variables)
+ *          • entropy-based estimator (discrete variables)
+ *
+ * 2. Knockoff comparison
+ *
+ *      For each Monte-Carlo knockoff sample X̃_i:
+ *
+ *          Δ_i = I(Y ; X | Z) − I(Y ; X̃_i | Z)
+ *
+ *      or when null knockoffs are provided:
+ *
+ *          Δ_i = I(Y ; X̃_null_i | Z) − I(Y ; X̃_i | Z)
+ *
+ *      This forms a vector of conditional information differences.
+ *
+ * 3. Permutation sign test
+ *
+ *      A permutation test is applied to the mean of Δ:
+ *
+ *          T = | mean(Δ) |
+ *
+ *      Random sign flips are generated to construct the null distribution
+ *      of the statistic:
+ *
+ *          Δ_i* = s_i · Δ_i ,  where s_i ∈ {−1, +1}
+ *
+ *      The p-value is estimated as
+ *
+ *          p = Pr( |mean(Δ*)| ≥ |mean(Δ)| )
+ *
+ * 4. Parallel permutation computation
+ *
+ *      To ensure reproducibility and efficient parallel computation,
+ *      independent random number generators (RNGs) are pre-constructed
+ *      using user-provided seeds. Each permutation iteration uses a
+ *      dedicated RNG instance.
+ *
+ * ---------------------------------------------------------------------------
+ * Supported estimators
+ * ---------------------------------------------------------------------------
+ *
+ * Continuous data:
+ *
+ *      Conditional mutual information estimated using a
+ *      k-nearest-neighbor approach based on maximum-norm distances.
+ *
+ * Discrete data:
+ *
+ *      Conditional mutual information estimated via joint entropy
+ *      decomposition using utilities from infotheo.hpp.
+ *
+ * ---------------------------------------------------------------------------
+ * Input data format
+ * ---------------------------------------------------------------------------
+ *
+ * Continuous variables:
+ *
+ *      target      : vector<double>
+ *      agent       : vector<double>
+ *      conds       : matrix (vector<vector<double>>)
+ *
+ * Discrete variables:
+ *
+ *      target      : vector<uint64_t>
+ *      agent       : vector<uint64_t>
+ *      conds       : matrix (vector<vector<uint64_t>>)
+ *
+ * Knockoff samples are provided as matrices where each row corresponds
+ * to one Monte-Carlo knockoff realization.
+ *
+ * ---------------------------------------------------------------------------
+ * Output
+ * ---------------------------------------------------------------------------
+ *
+ * The algorithm returns a KOCMIRes structure containing:
+ *
+ *      t_stat   : test statistic of the observed mean difference
+ *      p_value  : permutation test p-value
+ *
+ * ---------------------------------------------------------------------------
+ * Author: Wenbo Lyu (Github: @SpatLyu)
+ * License: GPL-3
+ ******************************************************************************/
+
 #ifndef INFOXTR_KOCMI_HPP
 #define INFOXTR_KOCMI_HPP
 
