@@ -63,10 +63,6 @@ namespace kocmi
         if (n < 2) {
             return result;
         }
-
-        if (threads == 0) threads = 1;
-        size_t hw = std::thread::hardware_concurrency();
-        if (hw > 0) threads = std::min(threads, hw);
         
         // Compute observed statistic
         const double observed_mean = sum / static_cast<double>(n);
@@ -311,6 +307,10 @@ namespace kocmi
         const size_t monte_size = knockoff.size();
         if (contain_null && monte_size != null_knockoff.size())
             throw std::invalid_argument("The sizes between agent_knockoff and all_knockoff should be same");
+
+        if (threads == 0) threads = 1;
+        size_t hw = std::thread::hardware_concurrency();
+        if (hw > 0) threads = std::min(threads, hw);
 
         double cmi_val = std::numeric_limits<double>::quiet_NaN();
         if (!contain_null) cmi_val = cmi(target, agent, conds, k, alg);
