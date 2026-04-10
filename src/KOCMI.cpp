@@ -63,6 +63,16 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
     );
     if (cg.empty())
         Rcpp::stop("Conditioning indices should not be empty");
+
+    // Convert original values from R to C++
+    std::vector<double> tg_std(n_obs);
+    std::vector<double> ag_std(n_obs);
+    for (size_t r = 0; r < n_obs; ++r)
+    {
+        tg_std[r] = mat(r, tg_idx);
+        ag_std[r] = mat(r, ag_idx);
+    }
+    std::vector<std::vector<double>> cg_std = infoxtr::convert::mat_r2std(conds, false);
     
     std::vector<std::vector<double>> nkm;
     if (null_knockoff.isNotNull())
