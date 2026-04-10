@@ -1,6 +1,7 @@
 #include <vector>
 #include <cmath>
 #include <limits>
+#include <string>
 #include <numeric>
 #include <algorithm>
 #include "infoxtr.h"
@@ -72,7 +73,16 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
         tg_std[r] = mat(r, tg_idx);
         ag_std[r] = mat(r, ag_idx);
     }
-    std::vector<std::vector<double>> cg_std = infoxtr::convert::mat_r2std(conds, false);
+    std::vector<std::vector<double>> cg_mat(
+        n_obs, std::vector<double>(cg.size())
+    );
+    for (size_t j = 0; j < cg.size(); ++j)
+    {   
+        for (size_t r = 0; r < n_obs; ++r)
+        {
+            cg_mat[j][r] = mat(r, cg[j]);
+        }
+    }
     
     std::vector<std::vector<double>> nkm;
     if (null_knockoff.isNotNull())
@@ -80,6 +90,12 @@ Rcpp::List RcppKOCMI(const Rcpp::NumericMatrix& mat,
         nkm = infoxtr::convert::mat_r2std(null_knockoff, false);
     }
     std::vector<std::vector<double>> km = infoxtr::convert::mat_r2std(knockoff, false);
+    
+    // Initialize result container
+    infoxtr::kocmi::KOCMIRes res;
+   
+    if (type == "cont")
+    
 
     // Construct discrete data matrix
     std::vector<std::vector<uint64_t>> pm(
