@@ -26,9 +26,14 @@ Rcpp::NumericVector RcppKOCMI(
     const std::string& method = "equal",
     bool contain_null = true)
 {   
-    if (contain_null || !null_knockoff.isNotNull())
+    if (contain_null && !null_knockoff.isNotNull())
     {
-        Rcpp::stop("[KOCMI] When `contain_null` is true, the `null_knockoff` matrix for the source variable must be supplied.")
+        Rcpp::stop("[KOCMI] When `contain_null` is true, the `null_knockoff` matrix for the source variable must be supplied.");
+    }
+
+    if (nboots < 0) 
+    {
+        Rcpp::warning("`nboots` is negative, using absolute value: %d", nboots);
     }
 
     const size_t n_cols = static_cast<size_t>(mat.ncol());
@@ -149,7 +154,7 @@ Rcpp::NumericVector RcppKOCMI(
         }
 
         res = infoxtr::kocmi::kocmi(
-            tg_vec, ag_cev, cg_discm, kdiscm, nkdiscm,
+            tg_vec, ag_vec, cg_discm, kdiscm, nkdiscm,
             static_cast<size_t>(std::abs(nboots)),
             static_cast<size_t>(std::abs(threads)),
             static_cast<uint64_t>(std::abs(seed)),
