@@ -183,7 +183,7 @@ namespace kocmi
         ContMat xz = conds;
         xz.push_back(target);  
 
-        std::vector<size_t> yz = conds;
+        ContMat yz = conds;
         yz.push_back(interact);
 
         auto d_xyz = infoxtr::distance::distance(xyz,"maximum",true,false);
@@ -269,18 +269,18 @@ namespace kocmi
 
         std::vector<size_t> xz;
         xz.reserve(conds.size() + 1);
-        xz.push_back(cond.size());
+        xz.push_back(conds.size());
         for (size_t idx : z) xz.push_back(idx);
 
         std::vector<size_t> yz;
         yz.reserve(conds.size() + 1);
-        yz.push_back(cond.size() + 1);
+        yz.push_back(conds.size() + 1);
         for (size_t idx : z) yz.push_back(idx);
 
-        double h_xz  = je(mat, xz, base, true);
-        double h_yz  = je(mat, yz, base, true);
-        double h_z   = je(mat, z, base, true);
-        double h_xyz = je(mat, xyz, base, true);
+        double h_xz  = infoxtr::infotheo::je(mat, xz, base, true);
+        double h_yz  = infoxtr::infotheo::je(mat, yz, base, true);
+        double h_z   = infoxtr::infotheo::je(mat, z, base, true);
+        double h_xyz = infoxtr::infotheo::je(mat, xyz, base, true);
 
         double cmival = h_xz + h_yz - h_z - h_xyz;
 
