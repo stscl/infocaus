@@ -75,6 +75,12 @@ A named numeric vector.
 \description{
 Knockoff Conditional Mutual Information
 }
+\examples{
+popd_df = readr::read_csv(system.file("case/popd.csv",package = "spEDM"))
+popd_df
+# infoxtr::kocmi(popd_df, 3, 6, c(4,5,7))
+
+}
 \references{
 Zhang, X., Chen, L., 2025. Quantifying interventional causality by knockoff operation. Science Advances 11.
 }
