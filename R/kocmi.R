@@ -3,12 +3,20 @@
 #' Knockoff Conditional Mutual Information
 #'
 #' @param conds Integer vector of column indices for the conditioning variables.
-#' @param knockoff
-#' @param null_knockoff
+#' @param knockoff A matrix or data frame containing knockoff realizations
+#'   constructed for the `agent` variable while keeping the `target`
+#'   variable unchanged. Each row corresponds to one Monte Carlo knockoff
+#'   sample generated using the remaining variables except the target.
+#' @param null_knockoff (optional) A matrix or data frame containing knockoff
+#'   realizations generated under the null setting where all variables are
+#'   jointly used to construct knockoffs. Each row represents one Monte Carlo
+#'   sample. If `contain_null = FALSE`, this argument can be `NULL`.
 #' @param type (optional) Estimation method:
 #'   `"disc"` for discrete entropy or `"cont"` for continuous entropy (KSG estimator).
 #' @param nboots
-#' @param k
+##' @param k For `type = "cont`, the number of nearest neighbors used by
+#'   the continuous conditional mutual information estimator.
+#'   For `type = "disc"`, the number of bins used for discretization.
 #' @param seed (optional) Random seed used for permutation test.
 #' @param contain_null
 #'
