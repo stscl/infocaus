@@ -81,7 +81,7 @@ Rcpp::NumericVector RcppKOCMI(
         ag_std[r] = mat(r, ag_idx);
     }
     std::vector<std::vector<double>> cg_mat(
-        n_obs, std::vector<double>(cg.size())
+        cg.size(), std::vector<double>(n_obs)
     );
     for (size_t j = 0; j < cg.size(); ++j)
     {   
@@ -100,6 +100,8 @@ Rcpp::NumericVector RcppKOCMI(
     
     // Initialize result container
     infoxtr::kocmi::KOCMIRes res;
+
+    Rcpp::Rcerr << "Convert" << std::endl;
    
     if (type == "cont")
     {
