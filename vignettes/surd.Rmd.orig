@@ -120,7 +120,7 @@ fig_cvds_ts = ggplot2::ggplot(cvd_long, ggplot2::aes(x = id, y = value, color = 
   ggplot2::theme_bw() +
   ggplot2::theme(legend.direction = "horizontal",
                  legend.position = "inside",
-                 legend.justification = c("center","top"),
+                 legend.justification = c("center", "top"),
                  legend.background = ggplot2::element_rect(fill = "transparent", color = NA))
 fig_cvds_ts
 ```
