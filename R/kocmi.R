@@ -2,6 +2,7 @@
 #'
 #' Knockoff Conditional Mutual Information
 #'
+#' @inheritParams surd
 #' @param conds Integer vector of column indices for the conditioning variables.
 #' @param knockoff Knockoff realizations constructed for the `agent` variable
 #'   while keeping the `target` variable unchanged. Each column corresponds to
@@ -31,6 +32,8 @@
 #' @export
 #'
 #' @examples
+#' 
+#' 
 kocmi = \(data, target, agent, conds, knockoff, null_knockoff = NULL,
           type = c("cont", "disc"), nboots = 1e4, k = 3, threads = 1,
           seed = 123456789, base = exp(1), method = "equal", contain_null = TRUE) {
