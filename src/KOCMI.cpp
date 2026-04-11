@@ -100,8 +100,6 @@ Rcpp::NumericVector RcppKOCMI(
     
     // Initialize result container
     infoxtr::kocmi::KOCMIRes res;
-
-    Rcpp::Rcerr << "Convert" << std::endl;
    
     if (type == "cont")
     {
