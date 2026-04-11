@@ -47,7 +47,7 @@
 #' @name surd
 #' @aliases surd,data.frame-method
 #' @references
-#' Martinez-Sanchez, A., Arranz, G. & Lozano-Duran, A. Decomposing causality into its synergistic, unique, and redundant components. Nat Commun 15, 9296 (2024).
+#' Martinez-Sanchez, A., Arranz, G., Lozano-Duran, A., 2024. Decomposing causality into its synergistic, unique, and redundant components. Nature Communications 15.
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
