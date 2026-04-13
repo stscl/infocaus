@@ -183,6 +183,14 @@ namespace kocmi
             return result;
         }
         
+        // Skip parallelization for lightweight permutation tasks.
+        // Threshold: n × nboots < 1e8 operations (~0.1s serial time).
+        // Rationale: Parallel overhead (thread spawn, sync, cache contention) 
+        // exceeds computation time for small workloads, causing slowdown.
+        if (n * nboots < 1e8) {
+            threads = 1;
+        }
+        
         // Compute observed statistic
         const double observed_mean = sum / static_cast<double>(n);
         const double observed_stat = std::abs(observed_mean);
