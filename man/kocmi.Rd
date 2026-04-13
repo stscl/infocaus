@@ -75,6 +75,9 @@ A named numeric vector.
 \description{
 Knockoff Conditional Mutual Information
 }
+\note{
+\code{kocmi} only support numeric data.
+}
 \examples{
 set.seed(42)
 kn1 = replicate(50, stats::rnorm(100))

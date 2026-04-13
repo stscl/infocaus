@@ -85,7 +85,7 @@ A list.
 Synergistic-Unique-Redundant Decomposition
 }
 \note{
-SURD only support numeric data.
+\code{surd} only support numeric data.
 }
 \examples{
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
