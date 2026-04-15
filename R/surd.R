@@ -32,7 +32,7 @@
 #' @param method (optional) Discretization method. One of
 #'   `"sd"`, `"equal"`, `"geometric"`, `"quantile"`,
 #'   `"natural("jenks")"`, or `"headtail"("headtails")`.
-#' @param max.order (optional) Maximum interaction order.
+#' @param max.order (optional) Maximum combination order.
 #' @param threads (optional) Number of threads used.
 #' @param nb (optional) Neighbours list.
 #'
