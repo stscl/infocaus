@@ -17,7 +17,7 @@ Depends:
     R (>= 4.1.0)
 LinkingTo: 
     Rcpp,
-    RcppThread,
+    RcppThread
 Imports: 
     methods,
     sdsfun,
