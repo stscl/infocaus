@@ -88,6 +88,43 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
             method_expanded[i] = method_vec[idx + 1];
         }
     }
+
+    // create ordering index
+    std::vector<size_t> order(ag_raw.size());
+    std::iota(order.begin(), order.end(), 0);
+
+    // sort indices by ag_raw
+    std::sort(order.begin(), order.end(),
+            [&](size_t i, size_t j) {
+                return ag_raw[i] < ag_raw[j];
+            });
+
+    // apply ordering
+    std::vector<size_t> ag_sorted;
+    std::vector<size_t> bin_sorted;
+    std::vector<std::string> method_sorted;
+
+    for (size_t idx : order) {
+        ag_sorted.push_back(ag_raw[idx]);
+        bin_sorted.push_back(bin_expanded[idx + 1]);
+        method_sorted.push_back(method_expanded[idx + 1]);
+    }
+
+    // deduplicate while keeping alignment
+    std::vector<size_t> ag;
+    std::vector<size_t> bin_final;
+    std::vector<std::string> method_final;
+
+    for (size_t i = 0; i < ag_sorted.size(); ++i) {
+        if (i == 0 || ag_sorted[i] != ag_sorted[i - 1]) {
+            ag.push_back(ag_sorted[i]);
+            bin_final.push_back(bin_sorted[i]);
+            method_final.push_back(method_sorted[i]);
+        }
+    }
+
+    if (ag.empty())
+        Rcpp::stop("Agent indices should not be empty");
     
     std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
     for (auto& idx : ag) {
