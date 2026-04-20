@@ -95,9 +95,9 @@ mi = \(data, target, interact, base = exp(1), type = c("cont", "disc"), k = 3, n
   type = match.arg(type)
   mat = .convert2mat(data, type)
   if (type == "disc") {
-    return(RcppDiscMI(mat, target, interact, base, TRUE, normalize))
+    return(RcppDiscMI(mat, abs(target), abs(interact), base, TRUE, normalize))
   } else {
-    return(RcppContMI(mat, target, interact, k, 0, base, normalize))
+    return(RcppContMI(mat, abs(target), abs(interact), k, 0, base, normalize))
   }
 }
 
@@ -120,8 +120,8 @@ cmi = \(data, target, interact, conds, base = exp(1), type = c("cont", "disc"), 
   type = match.arg(type)
   mat = .convert2mat(data, type)
   if (type == "disc") {
-    return(RcppDiscCMI(mat, target, interact, conds, base, TRUE, normalize))
+    return(RcppDiscCMI(mat, abs(target), abs(interact), abs(conds), base, TRUE, normalize))
   } else {
-    return(RcppContCMI(mat, target, interact, conds, k, 0, base, normalize))
+    return(RcppContCMI(mat, abs(target), abs(interact), abs(conds), k, 0, base, normalize))
   }
 }
