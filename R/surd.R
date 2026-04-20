@@ -24,7 +24,13 @@
 #' 
 #' Synergistic-Unique-Redundant Decomposition
 #' 
-#' @note `surd` only support numeric data.
+#' @note `surd` only supports numeric input data. Both `bin` and `method`
+#'   support variable-specific settings using R-style recycling:
+#'   \itemize{
+#'     \item length 1: applied to the target and all agent variables
+#'     \item length 2: first for the target, second for all agents
+#'     \item length > 2: first for the target, remaining values are recycled across agents
+#'   }
 #'
 #' @inheritParams te
 #' @param lag (optional) Lag of the agent variables.
