@@ -182,7 +182,7 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     for (size_t j = 0; j < lagged_values.size(); ++j)
     {   
         pm[j + 1] = infoxtr::discretize::discretize(
-            lagged_values[j], method, static_cast<size_t>(std::abs(n))
+            lagged_values[j], method_final[j], bin_final[j]
         );
     }
 
