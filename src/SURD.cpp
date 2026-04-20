@@ -64,7 +64,8 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     else 
     {
         bin_expanded[0] = bin_vec[0];
-        for (size_t i = 1; i < nag_raw + 1; ++i) {
+        for (size_t i = 1; i < nag_raw + 1; ++i) 
+        {
             size_t idx = (i - 1) % (bin_vec.size() - 1);
             bin_expanded[i] = bin_vec[idx + 1];
         }
@@ -83,7 +84,8 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     else 
     {
         method_expanded[0] = method_vec[0];
-        for (size_t i = 1; i < nag_raw + 1; ++i) {
+        for (size_t i = 1; i < nag_raw + 1; ++i) 
+        {
             size_t idx = (i - 1) % (method_vec.size() - 1);
             method_expanded[i] = method_vec[idx + 1];
         }
