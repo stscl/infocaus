@@ -116,31 +116,16 @@ Rcpp::List RcppSURD(const Rcpp::NumericMatrix& mat,
     std::vector<size_t> bin_final;
     std::vector<std::string> method_final;
 
-    for (size_t i = 0; i < ag_sorted.size(); ++i) {
-        if (i == 0 || ag_sorted[i] != ag_sorted[i - 1]) {
+    for (size_t i = 0; i < ag_sorted.size(); ++i) 
+    {
+        if (i == 0 || ag_sorted[i] != ag_sorted[i - 1]) 
+        {
             ag.push_back(ag_sorted[i]);
             bin_final.push_back(bin_sorted[i]);
             method_final.push_back(method_sorted[i]);
         }
     }
 
-    if (ag.empty())
-        Rcpp::stop("Agent indices should not be empty");
-    
-    std::vector<size_t> ag = Rcpp::as<std::vector<size_t>>(agent);
-    for (auto& idx : ag) {
-        if (idx < 1 || idx > n_cols) {
-            Rcpp::stop("Agent index %d out of bounds [1, %d]", 
-                       static_cast<int>(idx), 
-                       static_cast<int>(n_cols));
-        }
-        idx -= 1;  // to 0-based
-    }
-    std::sort(ag.begin(), ag.end());
-    ag.erase(
-        std::unique(ag.begin(), ag.end()),
-        ag.end()
-    );
     if (ag.empty())
         Rcpp::stop("Agent indices should not be empty");
 
